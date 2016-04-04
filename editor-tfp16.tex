@@ -195,28 +195,27 @@ Ian Voysey \and Matthew Hammer\inst{3}}
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
-Programs are rich inductive structures, yet today, programmers  interact with them mainly through ``flattened'' textual representations. This structural mismatch can impose a non-trivial cognitive burden on programmers.
+Programs are rich inductive structures, yet today, programmers  interact with them mainly through ``flat'' textual representations. This indirection  has a  cognitive cost, i.e. programmers must comprehend the subtleties of textual syntax and perform many primitive text editor actions for each structural transformation that they intend to perform. During the course of these sequences of primitive edit actions, tools must be prepared to reason about text that is (temporarily) malformed.
 %Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser. 
 %There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden. 
 %For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations. 
 %Indeed, most structural  transformations require performing many primitive edit actions. 
-\emph{Structure editors} are program editors where each edit action corresponds to a sensible structural  transformation. 
+
+\emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  correspond to  sensible structural  transformations. 
 Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. 
 Our aim in this paper is to give a minimal type-theoretic account of a structure editor. 
 We build upon a  bidirectionally typed lambda calculus, extending it with 
 1) \emph{holes}; 
 %, which are identified by variables tracked in a separate linear \emph{hole context} 
-2) a \emph{selection model}; and 3) an \emph{action model}. 
-This system is intended to be foundational. 
-In particular, we articulate our vision of a full-scale programming system designed ``from the ground up'' around the same fundamental concepts as this calculus.
+2) a \emph{selection model}; and 3) an \emph{action model}. We then examine the essential metatheoretic relationships that must be established about such a system. 
+Finally, we articulate our vision of a full-scale programming system designed ``from the ground up'' around the same fundamental concepts as this calculus.
 
 %\keywords{computational geometry, graph theory, Hamilton cycles}
 \end{abstract}
 %
 \section{Introduction}
 %
-Programs are rich inductive structures. 
-Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser. 
+The fact that programs are rich inductive structures is well-understood amongst researchers and experienced programmers, but still perhaps somewhat obscure amongst  programmers at large because they typically construct and interact with  programs only indirectly, using a text editor composed with a parser. 
 There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden. 
 For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations. 
 
