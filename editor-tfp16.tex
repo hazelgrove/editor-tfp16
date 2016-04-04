@@ -195,13 +195,13 @@ Ian Voysey \and Matthew Hammer\inst{3}}
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
-Programs are rich inductive structures. 
-Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser. 
-There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden. 
-For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations. 
-Indeed, most structural  transformations require performing many primitive edit actions. 
-This observation has led to the development of various  \emph{structure editors} -- editors where each edit action corresponds to a sensible structural transformation. 
-The design space of structure editors is high-dimensional, and existing systems are large and somewhat \emph{ad hoc}. 
+Programs are rich inductive structures, yet today, programmers  interact with them mainly through ``flattened'' textual representations. This structural mismatch can impose a non-trivial cognitive burden on programmers.
+%Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser. 
+%There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden. 
+%For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations. 
+%Indeed, most structural  transformations require performing many primitive edit actions. 
+\emph{Structure editors} are program editors where each edit action corresponds to a sensible structural  transformation. 
+Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. 
 Our aim in this paper is to give a minimal type-theoretic account of a structure editor. 
 We build upon a  bidirectionally typed lambda calculus, extending it with 
 1) \emph{holes}; 
@@ -215,6 +215,10 @@ In particular, we articulate our vision of a full-scale programming system desig
 %
 \section{Introduction}
 %
+Programs are rich inductive structures. 
+Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser. 
+There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden. 
+For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations. 
 
 
 There are many ways to interact with a tree. 
