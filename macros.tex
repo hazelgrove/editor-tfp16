@@ -1,2 +1,59 @@
+% !TEX root = editor-tfp16.tex
+
+% HTyp
 \newcommand{\htau}{\dot{\tau}}
+\newcommand{\tarr}[2]{#1 \rightarrow #2}
+\newcommand{\tnum}{\texttt{num}}
+\newcommand{\tehole}{\llparenthesis\rrparenthesis}
+
+\newcommand{\tsub}[2]{#1 <: #2}
+
+% HExp
 \newcommand{\hexp}{\dot{e}}
+\newcommand{\hlam}[3]{\lambda #1{:}#2.#3}
+\newcommand{\hap}[2]{#1(#2)}
+\newcommand{\hnum}[1]{\underline{#1}}
+\newcommand{\hadd}[2]{#1 + #2}
+\newcommand{\hehole}{\llparenthesis\rrparenthesis}
+\newcommand{\hhole}[1]{\llparenthesis#1\rrparenthesis}
+
+\newcommand{\hGamma}{\dot{\Gamma}}
+\newcommand{\domof}[1]{\text{dom}(#1)}
+\newcommand{\hsyn}[3]{#1 \vdash #2 \Rightarrow #3}
+\newcommand{\hana}[3]{#1 \vdash #2 \Leftarrow #3}
+
+% ZTyp and ZExp
+\newcommand{\zlsel}[1]{{\bowtie}{#1}}
+\newcommand{\zrsel}[1]{{#1}{\bowtie}}
+\newcommand{\zwsel}[1]{{\triangleright}{#1}{\triangleleft}}
+
+\newcommand{\removeSel}[1]{#1^{\diamond}}
+
+% ZTyp
+\newcommand{\ztau}{\hat{\tau}}
+
+% ZExp
+\newcommand{\zexp}{\hat{e}}
+
+% Direction
+\newcommand{\dLeft}{\mathtt{L}}
+\newcommand{\dRight}{\mathtt{R}}
+
+% Action
+\newcommand{\aMove}[1]{\mathtt{move}~#1}
+\newcommand{\aSelect}[1]{\mathtt{sel}~#1}
+\newcommand{\aDel}{\mathtt{delsel}}
+\newcommand{\aReplace}[1]{\mathtt{replace}~#1}
+\newcommand{\aExtend}[1]{\mathtt{extend}~#1}
+
+% Form
+\newcommand{\farr}{\mathtt{arr}}
+\newcommand{\fnum}{\mathtt{num}}
+
+\newcommand{\fasc}{\mathtt{asc}}
+\newcommand{\fvar}[1]{\mathtt{var}~#1}
+\newcommand{\flam}[1]{\mathtt{lam}~#1}
+\newcommand{\fap}{\mathtt{ap}}
+\newcommand{\fnumlit}[1]{\mathtt{numlit}~#1}
+\newcommand{\fplus}{\mathtt{plus}}
+\newcommand{\fhole}{\mathtt{hole}}
