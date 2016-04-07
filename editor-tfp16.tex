@@ -11,6 +11,7 @@
 \usepackage{makeidx}  % allows for indexgeneration
 \usepackage{mathpartir} % inference rules
 \usepackage{extarrows}
+\usepackage{graphicx}
 
 \input{macros}
 %
@@ -182,7 +183,7 @@
 %                                     \toctitle is used
 %
 \author{Cyrus Omar\inst{1} \and Michael Hilton\inst{2} \and
-Ian Voysey\inst{1} \and \\Jonathan Aldrich\inst{1} \and Matthew Hammer\inst{3} }
+Ian Voysey\inst{1} \and \\Jonathan Aldrich\inst{1} \and Matthew Hammer\inst{3}}
 %
 \authorrunning{Omar et al.} % abbreviated author list (for running head)
 %
@@ -226,8 +227,8 @@ Finally, we outline our vision of a full-scale programming system designed ``fro
 %
 Programs (and, by the Curry-Howard correspondence, proofs) are rich inductive structures. This fact is well understood amongst researchers and experienced programmers, but still somewhat  obscure amongst programmers at large because programmers normally construct and interact with  programs only indirectly, e.g. using a text editor composed with a parser. 
 
-There are some benefits to this approach, to be sure, but the structural mismatch between programs and their textual representations  also imposes various burdens. 
-For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations. 
+There are some benefits to this approach, to be sure, but the structural mismatch between programs and their textual representations  also imposes various burdens.
+For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations.
 
 
 
@@ -236,14 +237,14 @@ For example, the primitive edit actions available in a text editor (e.g. inserti
 \subsection{Holes}
 \begin{figure}
 $\arraycolsep=4pt\begin{array}{lllllll}
-\mathsf{HTyp} & \tau,\htau & ::= & 
-  \tarr{\htau}{\htau} ~\vert~ 
+\mathsf{HTyp} & \tau,\htau & ::= &
+  \tarr{\htau}{\htau} ~\vert~
   \tnum ~\vert~
   \tehole\\
-\mathsf{HExp} & e,\hexp & ::= & 
+\mathsf{HExp} & e,\hexp & ::= &
   \hexp : \htau ~\vert~
-  x ~\vert~ 
-  \hlam{x}{\htau}{\hexp} ~\vert~ 
+  x ~\vert~
+  \hlam{x}{\htau}{\hexp} ~\vert~
   \hap{\hexp}{\hexp} ~\vert~
   \hnum{n} ~\vert~
   \hadd{\hexp}{\hexp} ~\vert~
@@ -442,7 +443,7 @@ Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by remo
 \mathsf{Form} & \varphi & ::= & 
   \farr ~\vert~
   \fnum \\
-& & \vert & 
+& & \vert &
   \fasc ~\vert~
   \fvar{x} ~\vert~
   \flam{x} ~\vert~
@@ -761,14 +762,36 @@ Action Determinism
 Action Preservation
 
 \subsubsection{Mechanization}
-Agda proofs... explanation of basic approach and current status. (Ian)
+\input{agda.tex}
 
 \section{Implementation}
 (Michael)
 
-Reactive stream of actions -- reactive stream of zippered expressions -- reactive stream of views (string and web) (and then close the loop -- maybe make this a diagram?) 
+\subsection{Implementation Concepts}
+
+
+\begin{figure}[]
+\centering
+\includegraphics[width=4in]{Implementation_Diagram}
+\caption{Implementation Concepts}
+\label{fig:FRP}
+\end{figure}
+
+One of the key insights of structured editor is that instead of a series of character by character edits, the user generates a series of transformations to the program tree, that always leave the program in a syntactically correct state.  This insight led us to conclude that a natural way to implement a structured editor would be using
+Functional Reactive Programming~\cite{Wan:2000:FRP:349299.349331} (FRP).
+The idea behind this implementation is illustrated if Figure~\ref{fig:FRP}.  The action stream is a series of events from the user.
+Each action results in a new zipper object.  Each new zipper object then results in an updated view.
+
+%Reactive stream of actions -- reactive stream of zippered expressions -- reactive stream of views (string and web) (and then close the loop -- maybe make this a diagram?)
+
+
+\subsection{Current Implementation}
 
 Implementation in OCaml + jsoo + React. Link to GitHub. Explanation of current status.
+
+
+
+
 
 
 \section{Related Work}
@@ -799,9 +822,9 @@ Need to do a search to see what else has been done...
 This work provides a foundation for studying all of these concepts independently -- show how they work with this system and it should be straightforward to scale to bigger system.
 
 \begin{quote}
-In any case, these are but steps toward more graphical program-description systems, for we will not forever stay confined to mere strings of symbols. 
+In any case, these are but steps toward more graphical program-description systems, for we will not forever stay confined to mere strings of symbols.
 
---- Minsky, Turing Award lecture 
+--- Minsky, Turing Award lecture
 \end{quote}
 
 %
@@ -809,6 +832,6 @@ In any case, these are but steps toward more graphical program-description syste
 %
 % TODO
 %\begin{thebibliography}{5}
-%
-%\end{thebibliography}
+\bibliographystyle{abbrv}
+\bibliography{bibliography}
 \end{document}
