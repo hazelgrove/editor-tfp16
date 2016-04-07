@@ -1,12 +1,15 @@
 % !TEX root = editor-tfp16.tex
 
+% HTyp and HExp
+\newcommand{\hcomplete}[1]{#1~\mathsf{complete}}
+
 % HTyp
 \newcommand{\htau}{\dot{\tau}}
 \newcommand{\tarr}[2]{#1 \rightarrow #2}
 \newcommand{\tnum}{\texttt{num}}
 \newcommand{\tehole}{\llparenthesis\rrparenthesis}
 
-\newcommand{\tsub}[2]{#1 <: #2}
+\newcommand{\tcompat}[2]{#1 \sim #2}
 
 % HExp
 \newcommand{\hexp}{\dot{e}}
@@ -36,15 +39,27 @@
 \newcommand{\zexp}{\hat{e}}
 
 % Direction
-\newcommand{\dLeft}{\mathtt{L}}
-\newcommand{\dRight}{\mathtt{R}}
+\newcommand{\dParent}{\mathtt{parent}}
+\newcommand{\dChild}{\mathtt{firstChild}}
+\newcommand{\dNext}{\mathtt{nextSib}}
+\newcommand{\dPrev}{\mathtt{prevSib}}
 
 % Action
 \newcommand{\aMove}[1]{\mathtt{move}~#1}
+	\newcommand{\zrightmost}[1]{\mathsf{rightmost}(#1)}
+	\newcommand{\zleftmost}[1]{\mathsf{leftmost}(#1)}
 \newcommand{\aSelect}[1]{\mathtt{sel}~#1}
-\newcommand{\aDel}{\mathtt{delsel}}
+\newcommand{\aDel}{\mathtt{del}}
 \newcommand{\aReplace}[1]{\mathtt{replace}~#1}
-\newcommand{\aExtend}[1]{\mathtt{extend}~#1}
+\newcommand{\aConstruct}[1]{\mathtt{construct}~#1}
+\newcommand{\aFinish}{\mathtt{finish}}
+
+\newcommand{\performAna}[5]{#1 \vdash #2 \Leftarrow #3 \xlongrightarrow{#4} #5}
+\newcommand{\performSyn}[5]{#1 \vdash #2 \Rightarrow #3 \xlongrightarrow{#4} #5}
+\newcommand{\performTyp}[3]{#1 \xlongrightarrow{#2} #3}
+
+\newcommand{\performMove}[3]{#1 \xlongrightarrow{#2} #3}
+\newcommand{\performDel}[2]{#1 \xlongrightarrow{\aDel} #2}
 
 % Form
 \newcommand{\farr}{\mathtt{arr}}

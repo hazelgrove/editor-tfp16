@@ -10,6 +10,7 @@
 \usepackage{wasysym}
 \usepackage{makeidx}  % allows for indexgeneration
 \usepackage{mathpartir} % inference rules
+\usepackage{extarrows}
 
 \input{macros}
 %
@@ -181,7 +182,7 @@
 %                                     \toctitle is used
 %
 \author{Cyrus Omar\inst{1} \and Michael Hilton\inst{2} \and
-Ian Voysey \and Matthew Hammer\inst{3} }
+Ian Voysey\inst{1} \and \\Jonathan Aldrich\inst{1} \and Matthew Hammer\inst{3} }
 %
 \authorrunning{Omar et al.} % abbreviated author list (for running head)
 %
@@ -189,20 +190,21 @@ Ian Voysey \and Matthew Hammer\inst{3} }
 %\tocauthor{Ivar Ekeland, Roger Temam, Jeffrey Dean, David Grove,
 %Craig Chambers, Kim B. Bruce, and Elisa Bertino}
 %
-\institute{Carnegie Mellon University, 
-\email{comar@cs.cmu.edu}\\ 
+\institute{Carnegie Mellon University
+%\email{comar@cs.cmu.edu}\\ 
 %\texttt{http://www.cs.cmu.edu/\homedir comar/}
 \and
-Oregon State University,
-\email{hiltonm@eecs.oregonstate.edu}\\ 
+Oregon State University
+%\email{hiltonm@eecs.oregonstate.edu}\\ 
 \and
-University of Colorado Boulder,
-\email{Matthew.Hammer@colorado.edu}}
+University of Colorado Boulder
+%\email{Matthew.Hammer@colorado.edu}
+}
 
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
-Programs (and proofs) are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cognitive cost -- programmers must comprehend the many subtleties of textual syntax, and it can take several primitive text editor actions to make a single structural change. During these sequences of editor actions, code highlighters and various other assistive tools may be asked to reason about malformed program text, complicating their design.
+Programs (and proofs) are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of textual syntax, and it can require several primitive text editor actions to make a single structural change. During these sequences of text editor actions, code highlighters and various other assistive tools are asked to reason about malformed program text, complicating their design.
 %Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser. 
 %There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden. 
 %For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations. 
@@ -222,7 +224,7 @@ Finally, we outline our vision of a full-scale programming system designed ``fro
 %
 \section{Introduction}
 %
-Programs (and, following the well-known Curry-Howard correspondence, proofs) are rich inductive structures. This fact is well understood amongst researchers and experienced programmers, but still perhaps  obscure amongst programmers at large because programmers typically construct and interact with  programs only indirectly, e.g. using a text editor composed with a parser. 
+Programs (and, by the Curry-Howard correspondence, proofs) are rich inductive structures. This fact is well understood amongst researchers and experienced programmers, but still somewhat  obscure amongst programmers at large because programmers normally construct and interact with  programs only indirectly, e.g. using a text editor composed with a parser. 
 
 There are some benefits to this approach, to be sure, but the structural mismatch between programs and their textual representations  also imposes various burdens. 
 For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations. 
@@ -230,8 +232,7 @@ For example, the primitive edit actions available in a text editor (e.g. inserti
 
 
 
-\section{Holey Light}
-Good name? :p
+\section{H}
 \subsection{Holes}
 \begin{figure}
 $\arraycolsep=4pt\begin{array}{lllllll}
@@ -250,9 +251,11 @@ $\arraycolsep=4pt\begin{array}{lllllll}
   \hhole{\hexp}
 \end{array}$
 %\textbf{Sort} & & & \textbf{Operational Form} & \textbf{Stylized Form} & \textbf{Description}\\
-\caption{Syntax of types and expressions with holes. Empty holes are written $\hehole$ and non-empty holes are written $\hhole{\hexp}$. We use metavariables $\tau$ and $e$ rather than $\htau$ and $\hexp$ for \emph{complete} types and expressions, i.e. those with no sub-terms of hole form. Metavariable $x$ ranges over variables and $n$ over numerals.}
+\caption{Syntax of H-types and H-expressions. Metavariable $x$ ranges over variables and $n$ ranges over numerals. Empty holes are drawn $\hehole$ and non-empty expression holes are drawn $\hhole{\hexp}$. By convention, we will use metavariables $\tau$ and $e$ rather than $\htau$ and $\hexp$ for \emph{complete} H-types and H-expressions, i.e. those with no sub-terms of hole form.}
 \label{fig:hexp-syntax}
 \end{figure}
+
+We write $\hcomplete{\tau}$ if $\tau$ is a complete H-type (or more simply, a \emph{type}), and $\hcomplete{e}$ if $e$ is a complete H-expression (or more simply, an \emph{expression}). We omit the straightforward definition of these judgements for simplicity.
 
 Typing contexts, $\hGamma$, are finite functions that map each variable $x \in \domof{\hGamma}$ to the hypothesis $x : \htau$. We use the metavariable $\Gamma$ for \emph{complete typing contexts}, i.e. typing contexts where each hypothesis mentions only complete types.
 
@@ -263,12 +266,12 @@ Subsumption:
 \begin{equation}\label{rule:ana-subsume}
 \inferrule{
   \hsyn{\hGamma}{\hexp}{\htau'}\\
-  \tsub{\htau'}{\htau}
+  \tcompat{\htau}{\htau'}
 }{
   \hana{\hGamma}{\hexp}{\htau}
 }
 \end{equation}
-Subtyping coincides with syntactic equality for complete types. For incomplete types, the rules are given after we discuss holes below.
+The H-type compatibility judgement, $\tcompat{\htau}{\htau'}$, corresponds to syntactic equality for complete H-types. For incomplete H-types, the rules are given after we discuss holes below.
 
 Ascription:
 \begin{equation}\label{rule:syn-asc}
@@ -330,47 +333,56 @@ Holes synthesize the hole type:
 }
 \end{equation}
 \begin{equation}\label{rule:syn-hole}
-\inferrule{ }{
+\inferrule{
+  \hsyn{\hGamma}{\hexp}{\htau}
+}{
   \hsyn{\hGamma}{\hhole{\hexp}}{\tehole}
 }
 \end{equation}
 \end{subequations}
+talk about why you want non-empty holes. Non-empty type holes are not necessary because every type is a valid classifier.
 
-Subtyping judgement $\tsub{\htau}{\htau'}$ is inductively defined by the following rules:
-\begin{subequations}\label{rule:tsub-num}
-\begin{equation}
-\inferrule{ }{
-  \tsub{\tnum}{\tnum}
-}
-\end{equation}
-\begin{equation}\label{rule:tsub-arr}
+Compatibility judgement $\tcompat{\htau}{\htau'}$ is inductively defined by the following rules:
+\begin{subequations}\label{rules:tcompat}
+\begin{equation}\label{rule:tcompat-comm}
 \inferrule{
-  \tsub{\htau_1'}{\htau_1}\\
-  \tsub{\htau_2}{\htau_2'}
+  \tcompat{\tau}{\tau'}
 }{
-  \tsub{\tarr{\htau_1}{\htau_2}}{\tarr{\htau_1'}{\htau_2'}}
+  \tcompat{\tau'}{\tau}
 }
 \end{equation}
-\begin{equation}\label{rule:tsub-hole}
+\begin{equation}\label{rule:tcompat-num}
 \inferrule{ }{
-  \tsub{\htau}{\tehole}
+  \tcompat{\tnum}{\tnum}
 }
 \end{equation}
-
+\begin{equation}\label{rule:tcompat-arr}
+\inferrule{
+  \tcompat{\htau_1}{\htau_1'}\\
+  \tcompat{\htau_2}{\htau_2'}
+}{
+  \tcompat{\tarr{\htau_1}{\htau_2}}{\tarr{\htau_1'}{\htau_2'}}
+}
+\end{equation}
+\begin{equation}\label{rule:tcompat-hole}
+\inferrule{ }{
+  \tcompat{\htau}{\tehole}
+}
+\end{equation}
 \end{subequations}
 \subsection{Selection Model}
 \begin{figure}
 \hspace{-3px}$\arraycolsep=3pt\begin{array}{lllllll}
 \mathsf{ZTyp} & \ztau & ::= & 
-  \zlsel{\htau} ~\vert~
+  %\zlsel{\htau} ~\vert~
   \zwsel{\htau} ~\vert~  
-  \zrsel{\htau} ~\vert~
+  %\zrsel{\htau} ~\vert~
   \tarr{\ztau}{\htau} ~\vert~ 
   \tarr{\htau}{\ztau} \\
 \mathsf{ZExp} & \zexp & ::= & 
-  \zlsel{\hexp} ~\vert~
+  %\zlsel{\hexp} ~\vert~
   \zwsel{\hexp} ~\vert~
-  \zrsel{\hexp} ~\vert~
+  %\zrsel{\hexp} ~\vert~
   \zexp : \htau ~\vert~
   \hexp : \ztau ~\vert~
   \hlam{x}{\ztau}{\hexp} ~\vert~
@@ -382,24 +394,24 @@ Subtyping judgement $\tsub{\htau}{\htau'}$ is inductively defined by the followi
   \hhole{\zexp}
 \end{array}$
 %\textbf{Sort} & & & \textbf{Operational Form} & \textbf{Stylized Form} & \textbf{Description}\\
-\caption{Syntax of zippered types and expressions, i.e. types and expressions with holes and a single contiguous selection.}
+\caption{Syntax of Z-types and Z-expressions, i.e. types and expressions with holes and a single contiguous selection.}
 \label{fig:zexp-syntax}
 \end{figure}
 
-We write $\removeSel{\ztau}$ for the holey type constructed by removing the selection markers from the zippered type $\ztau$. This straightforward metafunction is defined as follows:
+We write $\removeSel{\ztau}$ for the H-type constructed by removing the selection markers from the Z-type $\ztau$. This straightforward metafunction is defined as follows:
 \begin{align*}
-\removeSel{(\zlsel{\htau})} & = \htau\\
+%\removeSel{(\zlsel{\htau})} & = \htau\\
 \removeSel{(\zwsel{\htau})} & = \htau\\
-\removeSel{(\zrsel{\htau})} & = \htau\\
+%\removeSel{(\zrsel{\htau})} & = \htau\\
 \removeSel{(\tarr{\ztau}{\htau})} & = \tarr{\removeSel{\ztau}}{\htau}\\
 \removeSel{(\tarr{\htau}{\ztau})} & = \tarr{\htau}{\removeSel{\ztau}}
 \end{align*}
 
-Similarly, we write $\removeSel{\zexp}$ for the holey expression constructed by removing the selection markers from the zippered expression $\zexp$:
+Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by removing the selection markers from the Z-expression $\zexp$:
 \begin{align*}
-\removeSel{(\zlsel{\hexp})} & = \hexp\\
+%\removeSel{(\zlsel{\hexp})} & = \hexp\\
 \removeSel{(\zwsel{\hexp})} & = \hexp\\
-\removeSel{(\zrsel{\hexp})} & = \hexp\\
+%\removeSel{(\zrsel{\hexp})} & = \hexp\\
 \removeSel{(\zexp : \htau)} & = \removeSel{\zexp} : \htau\\
 \removeSel{(\hexp : \ztau)} & = \hexp : \removeSel{\ztau}\\
 \removeSel{(\hlam{x}{\ztau}{\hexp})} & = \hlam{x}{\removeSel{\ztau}}{\hexp}\\
@@ -414,16 +426,19 @@ Similarly, we write $\removeSel{\zexp}$ for the holey expression constructed by 
 \subsection{Action Model}
 \begin{figure}
 \hspace{-3px}$\arraycolsep=3pt\begin{array}{llcllll}
-\mathsf{Direction} & \delta & ::= & 
-  \dLeft ~\vert~
-  \dRight\\
 \mathsf{Action} & \alpha & ::= & 
   \aMove{\delta} ~\vert~
-  \aSelect{\delta} ~\vert~
+  %\aSelect{\delta} ~\vert~
   \aDel ~\vert~
   %\aReplace{\htau} ~\vert~
   %\aReplace{\hexp} ~\vert~
-  \aExtend{\varphi}\\
+  \aConstruct{\varphi} ~\vert~
+  \aFinish\\
+\mathsf{Direction} & \delta & ::= & 
+  \dChild ~\vert~
+  \dParent ~\vert~
+  \dNext ~\vert~
+  \dPrev\\
 \mathsf{Form} & \varphi & ::= & 
   \farr ~\vert~
   \fnum \\
@@ -433,23 +448,313 @@ Similarly, we write $\removeSel{\zexp}$ for the holey expression constructed by 
   \flam{x} ~\vert~
   \fap ~\vert~
   \fnumlit{n} ~\vert~
-  \fplus ~\vert~
-  \fhole
+  \fplus
 \end{array}$
 %\textbf{Sort} & & & \textbf{Operational Form} & \textbf{Stylized Form} & \textbf{Description}\\
 \caption{Syntax of actions.}
 \label{fig:action-syntax}
 \end{figure}
-There are many ways to interact with a tree. 
+
+\fbox{$\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$}
+and 
+\fbox{$\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$}
+and
+\fbox{$\performTyp{\ztau}{\alpha}{\ztau'}$}
+
+
 
 \subsubsection{Relative Movement}
 
-\subsubsection{Relative Selection}
+\begin{subequations}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \zwsel{\tarr{\htau_1}{\htau_2}}
+    }{
+      \aMove{\dChild}
+    }{
+      \tarr{\zwsel{\htau_1}}{\htau_2}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \tarr{\zwsel{\htau_1}}{\htau_2}
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\tarr{\htau_1}{\htau_2}}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \tarr{{\htau_1}}{\zwsel{\htau_2}}
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\tarr{\htau_1}{\htau_2}}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \tarr{\zwsel{\htau_1}}{{\htau_2}}
+    }{
+      \aMove{\dNext}
+    }{
+      {\tarr{\htau_1}{\zwsel{\htau_2}}}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \tarr{{\htau_1}}{\zwsel{\htau_2}}
+    }{
+      \aMove{\dPrev}
+    }{
+      {\tarr{\zwsel{\htau_1}}{{\htau_2}}}
+    }
+  }
+\end{equation}
+\begin{equation}
+\inferrule{
+  \performTyp{
+    \ztau
+  }{
+    \aMove{\delta}
+  }{
+    \ztau'
+  }
+}{
+  \performTyp{
+    \tarr{\ztau}{\htau}
+  }{
+    \aMove{\delta}
+  }{
+    \tarr{\ztau'}{\htau}
+  }
+}
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \performTyp{
+      \ztau
+    }{
+      \aMove{\delta}
+    }{
+      \ztau'
+    }
+  }{
+    \performTyp{
+      \tarr{\htau}{\ztau}
+    }{
+      \aMove{\delta}
+    }{
+      \tarr{\htau}{\ztau}
+    }
+  }
+\end{equation}
+\end{subequations}
 
+Rules for expressions are similar. Movement is type-independent, so defer to auxiliary judgements:
+\begin{subequations}
+\begin{equation}
+\inferrule{
+  \performMove{\zexp}{\aMove{\delta}}{\zexp'} 
+}{
+  \performSyn{\hGamma}{\zexp}{\htau}{\aMove{\delta}}{\zexp'}
+}
+\end{equation}
+\begin{equation}
+\inferrule{
+  \performMove{\zexp}{\aMove{\delta}}{\zexp'}
+}{
+  \performAna{\hGamma}{\zexp}{\htau}{\aMove{\delta}}{\zexp'}
+}
+\end{equation}
+\end{subequations}
+Show only rules for ascription form:
+\begin{subequations}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \zwsel{\hexp : \htau}
+    }{
+      \aMove{\dChild}
+    }{
+      \zwsel{\hexp} : \htau
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \zwsel{\hexp} : \htau
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\hexp : \htau}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \hexp : \zwsel{\htau}
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\hexp : \htau}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \zwsel{\hexp} : \htau
+    }{
+      \aMove{\dNext}
+    }{
+      \hexp : \zwsel{\htau}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \hexp : \zwsel{\htau}
+    }{
+      \aMove{\dPrev}
+    }{
+      \zwsel{\hexp} : \htau
+    }
+  }
+\end{equation}
+\begin{equation}
+\inferrule{
+  \performTyp{
+    \zexp
+  }{
+    \aMove{\delta}
+  }{
+    \zexp'
+  }
+}{
+  \performTyp{
+    \zexp : \htau
+  }{
+    \aMove{\delta}
+  }{
+    \zexp' : \htau
+  }
+}
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \performTyp{
+      \ztau
+    }{
+      \aMove{\delta}
+    }{
+      \ztau'
+    }
+  }{
+    \performTyp{
+      \hexp : \ztau
+    }{
+      \aMove{\delta}
+    }{
+      \hexp : \ztau'
+    }
+  }
+\end{equation}
+\end{subequations}
 \subsubsection{Deletion}
+Types:
+\begin{subequations}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \zwsel{\htau}
+    }{
+      \aDel
+    }{
+      \zwsel{\tehole}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \performTyp{\ztau}{\aDel}{\ztau'}
+  }{
+    \performTyp{\tarr{\ztau}{\htau}}{\aDel}{\tarr{\ztau'}{\htau}}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \performTyp{\ztau}{\aDel}{\ztau'}
+  }{
+    \performTyp{\tarr{\htau}{\ztau}}{\aDel}{\tarr{\htau}{\ztau'}}
+  }
+\end{equation}
+\end{subequations}
 
+Expressions also not type-dependent, so define auxiliary judgement:
+\begin{subequations}
+\begin{equation}
+  \inferrule{
+    \performDel{\zexp}{\zexp'}
+  }{
+    \performSyn{\hGamma}{\zexp}{\htau}{\aDel}{\zexp'}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \performDel{\zexp}{\zexp'}
+  }{
+    \performAna{\hGamma}{\zexp}{\htau}{\aDel}{\zexp'}
+  }
+\end{equation}
+\end{subequations}
+Rule for ascription forms:
+\begin{subequations}
+\begin{equation}
+  \inferrule{
+    \performDel{\zexp}{\zexp'}
+  }{
+    \performDel{\zexp : \htau}{\zexp' : \htau}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \performTyp{\ztau}{\aDel}{\ztau'}
+  }{
+    \performDel{\hexp : \ztau}{\hexp : \ztau'}
+  }
+\end{equation}
+If you delete the inside of a hole, it becomes the empty hole:
+\begin{equation}
+  \inferrule{ }{
+    \performDel{\hhole{\zwsel{\hexp}}}{\hehole}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \zexp \neq \zwsel{\hexp}\\
+    \performDel{\zexp}{\zexp'}
+  }{
+    \performDel{\hhole{\zexp}}{\hhole{\zexp'}}
+  }
+\end{equation}
+\end{subequations}
 \subsubsection{Extension}
 
+\subsubsection{Finish}
 \subsection{Metatheory}
 Action Determinism
 
