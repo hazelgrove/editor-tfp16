@@ -1,3 +1,6 @@
+## the one really specific PDF we should never need to commit
+editor-tfp16.pdf
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
