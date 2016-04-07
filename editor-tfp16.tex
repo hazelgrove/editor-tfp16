@@ -190,12 +190,12 @@ Ian Voysey \and Matthew Hammer\inst{3} }
 %\tocauthor{Ivar Ekeland, Roger Temam, Jeffrey Dean, David Grove,
 %Craig Chambers, Kim B. Bruce, and Elisa Bertino}
 %
-\institute{Carnegie Mellon University, 
-\email{comar@cs.cmu.edu}\\ 
+\institute{Carnegie Mellon University,
+\email{comar@cs.cmu.edu}\\
 %\texttt{http://www.cs.cmu.edu/\homedir comar/}
 \and
 Oregon State University,
-\email{hiltonm@eecs.oregonstate.edu}\\ 
+\email{hiltonm@eecs.oregonstate.edu}\\
 \and
 University of Colorado Boulder,
 \email{Matthew.Hammer@colorado.edu}}
@@ -204,18 +204,18 @@ University of Colorado Boulder,
 
 \begin{abstract}
 Programs (and proofs) are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cognitive cost -- programmers must comprehend the many subtleties of textual syntax, and it can take several primitive text editor actions to make a single structural change. During these sequences of editor actions, code highlighters and various other assistive tools may be asked to reason about malformed program text, complicating their design.
-%Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser. 
-%There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden. 
-%For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations. 
-%Indeed, most structural  transformations require performing many primitive edit actions. 
+%Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser.
+%There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden.
+%For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations.
+%Indeed, most structural  transformations require performing many primitive edit actions.
 
-\emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  correspond to  sensible structural  transformations. 
-Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. 
-Our aim in this paper is to report on our ongoing efforts to develop a minimal type-theoretic account of a structure editor. 
-Our system extends a standard bidirectionally typed lambda calculus with 
-1) \emph{holes} (which stand for portions of the program that are under construction); 
-%, which are identified by variables tracked in a separate linear \emph{hole context} 
-2) a \emph{selection model}; and 3) an \emph{action model}. We then examine the essential metatheoretic properties that must be established about such a system. 
+\emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  correspond to  sensible structural  transformations.
+Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}.
+Our aim in this paper is to report on our ongoing efforts to develop a minimal type-theoretic account of a structure editor.
+Our system extends a standard bidirectionally typed lambda calculus with
+1) \emph{holes} (which stand for portions of the program that are under construction);
+%, which are identified by variables tracked in a separate linear \emph{hole context}
+2) a \emph{selection model}; and 3) an \emph{action model}. We then examine the essential metatheoretic properties that must be established about such a system.
 Finally, we outline our vision of a full-scale programming system designed ``from the ground up'' around the same fundamental concepts as this minimal formal system.
 
 %\keywords{computational geometry, graph theory, Hamilton cycles}
@@ -223,10 +223,10 @@ Finally, we outline our vision of a full-scale programming system designed ``fro
 %
 \section{Introduction}
 %
-Programs (and, following the well-known Curry-Howard correspondence, proofs) are rich inductive structures. This fact is well understood amongst researchers and experienced programmers, but still perhaps  obscure amongst programmers at large because programmers typically construct and interact with  programs only indirectly, e.g. using a text editor composed with a parser. 
+Programs (and, following the well-known Curry-Howard correspondence, proofs) are rich inductive structures. This fact is well understood amongst researchers and experienced programmers, but still perhaps  obscure amongst programmers at large because programmers typically construct and interact with  programs only indirectly, e.g. using a text editor composed with a parser.
 
-There are some benefits to this approach, to be sure, but the structural mismatch between programs and their textual representations  also imposes various burdens. 
-For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations. 
+There are some benefits to this approach, to be sure, but the structural mismatch between programs and their textual representations  also imposes various burdens.
+For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations.
 
 
 
@@ -236,14 +236,14 @@ Good name? :p
 \subsection{Holes}
 \begin{figure}
 $\arraycolsep=4pt\begin{array}{lllllll}
-\mathsf{HTyp} & \tau,\htau & ::= & 
-  \tarr{\htau}{\htau} ~\vert~ 
+\mathsf{HTyp} & \tau,\htau & ::= &
+  \tarr{\htau}{\htau} ~\vert~
   \tnum ~\vert~
   \tehole\\
-\mathsf{HExp} & e,\hexp & ::= & 
+\mathsf{HExp} & e,\hexp & ::= &
   \hexp : \htau ~\vert~
-  x ~\vert~ 
-  \hlam{x}{\htau}{\hexp} ~\vert~ 
+  x ~\vert~
+  \hlam{x}{\htau}{\hexp} ~\vert~
   \hap{\hexp}{\hexp} ~\vert~
   \hnum{n} ~\vert~
   \hadd{\hexp}{\hexp} ~\vert~
@@ -362,13 +362,13 @@ Subtyping judgement $\tsub{\htau}{\htau'}$ is inductively defined by the followi
 \subsection{Selection Model}
 \begin{figure}
 \hspace{-3px}$\arraycolsep=3pt\begin{array}{lllllll}
-\mathsf{ZTyp} & \ztau & ::= & 
+\mathsf{ZTyp} & \ztau & ::= &
   \zlsel{\htau} ~\vert~
-  \zwsel{\htau} ~\vert~  
+  \zwsel{\htau} ~\vert~
   \zrsel{\htau} ~\vert~
-  \tarr{\ztau}{\htau} ~\vert~ 
+  \tarr{\ztau}{\htau} ~\vert~
   \tarr{\htau}{\ztau} \\
-\mathsf{ZExp} & \zexp & ::= & 
+\mathsf{ZExp} & \zexp & ::= &
   \zlsel{\hexp} ~\vert~
   \zwsel{\hexp} ~\vert~
   \zrsel{\hexp} ~\vert~
@@ -415,20 +415,20 @@ Similarly, we write $\removeSel{\zexp}$ for the holey expression constructed by 
 \subsection{Action Model}
 \begin{figure}
 \hspace{-3px}$\arraycolsep=3pt\begin{array}{llcllll}
-\mathsf{Direction} & \delta & ::= & 
+\mathsf{Direction} & \delta & ::= &
   \dLeft ~\vert~
   \dRight\\
-\mathsf{Action} & \alpha & ::= & 
+\mathsf{Action} & \alpha & ::= &
   \aMove{\delta} ~\vert~
   \aSelect{\delta} ~\vert~
   \aDel ~\vert~
   %\aReplace{\htau} ~\vert~
   %\aReplace{\hexp} ~\vert~
   \aExtend{\varphi}\\
-\mathsf{Form} & \varphi & ::= & 
+\mathsf{Form} & \varphi & ::= &
   \farr ~\vert~
   \fnum \\
-& & \vert & 
+& & \vert &
   \fasc ~\vert~
   \fvar{x} ~\vert~
   \flam{x} ~\vert~
@@ -441,7 +441,7 @@ Similarly, we write $\removeSel{\zexp}$ for the holey expression constructed by 
 \caption{Syntax of actions.}
 \label{fig:action-syntax}
 \end{figure}
-There are many ways to interact with a tree. 
+There are many ways to interact with a tree.
 
 \subsubsection{Relative Movement}
 
@@ -457,12 +457,12 @@ Action Determinism
 Action Preservation
 
 \subsubsection{Mechanization}
-Agda proofs... explanation of basic approach and current status. (Ian)
+\input{agda.tex}
 
 \section{Implementation}
 (Michael)
 
-\subsection{Implementation Concepts} 
+\subsection{Implementation Concepts}
 
 
 \begin{figure}[]
@@ -472,12 +472,12 @@ Agda proofs... explanation of basic approach and current status. (Ian)
 \label{fig:FRP}
 \end{figure}
 
-One of the key insights of structured editor is that instead of a series of character by character edits, the user generates a series of transformations to the program tree, that always leave the program in a syntactically correct state.  This insight led us to conclude that a natural way to implement a structured editor would be using 
-Functional Reactive Programming~\cite{Wan:2000:FRP:349299.349331} (FRP). 
-The idea behind this implementation is illustrated if Figure~\ref{fig:FRP}.  The action stream is a series of events from the user.  
+One of the key insights of structured editor is that instead of a series of character by character edits, the user generates a series of transformations to the program tree, that always leave the program in a syntactically correct state.  This insight led us to conclude that a natural way to implement a structured editor would be using
+Functional Reactive Programming~\cite{Wan:2000:FRP:349299.349331} (FRP).
+The idea behind this implementation is illustrated if Figure~\ref{fig:FRP}.  The action stream is a series of events from the user.
 Each action results in a new zipper object.  Each new zipper object then results in an updated view.
 
-%Reactive stream of actions -- reactive stream of zippered expressions -- reactive stream of views (string and web) (and then close the loop -- maybe make this a diagram?) 
+%Reactive stream of actions -- reactive stream of zippered expressions -- reactive stream of views (string and web) (and then close the loop -- maybe make this a diagram?)
 
 
 \subsection{Current Implementation}
@@ -517,9 +517,9 @@ Need to do a search to see what else has been done...
 This work provides a foundation for studying all of these concepts independently -- show how they work with this system and it should be straightforward to scale to bigger system.
 
 \begin{quote}
-In any case, these are but steps toward more graphical program-description systems, for we will not forever stay confined to mere strings of symbols. 
+In any case, these are but steps toward more graphical program-description systems, for we will not forever stay confined to mere strings of symbols.
 
---- Minsky, Turing Award lecture 
+--- Minsky, Turing Award lecture
 \end{quote}
 
 %
