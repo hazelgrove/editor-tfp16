@@ -472,14 +472,12 @@ Agda proofs... explanation of basic approach and current status. (Ian)
 \label{fig:FRP}
 \end{figure}
 
-Our implementation  
+One of the key insights of structured editor is that instead of a series of character by character edits, the user generates a series of transformations to the program tree, that always leave the program in a syntactically correct state.  This insight led us to conclude that a natural way to implement a structured editor would be using 
+Functional Reactive Programming~\cite{Wan:2000:FRP:349299.349331} (FRP). 
+The idea behind this implementation is illustrated if Figure~\ref{fig:FRP}.  The action stream is a series of events from the user.  
+Each action results in a new zipper object.  Each new zipper object then results in an updated view.
 
-
-
-Functional Reactive Programming~\cite{Wan:2000:FRP:349299.349331} 
-
-
-Reactive stream of actions -- reactive stream of zippered expressions -- reactive stream of views (string and web) (and then close the loop -- maybe make this a diagram?) 
+%Reactive stream of actions -- reactive stream of zippered expressions -- reactive stream of views (string and web) (and then close the loop -- maybe make this a diagram?) 
 
 
 \subsection{Current Implementation}
