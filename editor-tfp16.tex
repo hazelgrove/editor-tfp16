@@ -10,6 +10,7 @@
 \usepackage{wasysym}
 \usepackage{makeidx}  % allows for indexgeneration
 \usepackage{mathpartir} % inference rules
+\usepackage{graphicx}
 
 \input{macros}
 %
@@ -461,9 +462,33 @@ Agda proofs... explanation of basic approach and current status. (Ian)
 \section{Implementation}
 (Michael)
 
+\subsection{Implementation Concepts} 
+
+
+\begin{figure}[]
+\centering
+\includegraphics[width=4in]{Implementation_Diagram}
+\caption{Implementation Concepts}
+\label{fig:FRP}
+\end{figure}
+
+Our implementation  
+
+
+
+Functional Reactive Programming~\cite{Wan:2000:FRP:349299.349331} 
+
+
 Reactive stream of actions -- reactive stream of zippered expressions -- reactive stream of views (string and web) (and then close the loop -- maybe make this a diagram?) 
 
+
+\subsection{Current Implementation}
+
 Implementation in OCaml + jsoo + React. Link to GitHub. Explanation of current status.
+
+
+
+
 
 
 \section{Related Work}
@@ -504,6 +529,6 @@ In any case, these are but steps toward more graphical program-description syste
 %
 % TODO
 %\begin{thebibliography}{5}
-%
-%\end{thebibliography}
+\bibliographystyle{abbrv}
+\bibliography{bibliography}
 \end{document}
