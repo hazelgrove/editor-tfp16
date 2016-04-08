@@ -237,27 +237,25 @@ For example, the primitive edit actions available in a text editor (e.g. inserti
 \marginpar{The partial terms in the table are temporary, unless we think they are useful and not too redundant.  Not sure yet myself. --Matt}
 \begin{figure}[t]
 \[
-\begin{array}{|l|l|l|l|}
-  \hline
-  \textrm{Partial Term} & \textbf{H-Expression} & \textbf{Z-Expression} & \textbf{Action}
-  \\
-  \hline    
-  \_                   & \hhole{} &&
-  \\
-  (\_)~\_              & \hap{\hhole{}}{\hhole{}} &&
-  \\
-  (\lambda x.~\_)~\_   & \hap{\hlam{x}{\hhole{}}}{\hhole{}} &&
-  \\
-  (\lambda x.~x)~\_    & \hap{\hlam{x}{x}}{\hhole{}} &&
-  \\
-  (\lambda x.~x)~3     & \hap{\hlam{x}{x}}{3} &&
-  \\
-  (\lambda x.~x + 1)~3 & \hap{\hlam{x}{x + 1}}{3} &&
-  \\
-  (\lambda x.~x + \_)~3 & \hap{\hlam{x}{x + \hhole{}}}{3} &&
-  \\
-  (\lambda x.~x + \_)~3 & \hap{\hlam{x}{x + \hhole{}}}{3} &&
-  \\
+\begin{array}{|c|c||l|}
+\hline
+\textbf{H-Expression} & \textbf{Z-Expression} & \textbf{Next Action}(s)
+\\
+\hline
+  \hhole{} &                            \zwsel{}                            & \aConstruct{\fap{}}, \textrm{(move to fun hole?)}
+\\
+  \hap{\hhole{}}{\hhole{}} &            \hap{\zwsel{}}{\hhole{}}            & \aConstruct{\flam{x}}, ... 
+\\
+  \hapP{\hlam{x}{\hhole{}}}{\hhole{}} & \hapP{\hlam{x}{\zwsel{}}}{\hhole{}} & \aConstruct{\fvar{x}}, ...
+\\
+  \hapP{\hlam{x}{x}}{\hhole{}} &        \hapP{\hlam{x}{x}}{\zwsel{}}        & \aConstruct{\fnumlit{3}}, ...
+\\
+  \hapP{\hlam{x}{x}}{3} &               \hapP{\hlam{x}{x}}{\zwsel{3}}       & \aConstruct{\fplus{}}, ...
+\\
+  \hapP{\hlam{x}{x + \hhole{}}}{3} &    \hapP{\hlam{x}{x + \zwsel{}}}{3}    & \aConstruct{\fnumlit{1}}, ...
+\\
+  \hapP{\hlam{x}{x + 1}}{3} &           \hapP{\hlam{x}{x + \zwsel{1}}}{3}   & \textit{none}
+\\
   \hline
 \end{array}
 \]
