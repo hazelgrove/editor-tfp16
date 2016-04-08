@@ -10,10 +10,11 @@
 \newcommand{\tehole}{\llparenthesis\rrparenthesis}
 
 \newcommand{\tcompat}[2]{#1 \sim #2}
+\newcommand{\tincompat}[2]{#1 \nsim #2}
 
 % HExp
 \newcommand{\hexp}{\dot{e}}
-\newcommand{\hlam}[3]{\lambda #1{:}#2.#3}
+\newcommand{\hlam}[2]{\lambda #1.#2}
 \newcommand{\hap}[2]{#1(#2)}
 \newcommand{\hnum}[1]{\underline{#1}}
 \newcommand{\hadd}[2]{#1 + #2}
@@ -54,8 +55,8 @@
 \newcommand{\aConstruct}[1]{\mathtt{construct}~#1}
 \newcommand{\aFinish}{\mathtt{finish}}
 
-\newcommand{\performAna}[5]{#1 \vdash #2 \Leftarrow #3 \xlongrightarrow{#4} #5}
-\newcommand{\performSyn}[5]{#1 \vdash #2 \Rightarrow #3 \xlongrightarrow{#4} #5}
+\newcommand{\performAna}[5]{#1 \vdash #2 \xlongrightarrow{#4} #5 \Leftarrow #3}
+\newcommand{\performSyn}[6]{#1 \vdash #2 \Rightarrow #3 \xlongrightarrow{#4} #5 \Rightarrow #6}
 \newcommand{\performTyp}[3]{#1 \xlongrightarrow{#2} #3}
 
 \newcommand{\performMove}[3]{#1 \xlongrightarrow{#2} #3}
@@ -69,6 +70,7 @@
 \newcommand{\fvar}[1]{\mathtt{var}~#1}
 \newcommand{\flam}[1]{\mathtt{lam}~#1}
 \newcommand{\fap}{\mathtt{ap}}
+\newcommand{\farg}{\mathtt{arg}}
 \newcommand{\fnumlit}[1]{\mathtt{numlit}~#1}
 \newcommand{\fplus}{\mathtt{plus}}
 \newcommand{\fhole}{\mathtt{hole}}

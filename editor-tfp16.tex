@@ -176,7 +176,7 @@
 % %
 \mainmatter              % start of the contributions
 %
-\title{A Minimal Bidirectionally Typed \\Structure Editor}
+\title{Hazelnut: A Minimal Bidirectionally \\Typed Structure Editor}
 %
 %\titlerunning{Hamiltonian Mechanics}  % abbreviated title (for running head)
 %                                     also used for the TOC unless
@@ -205,7 +205,7 @@ University of Colorado Boulder
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
-Programs (and proofs) are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of textual syntax, and it can require several primitive text editor actions to make a single structural change. During these sequences of text editor actions, code highlighters and various other assistive tools are asked to reason about malformed program text, complicating their design.
+Programs (and proofs) are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of textual syntax, and it can take several text editor actions to make a single structural change. During these sequences of text editor actions, code highlighters and various other assistive tools are asked to reason about malformed program text, complicating their design.
 %Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser. 
 %There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden. 
 %For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations. 
@@ -233,7 +233,7 @@ For example, the primitive edit actions available in a text editor (e.g. inserti
 
 
 
-\section{H}
+\section{Hazelnut}
 \subsection{Holes}
 \begin{figure}
 $\arraycolsep=4pt\begin{array}{lllllll}
@@ -244,7 +244,7 @@ $\arraycolsep=4pt\begin{array}{lllllll}
 \mathsf{HExp} & e,\hexp & ::= &
   \hexp : \htau ~\vert~
   x ~\vert~
-  \hlam{x}{\htau}{\hexp} ~\vert~
+  \hlam{x}{\hexp} ~\vert~
   \hap{\hexp}{\hexp} ~\vert~
   \hnum{n} ~\vert~
   \hadd{\hexp}{\hexp} ~\vert~
@@ -293,9 +293,9 @@ Variable:
 Lambda:
 \begin{equation}\label{rule:syn-lam}
 \inferrule{
-  \hsyn{\hGamma, x : \htau_1}{\hexp}{\htau_2}
+  \hana{\hGamma, x : \htau_1}{\hexp}{\htau_2}
 }{
-  \hsyn{\hGamma}{\hlam{x}{\htau_1}{\hexp}}{\tarr{\htau_1}{\htau_2}}
+  \hana{\hGamma}{\hlam{x}{\hexp}}{\tarr{\htau_1}{\htau_2}}
 }
 \end{equation}
 
@@ -306,6 +306,14 @@ Application:
   \hana{\hGamma}{\hexp_2}{\htau_2}
 }{
   \hsyn{\hGamma}{\hap{\hexp_1}{\hexp_2}}{\htau}
+}
+\end{equation}
+\begin{equation}\label{rule:syn-ap-2}
+\inferrule{
+  \hsyn{\hGamma}{\hexp_1}{\tehole}\\
+  \hana{\hGamma}{\hexp_2}{\tehole}
+}{
+  \hsyn{\hGamma}{\hap{\hexp_1}{\hexp_2}}{\tehole}
 }
 \end{equation}
 
@@ -347,9 +355,9 @@ Compatibility judgement $\tcompat{\htau}{\htau'}$ is inductively defined by the 
 \begin{subequations}\label{rules:tcompat}
 \begin{equation}\label{rule:tcompat-comm}
 \inferrule{
-  \tcompat{\tau}{\tau'}
+  \tcompat{\htau}{\htau'}
 }{
-  \tcompat{\tau'}{\tau}
+  \tcompat{\htau'}{\htau}
 }
 \end{equation}
 \begin{equation}\label{rule:tcompat-num}
@@ -371,6 +379,36 @@ Compatibility judgement $\tcompat{\htau}{\htau'}$ is inductively defined by the 
 }
 \end{equation}
 \end{subequations}
+
+Will also need type incompatibility, $\tincompat{\htau}{\htau'}$, as follows:
+\begin{subequations}
+  \begin{equation}
+    \inferrule{
+      \tincompat{\htau}{\htau'}
+    }{
+      \tincompat{\htau'}{\htau}
+    }
+  \end{equation}
+  \begin{equation}
+    \inferrule{ }{
+      \tincompat{\tnum}{\tarr{\htau_1}{\htau_2}}
+    }
+  \end{equation}
+  \begin{equation}
+    \inferrule{
+      \tincompat{\htau_1}{\htau_1'}
+    }{
+      \tincompat{\tarr{\htau_1}{\htau_2}}{\tarr{\htau_1'}{\htau_2'}}
+    }
+  \end{equation}
+  \begin{equation}
+    \inferrule{
+      \tincompat{\htau_2}{\htau_2'}
+    }{
+      \tincompat{\tarr{\htau_1}{\htau_2}}{\tarr{\htau_1'}{\htau_2'}}
+    }
+  \end{equation}
+\end{subequations}
 \subsection{Selection Model}
 \begin{figure}
 \hspace{-3px}$\arraycolsep=3pt\begin{array}{lllllll}
@@ -386,8 +424,7 @@ Compatibility judgement $\tcompat{\htau}{\htau'}$ is inductively defined by the 
   %\zrsel{\hexp} ~\vert~
   \zexp : \htau ~\vert~
   \hexp : \ztau ~\vert~
-  \hlam{x}{\ztau}{\hexp} ~\vert~
-  \hlam{x}{\htau}{\zexp} ~\vert~
+  \hlam{x}{\zexp} ~\vert~
   \hap{\zexp}{\hexp} ~\vert~
   \hap{\hexp}{\zexp} ~\vert~
   \hadd{\zexp}{\hexp} ~\vert~
@@ -415,8 +452,7 @@ Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by remo
 %\removeSel{(\zrsel{\hexp})} & = \hexp\\
 \removeSel{(\zexp : \htau)} & = \removeSel{\zexp} : \htau\\
 \removeSel{(\hexp : \ztau)} & = \hexp : \removeSel{\ztau}\\
-\removeSel{(\hlam{x}{\ztau}{\hexp})} & = \hlam{x}{\removeSel{\ztau}}{\hexp}\\
-\removeSel{(\hlam{x}{\htau}{\zexp})} & = \hlam{x}{\htau}{\removeSel{\zexp}}\\
+\removeSel{(\hlam{x}{\zexp})} & = \hlam{x}{\removeSel{\zexp}}\\
 \removeSel{(\hap{\zexp}{\hexp})} & = \hap{\removeSel{\zexp}}{\hexp}\\
 \removeSel{(\hap{\hexp}{\zexp})} & = \hap{\hexp}{\removeSel{\zexp}}\\
 \removeSel{(\hadd{\zexp}{\hexp})} & = \hadd{\removeSel{\zexp}}{\hexp}\\
@@ -448,6 +484,7 @@ Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by remo
   \fvar{x} ~\vert~
   \flam{x} ~\vert~
   \fap ~\vert~
+  \farg ~\vert~
   \fnumlit{n} ~\vert~
   \fplus
 \end{array}$
@@ -458,14 +495,23 @@ Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by remo
 
 \fbox{$\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$}
 and 
-\fbox{$\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$}
+\fbox{$\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$}
 and
 \fbox{$\performTyp{\ztau}{\alpha}{\ztau'}$}
 
+A subsumption rule:
+\begin{equation}
+  \inferrule{
+    \performSyn{\hGamma}{\zexp}{\htau'}{\alpha}{\zexp'}{\htau''}\\
+    \tcompat{\htau}{\htau''}
+  }{
+    \performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}
+  }
+\end{equation}
 
 
 \subsubsection{Relative Movement}
-
+Types 
 \begin{subequations}
 \begin{equation}
   \inferrule{ }{
@@ -568,7 +614,7 @@ Rules for expressions are similar. Movement is type-independent, so defer to aux
 \inferrule{
   \performMove{\zexp}{\aMove{\delta}}{\zexp'} 
 }{
-  \performSyn{\hGamma}{\zexp}{\htau}{\aMove{\delta}}{\zexp'}
+  \performSyn{\hGamma}{\zexp}{\htau}{\aMove{\delta}}{\zexp'}{\htau}
 }
 \end{equation}
 \begin{equation}
@@ -711,7 +757,7 @@ Expressions also not type-dependent, so define auxiliary judgement:
   \inferrule{
     \performDel{\zexp}{\zexp'}
   }{
-    \performSyn{\hGamma}{\zexp}{\htau}{\aDel}{\zexp'}
+    \performSyn{\hGamma}{\zexp}{\htau}{\aDel}{\zexp'}{\htau}
   }
 \end{equation}
 \begin{equation}
@@ -722,8 +768,14 @@ Expressions also not type-dependent, so define auxiliary judgement:
   }
 \end{equation}
 \end{subequations}
-Rule for ascription forms:
+Base case turns into a hole:
 \begin{subequations}
+\begin{equation}
+\inferrule{ }{
+  \performDel{\zwsel{\hexp}}{\hehole}
+}
+\end{equation}
+Rule for ascription forms:
 \begin{equation}
   \inferrule{
     \performDel{\zexp}{\zexp'}
@@ -753,13 +805,273 @@ If you delete the inside of a hole, it becomes the empty hole:
   }
 \end{equation}
 \end{subequations}
-\subsubsection{Extension}
+\subsubsection{Construction} Types:
+\begin{subequations}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \zwsel{\htau}
+    }{
+      \aConstruct{\farr}
+    }{
+      \tarr{\htau}{\zwsel{\tehole}}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \zwsel{\tehole}
+    }{
+      \aConstruct{\fnum}
+    }{
+      \zwsel{\tnum}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \performTyp{\ztau}{\aConstruct{\varphi}}{\ztau'}
+  }{
+    \performTyp{
+      \tarr{\ztau}{\htau}
+    }{
+      \aConstruct{\varphi}
+    }{
+      \tarr{\ztau'}{\htau}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \performTyp{\ztau}{\aConstruct{\varphi}}{\ztau'}
+  }{
+    \performTyp{
+      \tarr{\htau}{\ztau}
+    }{
+      \aConstruct{\varphi}
+    }{
+      \tarr{\htau}{\ztau'}
+    }
+  }
+\end{equation}
+\end{subequations}
 
-\subsubsection{Finish}
+Expressions:
+\begin{subequations}
+
+Ascription:
+\begin{equation}
+  \inferrule{ }{
+    \performSyn{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\zwsel{\hexp : \htau}}{\htau}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performAna{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\zwsel{\hexp : \htau}} 
+  }
+\end{equation}
+
+variables:
+\begin{equation}
+  \inferrule{ }{
+    \performSyn{\hGamma, x : \htau}{\zwsel{\hehole}}{\tehole}{\aConstruct{\fvar{x}}}{\zwsel{x}}{\htau}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \tincompat{\htau}{\htau'}
+  }{
+    \performAna{\hGamma, x : \htau'}{\zwsel{\hehole}}{\htau}{\aConstruct{\fvar{x}}}{\hhole{\zwsel{x}}}
+  }
+\end{equation}
+
+lambda:
+\begin{equation}
+  \inferrule{ }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hehole}}
+      {\tehole}
+      {\aConstruct{\flam{x}}}
+      {\hlam{x}{\hehole} : \tarr{\zwsel{\tehole}}{\tehole}}
+      {\tarr{\tehole}{\tehole}}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performAna
+      {\hGamma}
+      {\zwsel{\hehole}}
+      {\tarr{\htau_1}{\htau_2}}
+      {\aConstruct{\flam{x}}}
+      {\hlam{x}{\zwsel{\hehole}}}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \tincompat{\htau}{\tarr{\tehole}{\tehole}}
+  }{
+    \performAna
+      {\hGamma}
+      {\zwsel{\hehole}}
+      {\htau}
+      {\aConstruct{\flam{x}}}
+      {\hhole{
+        \hlam{x}{\hehole} : \tarr{\zwsel{\tehole}}{\tehole}
+      }}
+  }
+\end{equation}
+
+application:
+\begin{equation}
+  \inferrule{ }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hexp}}
+      {\tarr{\htau_1}{\htau_2}}
+      {\aConstruct{\fap}}
+      {\hap{\hexp}{\zwsel{\hehole}}}
+      {\htau_2}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hexp}}
+      {\tehole}
+      {\aConstruct{\fap}}
+      {\hap{\hexp}{\zwsel{\hehole}}}
+      {\tehole}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \tincompat{\htau}{\tarr{\tehole}{\tehole}}
+  }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hexp}}
+      {\htau}
+      {\aConstruct{\fap}}
+      {\hap{\hhole{\hexp}}{\zwsel{\hehole}}}
+      {\tehole}
+  }
+\end{equation}
+
+argument:
+\begin{equation}
+  \inferrule{ }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hexp}}
+      {\htau}
+      {\aConstruct{\farg}}
+      {\hap{\zwsel{\hehole}}{\hexp}}
+      {\tehole}
+  }
+\end{equation}
+
+number:
+\begin{equation}
+  \inferrule{ }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hehole}}
+      {\tehole}
+      {\aConstruct{\fnumlit{n}}}
+      {\zwsel{\hnum{n}}}
+      {\tnum}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \tincompat{\htau}{\tnum}
+  }{
+    \performAna
+      {\hGamma}
+      {\zwsel{\hehole}}
+      {\htau}
+      {\aConstruct{\fnumlit{n}}}
+      {\hhole{\zwsel{\hnum{n}}}}
+  }
+\end{equation}
+
+plus:
+\begin{equation}
+  \inferrule{
+    \tcompat{\htau}{\tnum}
+  }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hexp}}
+      {\htau}
+      {\aConstruct{\fplus}}
+      {\hadd{\hexp}{\zwsel{\hehole}}}
+      {\tnum}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \tincompat{\htau}{\tnum}
+  }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hexp}}
+      {\htau}
+      {\aConstruct{\fplus}}
+      {\hadd{\hhole{\hexp}}{\zwsel{\hehole}}}
+      {\tnum}
+  }
+\end{equation}
+\end{subequations}
+
+\subsubsection{Finish Hole}
+
+\begin{subequations}
+\begin{equation}
+  \inferrule{
+    \hsyn{\hGamma}{\hexp}{\htau'}
+  }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hhole{\hexp}}}
+      {\tehole}
+      {\aFinish}
+      {\zwsel{\hexp}}
+      {\htau'}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \hana{\hGamma}{\hexp}{\htau}
+  }{
+    \performAna
+      {\hGamma}
+      {\zwsel{\hhole{\hexp}}}
+      {\htau}
+      {\aFinish}
+      {\zwsel{\hexp}}
+  }
+\end{equation}
+\end{subequations}
 \subsection{Metatheory}
-Action Determinism
+\begin{theorem}[Action Safety] Both of the following hold:
+\begin{enumerate}
+\item If $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$  and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ then $\hsyn{\hGamma}{\removeSel{\zexp'}}{\htau'}$. 
+\item If  $\hana{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$ then $\hana{\hGamma}{\removeSel{\zexp'}}{\htau'}$. 
+\end{enumerate}
+\end{theorem}
 
-Action Preservation
+\begin{theorem}[Action Determinism] All of the following hold:
+\begin{enumerate}
+\item If $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}{\htau''}$ then $\zexp' = \zexp''$ and $\htau' = \htau''$. 
+\item If $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ and $\tcompat{\htau}{\htau'}$ and $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}$ or $\performAna{\hGamma}{\zexp}{\htau'}{\alpha}{\zexp''}$ then $\zexp' = \zexp''$.
+\item If $\hana{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$ and $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}$ then $\zexp' = \zexp''$.
+\end{enumerate}
+\end{theorem}
+
 
 \subsubsection{Mechanization}
 \input{agda.tex}
@@ -770,7 +1082,7 @@ Action Preservation
 \subsection{Implementation Concepts}
 
 
-\begin{figure}[]
+\begin{figure}
 \centering
 \includegraphics[width=4in]{Implementation_Diagram}
 \caption{Implementation Concepts}
