@@ -176,7 +176,7 @@
 % %
 \mainmatter              % start of the contributions
 %
-\title{Hazelnut: A Minimal Bidirectionally \\Typed Structure Editor}
+\title{Hazelnut: A Minimal Bidirectionally Typed Structure Editor}
 %
 %\titlerunning{Hamiltonian Mechanics}  % abbreviated title (for running head)
 %                                     also used for the TOC unless
@@ -203,7 +203,6 @@ University of Colorado Boulder
 }
 
 \maketitle              % typeset the title of the contribution
-
 \begin{abstract}
 Programs (and proofs) are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of textual syntax, and it can take several text editor actions to make a single structural change. During these sequences of text editor actions, code highlighters and various other assistive tools are asked to reason about malformed program text, complicating their design.
 %Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser. 
@@ -213,12 +212,12 @@ Programs (and proofs) are rich inductive structures, but  programmers typically 
 
 \emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  correspond to  sensible structural  transformations. 
 Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. 
-Our aim in this paper is to report on our ongoing efforts to develop a minimal type-theoretic account of a structure editor. 
-Our system extends a standard bidirectionally typed lambda calculus with 
-1) \emph{holes} (which stand for portions of the program that are under construction); 
+Our aim in this paper is to report on our ongoing efforts to develop Hazelnut, a minimal type-theoretic structure editor. 
+Hazelnut is based on  a standard bidirectionally typed lambda calculus, extending it with  
+1) \emph{holes} (which mark portions of the program that remain under construction); 
 %, which are identified by variables tracked in a separate linear \emph{hole context} 
-2) a \emph{selection model}; and 3) an \emph{action model}. We then examine the essential metatheoretic properties that must be established about such a system. 
-Finally, we outline our vision of a full-scale programming system designed ``from the ground up'' around the same fundamental concepts as this minimal formal system.
+2) a \emph{cursor model}; and 3) an \emph{action model}. Programs with holes have a well-defined static semantics in Hazelnut, and the action model is defined such that every performable action is both syntactically sensible (by construction) and semantically sensible (i.e. we can establish an \emph{action sensibility} theorem.) 
+We conclude by outlining our vision of a full-scale programming system grown ``from the ground up'' around the same fundamental concepts as Hazelnut.
 
 %\keywords{computational geometry, graph theory, Hamilton cycles}
 \end{abstract}
@@ -234,7 +233,18 @@ For example, the primitive edit actions available in a text editor (e.g. inserti
 
 
 \section{Hazelnut}
-\subsection{Holes}
+In this section, we define {Hazelnut}, a minimal bidirectionally typed structure editor based on the simply-typed lambda calculus extended with a single base type, $\tnum$, equipped (for simplicity) with a single operation, addition.
+
+The main constituents of Hazelnut are:
+\begin{itemize}
+\item \textbf{H-types} and \textbf{H-expressions} (Sec. \ref{sec:holes}). These are terms that contain \emph{holes}, which mark subterms that are ``under construction.'' H-types classify H-expressions according to a \emph{bidirectionally typed} static semantics.
+\item \textbf{Z-types} and \textbf{Z-expressions} (Sec. \ref{sec:cursors}). These superimpose a single \emph{cursor} onto H-types and H-expressions (using the \emph{zipper pattern}.)
+\item \textbf{Actions} (Sec. \ref{sec:actions}). These move the cursor or modify the subtree marked by the cursor.
+
+The action model is defined in a bidirectional manner such that whenever an action is performed on a well-typed tree, it produces another well-typed tree in a \emph{sensible} manner (we define \emph{sensibility} in Sec. \ref{sec:actions}.)
+\end{itemize}
+
+\subsection{Holes}\label{sec:holes}
 \begin{figure}
 $\arraycolsep=4pt\begin{array}{lllllll}
 \mathsf{HTyp} & \tau,\htau & ::= &
@@ -409,7 +419,7 @@ Will also need type incompatibility, $\tincompat{\htau}{\htau'}$, as follows:
     }
   \end{equation}
 \end{subequations}
-\subsection{Selection Model}
+\subsection{Cursor Model}\label{sec:cursors}
 \begin{figure}
 \hspace{-3px}$\arraycolsep=3pt\begin{array}{lllllll}
 \mathsf{ZTyp} & \ztau & ::= & 
@@ -432,7 +442,7 @@ Will also need type incompatibility, $\tincompat{\htau}{\htau'}$, as follows:
   \hhole{\zexp}
 \end{array}$
 %\textbf{Sort} & & & \textbf{Operational Form} & \textbf{Stylized Form} & \textbf{Description}\\
-\caption{Syntax of Z-types and Z-expressions, i.e. types and expressions with holes and a single contiguous selection.}
+\caption{Syntax of Z-types and Z-expressions, i.e. types and expressions with holes and a single cursor.}
 \label{fig:zexp-syntax}
 \end{figure}
 
@@ -460,7 +470,7 @@ Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by remo
 \removeSel{\hhole{\zexp}} &= \hhole{\removeSel{\zexp}}
 \end{align*}
 
-\subsection{Action Model}
+\subsection{Action Model}\label{sec:actions}
 \begin{figure}
 \hspace{-3px}$\arraycolsep=3pt\begin{array}{llcllll}
 \mathsf{Action} & \alpha & ::= & 
