@@ -765,34 +765,30 @@ Action Preservation
 \input{agda.tex}
 
 \section{Implementation}
-(Michael)
 
 \subsection{Implementation Concepts}
-
 
 \begin{figure}[]
 \centering
 \includegraphics[width=4in]{Implementation_Diagram}
-\caption{Implementation Concepts}
+\caption{Implementation Concepts. Each Action,Zipper Structure, View combination is considered to be ``instantaneous''}
 \label{fig:FRP}
 \end{figure}
 
-One of the key insights of structured editor is that instead of a series of character by character edits, the user generates a series of transformations to the program tree, that always leave the program in a syntactically correct state.  This insight led us to conclude that a natural way to implement a structured editor would be using
-Functional Reactive Programming~\cite{Wan:2000:FRP:349299.349331} (FRP).
-The idea behind this implementation is illustrated if Figure~\ref{fig:FRP}.  The action stream is a series of events from the user.
-Each action results in a new zipper object.  Each new zipper object then results in an updated view.
+The key insight of our implementation strategy is in how to interpret the input from the user.  
+In a traditional editor, the input from the user is a stream of characters, and there are no guarantees that at any point the program is syntactically correct.
+In contrast, in a structured editor, the input from the user is a stream of operations.  These operations can be considered atomic, and will always leave the program in a syntactically correct state.
+This insight leads us to conclude that a natural way to implement this editor would be using Functional Reactive Programming~\cite{Wan:2000:FRP:349299.349331} (FRP).
+Figure~\ref{fig:FRP} illustrates the concept of an FRP structured editor.  
+The input from the user is a stream of actions.  Each action results in a change to the underlying model (i.e., a new Zipper Structure object is created after each input action from the user.
+Each model change results in an updated view which is then presented to the user.  The user can then consider this new view when they choose a new action as input.
 
-%Reactive stream of actions -- reactive stream of zippered expressions -- reactive stream of views (string and web) (and then close the loop -- maybe make this a diagram?)
-
-
-\subsection{Current Implementation}
-
-Implementation in OCaml + jsoo + React. Link to GitHub. Explanation of current status.
-
-
-
-
-
+\subsection{HZ}
+We explore the concepts presented in the paper in HZ, our current implementation.  
+In order to reach the widest possible audience, we decided to implement HZ as a web application.
+In order to take advantage of all the benefits of FRP, we chose to implement HZ using OCaml\footnote{https://ocaml.org/}, Js\_of\_ocaml\footnote{http://ocsigen.org/js\_of\_ocaml/} and React\footnote{http://erratique.ch/software/react}.
+Our code as well as directions for how to run and compile can be found here: TODO ADD GITHUB LINK
+At the time of submission, HZ should very much be considered a work in progress.
 
 \section{Related Work}
 \subsection{Structure Editors}
@@ -802,8 +798,8 @@ Contemporary: Lamdu, MPS/Mbeddr, TouchDevelop
 
 Hybrid: Cyrus' active code completion paper
 
-\subsection{Refactoring Models}
-(Michael, can you fill this section out?)
+%\subsection{Refactoring Models}
+%(Michael, can you fill this section out?)
 
 \subsection{Formal Editor Models}
 Need to do a search to see what else has been done...
