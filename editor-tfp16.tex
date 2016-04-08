@@ -237,7 +237,7 @@ For example, the primitive edit actions available in a text editor (e.g. inserti
 %
 Figure~\ref{fig:first-example} gives an example of the Hazelnut user
 programming the identity function over numbers, then applying this
-function to the argument~3.
+function to an argument, the number literal~3.
 %
 Lines 1--10 consist of the user interactively constructing the
 identity function.
@@ -251,7 +251,7 @@ Z-Expression are each empty; they differ only in that the Z-Expression
 focuses on the hole of the H-Expression.
 %
 The syntax~$\zwsel{\cdot}$ indicates the current user focus, which
-determines how actions transform the expressions.
+determines where actions transform the expressions.
 %
 The third column~(\textbf{Next Action}) lists the first user action:
 Constructing a lambda abstraction using variable~$x$.
@@ -388,7 +388,8 @@ type to the codomain of the arrow type.
 \hline
 \end{array}
 \]
-\caption{Example of constructing the identity function interactively in Hazelnut.}
+\caption{Example of interactively constructing identity function in Hazelnut (Lines~1--10).
+  Afterward, the user applies this function to an argument~(Lines 11--15).}
 \label{fig:first-example}
 \end{figure}
 
