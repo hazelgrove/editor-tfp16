@@ -216,7 +216,7 @@ Programs (and proofs) are rich inductive structures, but  programmers typically 
 \emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  correspond to  sensible structural  transformations.
 Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}.
 Our aim in this paper is to report on our ongoing efforts to develop Hazelnut, a minimal type-theoretic structure editor.
-Hazelnut is based on  a standard bidirectionally typed lambda calculus, extending it with
+Hazelnut is based on  a standard bidirectionally typed lambda calculus. We extend this calculus with
 1) \emph{holes} (which mark portions of the program that remain under construction);
 %, which are identified by variables tracked in a separate linear \emph{hole context}
 2) a \emph{cursor model}; and 3) an \emph{action model}. Programs with holes have a well-defined static semantics in Hazelnut, and the action model is defined such that every performable action is both syntactically sensible (by construction) and semantically sensible (i.e. we can establish an \emph{action sensibility} theorem.)
@@ -304,13 +304,21 @@ The only novel forms are the hole forms. Empty holes are drawn $\hehole$ and non
 
 We refer to terms that do not contain subterms of hole form as \emph{complete H-types} or \emph{complete H-expressions}. Informally, we will use metavariables $\tau$ and $e$ rather than $\htau$ and $\hexp$ for complete H-types and H-expressions, respectively. Formally, we can derive $\hcomplete{\tau}$ when $\tau$ is a complete H-type, and $\hcomplete{e}$ when $e$ is a complete H-expression. We omit the straightforward definitions of these judgements for concision. The dynamics of Hazelnut, which we need not detail here, considers only  complete H-expressions (i.e. the user cannot ``run'' an incomplete program.)
 
-The statics of Hazelnut is organized as a \emph{bidirectional type system} \cite{bidi}, i.e. around two mutually defined typing judgements: 1) $\hana{\hGamma}{\hexp}{\htau}$, which \emph{analyzes} $\hexp$ against the given H-type $\htau$; and 2) $\hsyn{\hGamma}{\hexp}{\htau}$, which \emph{synthesizes} an H-type, $\htau$, from the given H-expression, $\hexp$. Typing contexts, $\hGamma$, map each variable $x \in \domof{\hGamma}$ to the hypothesis $x : \htau$. Algorithmically, the type analysis judgement specifies a function where the type is an input, and the type synthesis judgement specifies a function where the type is an output. This amounts to a specification for a \emph{local type inference} system \cite{pierce}.
+The statics of Hazelnut is organized as a \emph{bidirectional type system} \cite{bidi}, i.e. around the following mutually defined typing judgements:
+\[\arraycolsep=15pt\begin{array}{ll}
+%\textbf{Judgement Form} & \textbf{Description}\\
+\hsyn{\hGamma}{\hexp}{\htau} & \text{$\hexp$ synthesizes H-type $\htau$}\\
+\hana{\hGamma}{\hexp}{\htau} & \text{$\hexp$ analyzes against H-type $\htau$}
+\end{array}\]
+where typing contexts, $\hGamma$, map variables $x \in \domof{\hGamma}$ to hypotheses $x : \htau$. 
+
+Algorithmically, the type analysis judgement specifies a function where the type is an input, and the type synthesis judgement specifies a function where the type is an output. This provides \emph{local type inference}. Moreover, making a judgemental distinction between analysis and synthesis is essential for giving a sensible action semantics to our system (Sec. \ref{sec:actions}.)
 
  %We use the metavariable $\Gamma$ for \emph{complete typing contexts}, i.e. typing contexts where each hypothesis mentions only complete types.
 
 
 \begin{subequations}\label{rules:syn-ana}
-Subsumption:
+Type synthesis is stronger than type analysis, i.e. if an expression is able to synthesize a type, it can also be analyzed against that type. This is expressed by the following \emph{subsumption rule}:
 \begin{equation}\label{rule:ana-subsume}
 \inferrule{
   \hsyn{\hGamma}{\hexp}{\htau'}\\
@@ -319,9 +327,9 @@ Subsumption:
   \hana{\hGamma}{\hexp}{\htau}
 }
 \end{equation}
-The H-type compatibility judgement, $\tcompat{\htau}{\htau'}$, corresponds to syntactic equality for complete H-types. For incomplete H-types, the rules are given after we discuss holes below.
+The \emph{H-type compatibility} judgement, $\tcompat{\htau}{\htau'}$, reduces to syntactic equality for complete H-types. For incomplete H-types, the rules are given after we discuss the semantics of holes below. First, we will reproduce the rules for the standard constructs. 
 
-Ascription:
+Type ascription allows the user to explicitly annotate an expression with the type that it is to be analyzed against:
 \begin{equation}\label{rule:syn-asc}
 \inferrule{
   \hana{\hGamma}{\hexp}{\htau}
@@ -330,14 +338,14 @@ Ascription:
 }
 \end{equation}
 
-Variable:
+A variable synthesizes the type that the context assigns to it:
 \begin{equation}\label{rule:syn-var}
 \inferrule{ }{
   \hsyn{\hGamma, x : \htau}{x}{\htau}
 }
 \end{equation}
 
-Lambda:
+Functions are not themselves annotated with types, so they can only appear in analytic position:
 \begin{equation}\label{rule:syn-lam}
 \inferrule{
   \hana{\hGamma, x : \htau_1}{\hexp}{\htau_2}
@@ -346,7 +354,7 @@ Lambda:
 }
 \end{equation}
 
-Application:
+In a function application, the function must synthesize an arrow type. The argument is analyzed against the synthesized argument type.
 \begin{equation}\label{rule:syn-ap}
 \inferrule{
   \hsyn{\hGamma}{\hexp_1}{\tarr{\htau_2}{\htau}}\\
@@ -355,23 +363,15 @@ Application:
   \hsyn{\hGamma}{\hap{\hexp_1}{\hexp_2}}{\htau}
 }
 \end{equation}
-\begin{equation}\label{rule:syn-ap-2}
-\inferrule{
-  \hsyn{\hGamma}{\hexp_1}{\tehole}\\
-  \hana{\hGamma}{\hexp_2}{\tehole}
-}{
-  \hsyn{\hGamma}{\hap{\hexp_1}{\hexp_2}}{\tehole}
-}
-\end{equation}
 
-Number:
+Numbers synthesize type $\tnum$:
 \begin{equation}\label{rule:syn-num}
 \inferrule{ }{
   \hsyn{\hGamma}{\hnum{n}}{\tnum}
 }
 \end{equation}
 
-Plus:
+Addition operates like a function over numbers:
 \begin{equation}\label{rule:syn-plus}
 \inferrule{
   \hana{\hGamma}{\hexp_1}{\tnum}\\
@@ -380,14 +380,17 @@ Plus:
   \hsyn{\hGamma}{\hadd{\hexp_1}{\hexp_2}}{\tnum}
 }
 \end{equation}
-Additional rules for holes.
 
-Holes synthesize the hole type:
+The rules given so far are sufficient to type complete H-expressions. The remaining rules give H-expressions with holes a well-defined static semantics.
+
+The empty hole synthesizes the hole type:
 \begin{equation}\label{rule:syn-ehole}
 \inferrule{ }{
   \hsyn{\hGamma}{\hehole}{\tehole}
 }
 \end{equation}
+
+Non-empty holes contain H-expressions that are ``under construction''. This expression must synthesize a type, but because this type may change, the non-empty hole also synthesizes the hole type:
 \begin{equation}\label{rule:syn-hole}
 \inferrule{
   \hsyn{\hGamma}{\hexp}{\htau}
@@ -395,11 +398,14 @@ Holes synthesize the hole type:
   \hsyn{\hGamma}{\hhole{\hexp}}{\tehole}
 }
 \end{equation}
-\end{subequations}
-talk about why you want non-empty holes. Non-empty type holes are not necessary because every type is a valid classifier.
-
-Compatibility judgement $\tcompat{\htau}{\htau'}$ is inductively defined by the following rules:
+The compatibility judgement $\tcompat{\htau}{\htau'}$, which appeared as a premise in the subsumption rule, makes the hole type compatible with any other type:
 \begin{subequations}\label{rules:tcompat}
+\begin{equation}\label{rule:tcompat-hole}
+\inferrule{ }{
+  \tcompat{\htau}{\tehole}
+}
+\end{equation}
+Type compatibility is symmetric and reflexive:
 \begin{equation}\label{rule:tcompat-comm}
 \inferrule{
   \tcompat{\htau}{\htau'}
@@ -420,12 +426,21 @@ Compatibility judgement $\tcompat{\htau}{\htau'}$ is inductively defined by the 
   \tcompat{\tarr{\htau_1}{\htau_2}}{\tarr{\htau_1'}{\htau_2'}}
 }
 \end{equation}
-\begin{equation}\label{rule:tcompat-hole}
-\inferrule{ }{
-  \tcompat{\htau}{\tehole}
+\end{subequations}
+Consequently, by subsumption, we can derive that $\hana{\hGamma}{\hhole{\hnum{42}}}{\tarr{\tnum}{\tnum}}$.
+
+\begin{equation}\label{rule:syn-ap-2}
+\inferrule{
+  \hsyn{\hGamma}{\hexp_1}{\tehole}\\
+  \hana{\hGamma}{\hexp_2}{\tehole}
+}{
+  \hsyn{\hGamma}{\hap{\hexp_1}{\hexp_2}}{\tehole}
 }
 \end{equation}
+
 \end{subequations}
+talk about why you want non-empty holes. Non-empty type holes are not necessary because every type is a valid classifier.
+
 
 Will also need type incompatibility, $\tincompat{\htau}{\htau'}$, as follows:
 \begin{subequations}
