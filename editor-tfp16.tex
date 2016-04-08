@@ -329,12 +329,12 @@ type to the codomain of the arrow type.
 \hlam{x}{\zwsel{\hhole{}}} : \tarr{\tnum{}}{\tnum{}}
 &
 \aConstruct{\fvar{x}} & \refrule{20c}
-\\ 9 &
-\hlam{x}{\hhole{x}} : \tarr{\tnum{}}{\tnum{}}
-&
-\hlam{x}{\zwsel{\hhole{x}}} : \tarr{\tnum{}}{\tnum{}}
-&
-\aFinish{} & \refrule{21a}
+%\\ 9 &
+%\hlam{x}{\hhole{x}} : \tarr{\tnum{}}{\tnum{}}
+%&
+%\hlam{x}{\zwsel{\hhole{x}}} : \tarr{\tnum{}}{\tnum{}}
+%&
+%\aFinish{} & \refrule{21a}
 \\ 10 &
 \hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}
 &
@@ -347,45 +347,88 @@ type to the codomain of the arrow type.
 \hline
 \hline
 11 &
-\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}
+\hhole{\textrm{id}} : \tnum{} &
+\hhole{\zwsel{{\textrm{id}}}} : \tnum{}
 &
-\hlam{x}{\zwsel{{x}}} : \tarr{\tnum{}}{\tnum{}}
+\aConstruct{\fap{}} & ?
+\\
+12 &
+\hhole{\hap{{{\textrm{id}}}}{{\hhole{}}}} : \tnum{}
+&
+\hhole{\hap{{{\textrm{id}}}}{\zwsel{\hhole{}}}} : \tnum{}
+&
+\aConstruct{\fnumlit{3}} & ?
+\\
+13 &
+\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
+&
+\hhole{\hap{{{\textrm{id}}}}{\zwsel{\hnum{3}}}} : \tnum{}
 &
 \aMove{\dParent{}} & ?
-\\ 12 &
-%\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}
+\\
+14 &
+%\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
-\zwsel{\hlam{x}{{{x}}}} : \tarr{\tnum{}}{\tnum{}}
+\hhole{\zwsel{\hap{{{\textrm{id}}}}{{\hnum{3}}}}} : \tnum{}
 &
-\aMove{\dParent{}} & \refrule{15b}
-\\ 13 &
-%\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}
+\aMove{\dParent{}} & ?
+\\
+15 &
+%\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
-\zwsel{\hlam{x}{{{x}}} : \tarr{\tnum{}}{\tnum{}}}
+\zwsel{\hhole{{\hap{{{\textrm{id}}}}{{\hnum{3}}}}}} : \tnum{}
 &
-\aConstruct{\fap{}} & \refrule{20h}
-\\ 14 &
-\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\hhole{}}
+\aMove{\dParent{}} & ?
+\\
+16 &
+{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
-\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\zwsel{\hhole{}}}
+\zwsel{{{\hap{{{\textrm{id}}}}{{\hnum{3}}}}}} : \tnum{}
 &
-\aConstruct{\fnumlit{3}} & \refrule{20l}
-\\ 15 &
-%\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\hhole{3}}
-%&
-%\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\zwsel{\hhole{3}}}
-%&
-%\aFinish{} & ?
-%\\
-\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{{\hnum{3}}}
-&
-\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\zwsel{{\hnum{3}}}}
-&
-\quad\textrm{---{}---}
-&
-\quad\textrm{---{}---}
+\aFinish & ?
 \\
 \hline
+
+%% 11 &
+%% {\textrm{id}} : \tarr{\tnum{}}{\tnum{}}
+%% &
+%% \hlam{x}{\zwsel{{x}}} : \tarr{\tnum{}}{\tnum{}}
+%% &
+%% \aMove{\dParent{}} & ?
+%% \\ 12 &
+%% %{\textrm{id}} : \tarr{\tnum{}}{\tnum{}}
+%% &
+%% \zwsel{\hlam{x}{{{x}}}} : \tarr{\tnum{}}{\tnum{}}
+%% &
+%% \aMove{\dParent{}} & \refrule{15b}
+%% \\ 13 &
+%% %{\textrm{id}} : \tarr{\tnum{}}{\tnum{}}
+%% &
+%% \zwsel{\hlam{x}{{{x}}} : \tarr{\tnum{}}{\tnum{}}}
+%% &
+%% \aConstruct{\fap{}} & \refrule{20h}
+%% \\ 14 &
+%% \hapP{{\textrm{id}} : \tarr{\tnum{}}{\tnum{}}}{\hhole{}}
+%% &
+%% \hapP{{\textrm{id}} : \tarr{\tnum{}}{\tnum{}}}{\zwsel{\hhole{}}}
+%% &
+%% \aConstruct{\fnumlit{3}} & \refrule{20l}
+%% \\ 15 &
+%% %\hapP{{\textrm{id}} : \tarr{\tnum{}}{\tnum{}}}{\hhole{3}}
+%% %&
+%% %\hapP{{\textrm{id}} : \tarr{\tnum{}}{\tnum{}}}{\zwsel{\hhole{3}}}
+%% %&
+%% %\aFinish{} & ?
+%% %\\
+%% \hapP{{\textrm{id}} : \tarr{\tnum{}}{\tnum{}}}{{\hnum{3}}}
+%% &
+%% \hapP{{\textrm{id}} : \tarr{\tnum{}}{\tnum{}}}{\zwsel{{\hnum{3}}}}
+%% &
+%% \quad\textrm{---{}---}
+%% &
+%% \quad\textrm{---{}---}
+%% \\
+%% \hline
 \end{array}
 \]
 \caption{Example of interactively constructing identity function in Hazelnut (Lines~1--10).
@@ -1294,7 +1337,7 @@ Each model change results in an updated view which is then presented to the user
 We explore the concepts presented in the paper in HZ, our current implementation.
 In order to reach the widest possible audience, we decided to implement HZ as a web application.
 In order to take advantage of all the benefits of FRP, we chose to implement HZ using OCaml\footnote{https://ocaml.org/}, Js\_of\_ocaml\footnote{http://ocsigen.org/js\_of\_ocaml/} and React\footnote{http://erratique.ch/software/react}.
-Our code as well as directions for how to run and compile can be found here: TODO ADD GITHUB LINK
+Our code as well as directions for how to run and compile can be found here: \url{https://github.com/MichaelHilton/impl-tfp16}
 At the time of submission, HZ should very much be considered a work in progress.
 
 \section{Related Work}
