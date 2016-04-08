@@ -233,15 +233,15 @@ For example, the primitive edit actions available in a text editor (e.g. inserti
 
 
 \section{Hazelnut}
-In this section, we define {Hazelnut}, a minimal bidirectionally typed structure editor based on the simply-typed lambda calculus extended with a single base type, $\tnum$, equipped (for simplicity) with a single operation, addition.
+In this section, we will formally define {Hazelnut}. Hazelnut is based on the simply-typed lambda calculus extended with a single base type, $\tnum$.
 
 The main constituents of Hazelnut are:
 \begin{itemize}
-\item \textbf{H-types} and \textbf{H-expressions} (Sec. \ref{sec:holes}). These are terms that contain \emph{holes}, which mark subterms that are ``under construction.'' H-types classify H-expressions according to a \emph{bidirectionally typed} static semantics.
+\item \textbf{H-types} and \textbf{H-expressions} (Sec. \ref{sec:holes}). These are terms with \emph{holes}, which mark subterms that are ``under construction.'' H-types classify H-expressions according to a {bidirectionally typed} static semantics.
 \item \textbf{Z-types} and \textbf{Z-expressions} (Sec. \ref{sec:cursors}). These superimpose a single \emph{cursor} onto H-types and H-expressions (using the \emph{zipper pattern}.)
-\item \textbf{Actions} (Sec. \ref{sec:actions}). These move the cursor or modify the subtree marked by the cursor.
+\item \textbf{Actions} (Sec. \ref{sec:actions}). The user performs actions on Z-expressions (and the Z-types therein) to move the cursor or to modify the subterm marked by the cursor.
 
-The action model is defined in a bidirectional manner such that whenever an action is performed on a well-typed tree, it produces another well-typed tree in a \emph{sensible} manner (we define \emph{sensibility} in Sec. \ref{sec:actions}.)
+The action semantics is also defined in a bidirectional manner. Whenever an action is performed on a well-typed expression, it produces another well-typed expression in a \emph{sensible} manner (we define \emph{sensibility} in Sec. \ref{sec:actions}.)
 \end{itemize}
 
 \subsection{Holes}\label{sec:holes}
@@ -262,15 +262,20 @@ $\arraycolsep=4pt\begin{array}{lllllll}
   \hhole{\hexp}
 \end{array}$
 %\textbf{Sort} & & & \textbf{Operational Form} & \textbf{Stylized Form} & \textbf{Description}\\
-\caption{Syntax of H-types and H-expressions. Metavariable $x$ ranges over variables and $n$ ranges over numerals. Empty holes are drawn $\hehole$ and non-empty expression holes are drawn $\hhole{\hexp}$. By convention, we will use metavariables $\tau$ and $e$ rather than $\htau$ and $\hexp$ for \emph{complete} H-types and H-expressions, i.e. those with no sub-terms of hole form.}
+\caption{Syntax of H-types and H-expressions. Metavariable $x$ ranges over variables and $n$ ranges over numerals.}
 \label{fig:hexp-syntax}
 \end{figure}
 
-We write $\hcomplete{\tau}$ if $\tau$ is a complete H-type (or more simply, a \emph{type}), and $\hcomplete{e}$ if $e$ is a complete H-expression (or more simply, an \emph{expression}). We omit the straightforward definition of these judgements for simplicity.
+The syntax of H-types and H-expressions is given in Figure \ref{fig:hexp-syntax}. Most forms correspond directly to those of the simply-typed lambda calculus extended with type $\tnum$. The number expression corresponding to the number $n$ is drawn $\hnum{n}$, and for simplicity, we define only a single arithmetic operation, $\hadd{\hexp}{\hexp}$. An expression can be explicitly \emph{ascribed} a type, drawn $\hexp : \htau$. 
 
-Typing contexts, $\hGamma$, are finite functions that map each variable $x \in \domof{\hGamma}$ to the hypothesis $x : \htau$. We use the metavariable $\Gamma$ for \emph{complete typing contexts}, i.e. typing contexts where each hypothesis mentions only complete types.
+The only novel forms are the hole forms. Empty holes are drawn $\hehole$ and non-empty expression holes are drawn $\hhole{\hexp}$. Holes mark subterms that are, notionally, ``under construction.'' We will see what this formally corresponds to in a moment.
 
-The judgements $\hana{\hGamma}{\hexp}{\htau}$, for type analysis, and $\hsyn{\hGamma}{\hexp}{\htau}$, for type synthesis, are defined mutually inductively by the following rules.
+We refer to terms that do not contain subterms of hole form as \emph{complete H-types} or \emph{complete H-expressions}. Informally, we will use metavariables $\tau$ and $e$ rather than $\htau$ and $\hexp$ for complete H-types and H-expressions, respectively. Formally, we can derive $\hcomplete{\tau}$ when $\tau$ is a complete H-type, and $\hcomplete{e}$ when $e$ is a complete H-expression. We omit the straightforward definitions of these judgements for concision. The dynamics of Hazelnut, which we need not detail here, considers only  complete H-expressions (i.e. the user cannot ``run'' an incomplete program.)
+
+The statics of Hazelnut is organized as a \emph{bidirectional type system} \cite{bidi}, i.e. around two mutually defined typing judgements: 1) $\hana{\hGamma}{\hexp}{\htau}$, which \emph{analyzes} $\hexp$ against the given H-type $\htau$; and 2) $\hsyn{\hGamma}{\hexp}{\htau}$, which \emph{synthesizes} an H-type, $\htau$, from the given H-expression, $\hexp$. Typing contexts, $\hGamma$, map each variable $x \in \domof{\hGamma}$ to the hypothesis $x : \htau$. Algorithmically, the type analysis judgement specifies a function where the type is an input, and the type synthesis judgement specifies a function where the type is an output. This amounts to a specification for a \emph{local type inference} system \cite{pierce}.
+
+ %We use the metavariable $\Gamma$ for \emph{complete typing contexts}, i.e. typing contexts where each hypothesis mentions only complete types.
+
 
 \begin{subequations}\label{rules:syn-ana}
 Subsumption:
