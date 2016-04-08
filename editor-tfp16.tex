@@ -12,6 +12,7 @@
 \usepackage{mathpartir} % inference rules
 \usepackage{extarrows}
 \usepackage{graphicx}
+\usepackage{url}
 
 \input{macros}
 %
@@ -192,11 +193,11 @@ Ian Voysey\inst{1} \and \\Jonathan Aldrich\inst{1} \and Matthew Hammer\inst{3}}
 %Craig Chambers, Kim B. Bruce, and Elisa Bertino}
 %
 \institute{Carnegie Mellon University
-%\email{comar@cs.cmu.edu}\\ 
+%\email{comar@cs.cmu.edu}\\
 %\texttt{http://www.cs.cmu.edu/\homedir comar/}
 \and
 Oregon State University
-%\email{hiltonm@eecs.oregonstate.edu}\\ 
+%\email{hiltonm@eecs.oregonstate.edu}\\
 \and
 University of Colorado Boulder
 %\email{Matthew.Hammer@colorado.edu}
@@ -207,18 +208,18 @@ University of Colorado Boulder
 \maketitle              % typeset the title of the contribution
 \begin{abstract}
 Programs (and proofs) are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of textual syntax, and it can take several text editor actions to make a single structural change. During these sequences of text editor actions, code highlighters and various other assistive tools are asked to reason about malformed program text, complicating their design.
-%Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser. 
-%There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden. 
-%For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations. 
-%Indeed, most structural  transformations require performing many primitive edit actions. 
+%Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser.
+%There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden.
+%For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations.
+%Indeed, most structural  transformations require performing many primitive edit actions.
 
-\emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  correspond to  sensible structural  transformations. 
-Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. 
-Our aim in this paper is to report on our ongoing efforts to develop Hazelnut, a minimal type-theoretic structure editor. 
-Hazelnut is based on  a standard bidirectionally typed lambda calculus, extending it with  
-1) \emph{holes} (which mark portions of the program that remain under construction); 
-%, which are identified by variables tracked in a separate linear \emph{hole context} 
-2) a \emph{cursor model}; and 3) an \emph{action model}. Programs with holes have a well-defined static semantics in Hazelnut, and the action model is defined such that every performable action is both syntactically sensible (by construction) and semantically sensible (i.e. we can establish an \emph{action sensibility} theorem.) 
+\emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  correspond to  sensible structural  transformations.
+Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}.
+Our aim in this paper is to report on our ongoing efforts to develop Hazelnut, a minimal type-theoretic structure editor.
+Hazelnut is based on  a standard bidirectionally typed lambda calculus, extending it with
+1) \emph{holes} (which mark portions of the program that remain under construction);
+%, which are identified by variables tracked in a separate linear \emph{hole context}
+2) a \emph{cursor model}; and 3) an \emph{action model}. Programs with holes have a well-defined static semantics in Hazelnut, and the action model is defined such that every performable action is both syntactically sensible (by construction) and semantically sensible (i.e. we can establish an \emph{action sensibility} theorem.)
 We conclude by outlining our vision of a full-scale programming system grown ``from the ground up'' around the same fundamental concepts as Hazelnut.
 
 %\keywords{computational geometry, graph theory, Hamilton cycles}
@@ -226,7 +227,7 @@ We conclude by outlining our vision of a full-scale programming system grown ``f
 %
 \section{Introduction}
 %
-Programs (and, by the Curry-Howard correspondence, proofs) are rich inductive structures. This fact is well understood amongst researchers and experienced programmers, but still somewhat  obscure amongst programmers at large because programmers normally construct and interact with  programs only indirectly, e.g. using a text editor composed with a parser. 
+Programs (and, by the Curry-Howard correspondence, proofs) are rich inductive structures. This fact is well understood amongst researchers and experienced programmers, but still somewhat  obscure amongst programmers at large because programmers normally construct and interact with  programs only indirectly, e.g. using a text editor composed with a parser.
 
 There are some benefits to this approach, to be sure, but the structural mismatch between programs and their textual representations  also imposes various burdens.
 For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations.
@@ -459,13 +460,13 @@ Will also need type incompatibility, $\tincompat{\htau}{\htau'}$, as follows:
 \subsection{Cursor Model}\label{sec:cursors}
 \begin{figure}
 \hspace{-3px}$\arraycolsep=3pt\begin{array}{lllllll}
-\mathsf{ZTyp} & \ztau & ::= & 
+\mathsf{ZTyp} & \ztau & ::= &
   %\zlsel{\htau} ~\vert~
-  \zwsel{\htau} ~\vert~  
+  \zwsel{\htau} ~\vert~
   %\zrsel{\htau} ~\vert~
-  \tarr{\ztau}{\htau} ~\vert~ 
+  \tarr{\ztau}{\htau} ~\vert~
   \tarr{\htau}{\ztau} \\
-\mathsf{ZExp} & \zexp & ::= & 
+\mathsf{ZExp} & \zexp & ::= &
   %\zlsel{\hexp} ~\vert~
   \zwsel{\hexp} ~\vert~
   %\zrsel{\hexp} ~\vert~
@@ -510,7 +511,7 @@ Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by remo
 \subsection{Action Model}\label{sec:actions}
 \begin{figure}
 \hspace{-3px}$\arraycolsep=3pt\begin{array}{llcllll}
-\mathsf{Action} & \alpha & ::= & 
+\mathsf{Action} & \alpha & ::= &
   \aMove{\delta} ~\vert~
   %\aSelect{\delta} ~\vert~
   \aDel ~\vert~
@@ -518,12 +519,12 @@ Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by remo
   %\aReplace{\hexp} ~\vert~
   \aConstruct{\varphi} ~\vert~
   \aFinish\\
-\mathsf{Direction} & \delta & ::= & 
+\mathsf{Direction} & \delta & ::= &
   \dChild ~\vert~
   \dParent ~\vert~
   \dNext ~\vert~
   \dPrev\\
-\mathsf{Form} & \varphi & ::= & 
+\mathsf{Form} & \varphi & ::= &
   \farr ~\vert~
   \fnum \\
 & & \vert &
@@ -541,7 +542,7 @@ Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by remo
 \end{figure}
 
 \fbox{$\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$}
-and 
+and
 \fbox{$\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$}
 and
 \fbox{$\performTyp{\ztau}{\alpha}{\ztau'}$}
@@ -558,7 +559,7 @@ A subsumption rule:
 
 
 \subsubsection{Relative Movement}
-Types 
+Types
 \begin{subequations}
 \begin{equation}
   \inferrule{ }{
@@ -659,7 +660,7 @@ Rules for expressions are similar. Movement is type-independent, so defer to aux
 \begin{subequations}
 \begin{equation}
 \inferrule{
-  \performMove{\zexp}{\aMove{\delta}}{\zexp'} 
+  \performMove{\zexp}{\aMove{\delta}}{\zexp'}
 }{
   \performSyn{\hGamma}{\zexp}{\htau}{\aMove{\delta}}{\zexp'}{\htau}
 }
@@ -915,7 +916,7 @@ Ascription:
 \end{equation}
 \begin{equation}
   \inferrule{ }{
-    \performAna{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\zwsel{\hexp : \htau}} 
+    \performAna{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\zwsel{\hexp : \htau}}
   }
 \end{equation}
 
@@ -1105,15 +1106,17 @@ plus:
 \end{subequations}
 \subsection{Metatheory}
 \begin{theorem}[Action Safety] Both of the following hold:
+\label{thrm:actsafe}
 \begin{enumerate}
-\item If $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$  and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ then $\hsyn{\hGamma}{\removeSel{\zexp'}}{\htau'}$. 
-\item If  $\hana{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$ then $\hana{\hGamma}{\removeSel{\zexp'}}{\htau}$. 
+\item If $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$  and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ then $\hsyn{\hGamma}{\removeSel{\zexp'}}{\htau'}$.
+\item If  $\hana{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$ then $\hana{\hGamma}{\removeSel{\zexp'}}{\htau}$.
 \end{enumerate}
 \end{theorem}
 
 \begin{theorem}[Action Determinism] All of the following hold:
+\label{thrm:actdet}
 \begin{enumerate}
-\item If $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}{\htau''}$ then $\zexp' = \zexp''$ and $\htau' = \htau''$. 
+\item If $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}{\htau''}$ then $\zexp' = \zexp''$ and $\htau' = \htau''$.
 \item If $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ and $\tcompat{\htau}{\htau'}$ and $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}$ or $\performAna{\hGamma}{\zexp}{\htau'}{\alpha}{\zexp''}$ then $\zexp' = \zexp''$.
 \item If $\hana{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$ and $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}$ then $\zexp' = \zexp''$.
 \end{enumerate}
@@ -1134,16 +1137,16 @@ plus:
 \label{fig:FRP}
 \end{figure}
 
-The key insight of our implementation strategy is in how to interpret the input from the user.  
+The key insight of our implementation strategy is in how to interpret the input from the user.
 In a traditional editor, the input from the user is a stream of characters, and there are no guarantees that at any point the program is syntactically correct.
 In contrast, in a structured editor, the input from the user is a stream of operations.  These operations can be considered atomic, and will always leave the program in a syntactically correct state.
 This insight leads us to conclude that a natural way to implement this editor would be using Functional Reactive Programming~\cite{Wan:2000:FRP:349299.349331} (FRP).
-Figure~\ref{fig:FRP} illustrates the concept of an FRP structured editor.  
+Figure~\ref{fig:FRP} illustrates the concept of an FRP structured editor.
 The input from the user is a stream of actions.  Each action results in a change to the underlying model (i.e., a new Zipper Structure object is created after each input action from the user.
 Each model change results in an updated view which is then presented to the user.  The user can then consider this new view when they choose a new action as input.
 
 \subsection{HZ}
-We explore the concepts presented in the paper in HZ, our current implementation.  
+We explore the concepts presented in the paper in HZ, our current implementation.
 In order to reach the widest possible audience, we decided to implement HZ as a web application.
 In order to take advantage of all the benefits of FRP, we chose to implement HZ using OCaml\footnote{https://ocaml.org/}, Js\_of\_ocaml\footnote{http://ocsigen.org/js\_of\_ocaml/} and React\footnote{http://erratique.ch/software/react}.
 Our code as well as directions for how to run and compile can be found here: TODO ADD GITHUB LINK
