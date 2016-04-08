@@ -549,7 +549,7 @@ The hole type behaves much like the type $?$ in prior work on gradual types for 
 
 In order to identify a single subtree of an H-type or H-expression as the current focus of action, we apply Huet's \emph{zipper pattern} \cite{JFP::Huet1997}. The syntax of Z-types, $\ztau$, and Z-expressions, $\zexp$, is given in Figure \ref{fig:zexp-syntax}. The only base cases in these inductive grammars are $\zwsel{\htau}$ and $\zwsel{\hexp}$, which identify the H-type or H-expression that is the current focus. All other forms correspond to the recursive forms in the syntax of H-types and H-expressions, and contain exactly one ``hatted'' subterm. All other sub-terms are H-types or H-expressions. Taken together, every syntactically well-formed Z-type and Z-expression contains exactly one focused H-type or H-expression.
 
-We write $\removeSel{\ztau}$ for the H-type constructed by removing the selection markers from the Z-type $\ztau$. This straightforward metafunction is defined as follows:
+We write $\removeSel{\ztau}$ for the H-type constructed by removing the focus markers from the Z-type $\ztau$. This straightforward metafunction is defined as follows:
 \begin{align*}
 %\removeSel{(\zlsel{\htau})} & = \htau\\
 \removeSel{(\zwsel{\htau})} & = \htau\\
@@ -558,7 +558,7 @@ We write $\removeSel{\ztau}$ for the H-type constructed by removing the selectio
 \removeSel{(\tarr{\htau}{\ztau})} & = \tarr{\htau}{\removeSel{\ztau}}
 \end{align*}
 
-Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by removing the selection markers from the Z-expression $\zexp$:
+Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by removing the focus markers from the Z-expression $\zexp$:
 \begin{align*}
 %\removeSel{(\zlsel{\hexp})} & = \hexp\\
 \removeSel{(\zwsel{\hexp})} & = \hexp\\
