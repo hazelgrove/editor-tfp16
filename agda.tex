@@ -1,15 +1,17 @@
-Part of our work is a formalization of the grammar and judgements given
-above in Agda. The goal of this work is fully mechanized proofs Theorem
-\ref{thrm:actsafe} and Theorem \ref{thrm:actdet} as well as a platform to
-explore future work. This development can be found at
-\url{http://github.com/ivoysey/agda-tfp16}. This includes the actual Agda
-source, as well as a more detailed discussion of the representation
+Our work includes a formalization of the grammar and judgements given above
+in the proof assistant Agda. The goal is fully mechanized proofs
+Theorem \ref{thrm:actsafe} and Theorem \ref{thrm:actdet} as well as a
+platform to explore future work. The development can be found at
+\url{http://github.com/ivoysey/agda-tfp16}, which includes the actual Agda
+source as well as a more detailed discussion of the various representation
 decisions and assumptions made.
 
 The core idea of the formalization is to encode each judgement as a
 dependent type. The rules of the judgements become the constructors of the
 type, and derivations of theorems values of the type. This is a rich
-setting
+setting that allows proofs to take advantage of pattern matching on the
+shape of derivations, closely matching on-paper proofs of similar
+properties.
 
 
 %% Agda proofs... explanation of basic approach and current status.
