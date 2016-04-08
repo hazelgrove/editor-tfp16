@@ -233,62 +233,109 @@ There are some benefits to this approach, to be sure, but the structural mismatc
 For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations.
 
 
-\subsection{Example: Structured Interaction in Hazelnut}
+\paragraph{Example: Structured Interaction in Hazelnut.}
+%
+Figure~\ref{fig:first-example} gives an example of the Hazelnut user
+programming the identity function over numbers, then applying this
+function to the argument~3.
+%
+Lines 1--10 consist of the user interactively constructing the
+identity function.
+%
+After the break, lines 11--15 consist of the user editing this program
+so that it consists of a function application (of the first program)
+to the literal argument~3.
+
+Line~1 begins with the initial, empty state: The H-Expression and
+Z-Expression are each empty; they differ only in that the Z-Expression
+focuses on the hole of the H-Expression.
+%
+The syntax~$\zwsel{\cdot}$ indicates the current user focus, which
+determines how actions transform the expressions.
+%
+The third column~(\textbf{Next Action}) lists the first user action:
+Constructing a lambda abstraction using variable~$x$.
+%
+The final column~(\textbf{Semantics}) indicates the semantic rule for
+this action, Rule (20e), which gives general semantics for introducing
+lambda terms into holes.
+%
+In Section~\ref{sec:?}, we list this rule, and the other rules used in
+this final column. In total, these rules give a formal semantics to
+the user actions, which relate each line's Z-Expression to the
+Z-Expression on the subsequent line.
+
+In addition to introducing the lambda term, and its variable, the
+first user action~$\aConstruct{\flam{x}}$ also introduces a type
+ascription for this function, as an arrow type, with holes for the
+type of its domain and codomain.
+%
+The actions for Lines~2--5 consist of the user filling these holes
+with the basetype $\tnum{}$.
+%
+To do so, the user constructs the type constructor twice (Lines 2 and
+4), and navigates between the holes with a move action (Line~3).
+%
+Generally, the move action~$\dNext$ moves the focus from one
+sub-structure to the next sibling sub-structure of the (common) parent
+structure; in this case, it moves from the domain type of the arrow
+type to the codomain of the arrow type.
+%
 
 \begin{figure}[t]
 \[
-\begin{array}{|c|c||l|l|}
+\begin{array}{|c||c|c||l|l|}
 \hline
-\textbf{H-Expression} & \textbf{Z-Expression} & \textbf{Next Action} & \textbf{Semantic Rule}
-\\
+\# & \textbf{H-Expression} & \textbf{Z-Expression} & \textbf{Next Action} & \textbf{Semantics}
+\\ 
 \hline
+1 &
 \hhole{} &
 \zwsel{\hhole{}}
 &
 \aConstruct{\flam{x}} & \refrule{20e}
-\\
+\\ 2 &
 \hlam{x}{\hhole{}} : \tarr{\hhole{}}{\hhole{}} &
 \hlam{x}{\hhole{}} : \tarr{\zwsel{\hhole{}}}{\hhole{}}
 &
 \aConstruct{\fnum{}} & \refrule{19b}
-\\
+\\ 3 &
 \hlam{x}{\hhole{}} : \tarr{\tnum{}}{\hhole{}} &
 \hlam{x}{\hhole{}} : \tarr{\zwsel{\tnum{}}}{\hhole{}}
 &
 \aMove{\dNext{}} & \refrule{15d}
-\\
-%\hlam{x}{\hhole{}} : \tarr{\tnum{}}{\hhole{}}
+\\ 4 &
 &
 \hlam{x}{\hhole{}} : \tarr{\tnum}{\zwsel{\hhole{}}}
 &
 \aConstruct{\fnum{}} & \refrule{19b}
-\\
+\\ 5 &
 \hlam{x}{\hhole{}} : \tarr{\tnum{}}{\tnum{}} &
 \hlam{x}{\hhole{}} : \tarr{\tnum{}}{\zwsel{\tnum{}}}
 &
 \aMove{\dParent{}} & \refrule{15b}
-\\
+\\ 6 &
 &
 \hlam{x}{\hhole{}} : \zwsel{\tarr{\tnum{}}{\tnum{}}}
 &
 \aMove{\dPrev{}} & \refrule{15e}
-\\
+\\ 7 &
 &
 \zwsel{\hlam{x}{\hhole{}}} : \tarr{\tnum{}}{\tnum{}}
 &
 \aMove{\dChild{}} & \refrule{15a}
-\\
+\\ 8 &
 &
 \hlam{x}{\zwsel{\hhole{}}} : \tarr{\tnum{}}{\tnum{}}
 &
 \aConstruct{\fvar{x}} & \refrule{20c}
-\\
+\\ 9 &
 \hlam{x}{\hhole{x}} : \tarr{\tnum{}}{\tnum{}}
 &
 \hlam{x}{\zwsel{\hhole{x}}} : \tarr{\tnum{}}{\tnum{}}
 &
 \aFinish{} & \refrule{21a}
-\\
+\\ 10 &
 \hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}
 &
 \hlam{x}{\zwsel{{x}}} : \tarr{\tnum{}}{\tnum{}}
@@ -296,33 +343,34 @@ For example, the primitive edit actions available in a text editor (e.g. inserti
 \quad\textrm{---{}---}
 &
 \quad\textrm{---{}---}
-\\
+\\ 
 \hline
 \hline
+11 &
 \hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}
 &
 \hlam{x}{\zwsel{{x}}} : \tarr{\tnum{}}{\tnum{}}
 &
 \aMove{\dParent{}} & ?
-\\
+\\ 12 &
 %\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}
 &
 \zwsel{\hlam{x}{{{x}}}} : \tarr{\tnum{}}{\tnum{}}
 &
 \aMove{\dParent{}} & \refrule{15b}
-\\
+\\ 13 &
 %\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}
 &
 \zwsel{\hlam{x}{{{x}}} : \tarr{\tnum{}}{\tnum{}}}
 &
 \aConstruct{\fap{}} & \refrule{20h}
-\\
+\\ 14 &
 \hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\hhole{}}
 &
 \hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\zwsel{\hhole{}}}
 &
 \aConstruct{\fnumlit{3}} & \refrule{20l}
-\\
+\\ 15 &
 %\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\hhole{3}}
 %&
 %\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\zwsel{\hhole{3}}}
