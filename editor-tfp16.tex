@@ -287,7 +287,7 @@ type to the codomain of the arrow type.
 \begin{array}{|c||c|c||l|l|}
 \hline
 \# & \textbf{H-Expression} & \textbf{Z-Expression} & \textbf{Next Action} & \textbf{Semantics}
-\\ 
+\\
 \hline
 1 &
 \hhole{} &
@@ -343,7 +343,7 @@ type to the codomain of the arrow type.
 \quad\textrm{---{}---}
 &
 \quad\textrm{---{}---}
-\\ 
+\\
 \hline
 \hline
 11 &
@@ -437,7 +437,7 @@ The statics of Hazelnut is organized as a \emph{bidirectional type system} \cite
 \hsyn{\hGamma}{\hexp}{\htau} & \text{$\hexp$ synthesizes H-type $\htau$}\\
 \hana{\hGamma}{\hexp}{\htau} & \text{$\hexp$ analyzes against H-type $\htau$}
 \end{array}\]
-where typing contexts, $\hGamma$, map the variables $x \in \domof{\hGamma}$ to hypotheses $x : \htau$. 
+where typing contexts, $\hGamma$, map the variables $x \in \domof{\hGamma}$ to hypotheses $x : \htau$.
 
 Algorithmically, the type synthesis judgement specifies a function where the type is an output, and type analysis judgement specifies a function where the type is an input. This defines a \emph{local type inference} scheme. Moreover, making a judgemental distinction between synthesis and analysis is essential for giving a sensible action semantics to our system (Sec. \ref{sec:actions}.)
 
@@ -454,7 +454,7 @@ Type synthesis is stronger than type analysis, i.e. if an expression is able to 
   \hana{\hGamma}{\hexp}{\htau}
 }
 \end{equation}
-The \emph{H-type compatibility} judgement, $\tcompat{\htau}{\htau'}$, reduces to syntactic equality for complete H-types. For incomplete H-types, the rules are given after we discuss the semantics of holes below. 
+The \emph{H-type compatibility} judgement, $\tcompat{\htau}{\htau'}$, reduces to syntactic equality for complete H-types. For incomplete H-types, the rules are given after we discuss the semantics of holes below.
 
 First, let us reproduce the rules for the standard constructs. Type ascription allows the user to explicitly annotate an expression with the type that it is to be analyzed against:
 \begin{equation}\label{rule:syn-asc}
@@ -1320,6 +1320,7 @@ Need to do a search to see what else has been done...
 \item Type-Specific Projections (ala TSLs)
 \item Typed Documents
 \item Collaboration (packaging system, diff algorithm, multiple cursors, etc.)
+\item Connection between our notion of focus in 2.2 and focusing in proof theory
 \end{itemize}
 
 This work provides a foundation for studying all of these concepts independently -- show how they work with this system and it should be straightforward to scale to bigger system.
