@@ -184,7 +184,7 @@
 %                                     \toctitle is used
 %
 \author{Cyrus Omar\inst{1}$^\dagger$ \and Michael Hilton\inst{2}$^\dagger$ \and
-Ian Voysey\inst{1} \and \\Jonathan Aldrich\inst{1} \and Matthew Hammer\inst{3}}
+Ian Voysey\inst{1}$^\dagger$ \and \\Jonathan Aldrich\inst{1} \and Matthew Hammer\inst{3}}
 %
 \authorrunning{Omar et al.} % abbreviated author list (for running head)
 %
@@ -244,7 +244,7 @@ For example, the primitive edit actions available in a text editor (e.g. inserti
 \hline
   \hhole{} &                            \zwsel{}                            & \aConstruct{\fap{}}, \textrm{(move to fun hole?)}
 \\
-  \hap{\hhole{}}{\hhole{}} &            \hap{\zwsel{}}{\hhole{}}            & \aConstruct{\flam{x}}, ... 
+  \hap{\hhole{}}{\hhole{}} &            \hap{\zwsel{}}{\hhole{}}            & \aConstruct{\flam{x}}, ...
 \\
   \hapP{\hlam{x}{\hhole{}}}{\hhole{}} & \hapP{\hlam{x}{\zwsel{}}}{\hhole{}} & \aConstruct{\fvar{x}}, ...
 \\
@@ -298,7 +298,7 @@ $\arraycolsep=4pt\begin{array}{lllllll}
 \label{fig:hexp-syntax}
 \end{figure}
 
-The syntax of H-types and H-expressions is given in Figure \ref{fig:hexp-syntax}. Most forms correspond directly to those of the simply-typed lambda calculus extended with type $\tnum$. The number expression corresponding to the number $n$ is drawn $\hnum{n}$, and for simplicity, we define only a single arithmetic operation, $\hadd{\hexp}{\hexp}$. An expression can be explicitly \emph{ascribed} a type, drawn $\hexp : \htau$. 
+The syntax of H-types and H-expressions is given in Figure \ref{fig:hexp-syntax}. Most forms correspond directly to those of the simply-typed lambda calculus extended with type $\tnum$. The number expression corresponding to the number $n$ is drawn $\hnum{n}$, and for simplicity, we define only a single arithmetic operation, $\hadd{\hexp}{\hexp}$. An expression can be explicitly \emph{ascribed} a type, drawn $\hexp : \htau$.
 
 The only novel forms are the hole forms. Empty holes are drawn $\hehole$ and non-empty expression holes are drawn $\hhole{\hexp}$. Holes mark subterms that are, notionally, ``under construction.'' We will see what this formally corresponds to in a moment.
 
