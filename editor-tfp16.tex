@@ -242,9 +242,9 @@ For example, the primitive edit actions available in a text editor (e.g. inserti
 \textbf{H-Expression} & \textbf{Z-Expression} & \textbf{Next Action}(s)
 \\
 \hline
-  \hhole{} &                            \zwsel{}                            & \aConstruct{\fap{}}, \textrm{(move to fun hole?)}
+  \hhole{} &                            \zwsel{\hhole{}}                    & \aConstruct{\fap{}}, \textrm{(move to fun hole?)}
 \\
-  \hap{\hhole{}}{\hhole{}} &            \hap{\zwsel{}}{\hhole{}}            & \aConstruct{\flam{x}}, ... 
+  \hap{\hhole{}}{\hhole{}} &            \hap{\zwsel{\hhole{}}}{\hhole{}}            & \aConstruct{\flam{x}}, ... 
 \\
   \hapP{\hlam{x}{\hhole{}}}{\hhole{}} & \hapP{\hlam{x}{\zwsel{}}}{\hhole{}} & \aConstruct{\fvar{x}}, ...
 \\
