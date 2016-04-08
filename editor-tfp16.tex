@@ -184,7 +184,7 @@
 %                                     \toctitle is used
 %
 \author{Cyrus Omar\inst{1}$^\dagger$ \and Michael Hilton\inst{2}$^\dagger$ \and
-Ian Voysey\inst{1}$^\dagger$ \and \\Jonathan Aldrich\inst{1} \and Matthew Hammer\inst{3}}
+Ian Voysey\inst{1}$^\dagger$ \and \\Jonathan Aldrich\inst{1} \and Matthew A. Hammer\inst{3}}
 %
 \authorrunning{Omar et al.} % abbreviated author list (for running head)
 %
@@ -237,30 +237,68 @@ For example, the primitive edit actions available in a text editor (e.g. inserti
 
 \begin{figure}[t]
 \[
-\begin{array}{|c|c||l|}
+\begin{array}{|c|c||l|l|}
 \hline
-\textbf{H-Expression} & \textbf{Z-Expression} & \textbf{Next Action}(s)
+\textbf{H-Expression} & \textbf{Z-Expression} & \textbf{Next Action} & \textbf{Semantic Rule}
 \\
 \hline
-  \hhole{} &                            \zwsel{\hhole{}}                    & \aConstruct{\fap{}}, \textrm{(move to fun hole?)}
+\hhole{} &
+\zwsel{\hhole{}}
+&
+\aConstruct{\flam{x}} & \refrule{20e}
 \\
-  \hap{\hhole{}}{\hhole{}} &            \hap{\zwsel{\hhole{}}}{\hhole{}}    & \aConstruct{\flam{x}}, ... 
+\hlam{x}{\hhole{}} : \tarr{\hhole{}}{\hhole{}} &
+\hlam{x}{\hhole{}} : \tarr{\zwsel{\hhole{}}}{\hhole{}}
+&
+\aConstruct{\fnum{}} & \refrule{19b}
 \\
-  \hapP{\hlam{x}{\hhole{}}}{\hhole{}} & \hapP{\hlam{x}{\zwsel{}}}{\hhole{}} & \aConstruct{\fvar{x}}, ...
+\hlam{x}{\hhole{}} : \tarr{\tnum{}}{\hhole{}} &
+\hlam{x}{\hhole{}} : \tarr{\zwsel{\tnum{}}}{\hhole{}}
+&
+\aMove{\dNext{}} & \refrule{15d}
 \\
-  \hapP{\hlam{x}{x}}{\hhole{}} &        \hapP{\hlam{x}{x}}{\zwsel{}}        & \aConstruct{\fnumlit{3}}, ...
+%\hlam{x}{\hhole{}} : \tarr{\tnum{}}{\hhole{}}
+&
+\hlam{x}{\hhole{}} : \tarr{\tnum}{\zwsel{\hhole{}}}
+&
+\aConstruct{\fnum{}} & \refrule{19b}
 \\
-  \hapP{\hlam{x}{x}}{3} &               \hapP{\hlam{x}{x}}{\zwsel{3}}       & \aConstruct{\fplus{}}, ...
+\hlam{x}{\hhole{}} : \tarr{\tnum{}}{\tnum{}} &
+\hlam{x}{\hhole{}} : \tarr{\tnum{}}{\zwsel{\tnum{}}}
+&
+\aMove{\dParent{}} & \refrule{15b}
 \\
-  \hapP{\hlam{x}{x + \hhole{}}}{3} &    \hapP{\hlam{x}{x + \zwsel{}}}{3}    & \aConstruct{\fnumlit{1}}, ...
+&
+\hlam{x}{\hhole{}} : \zwsel{\tarr{\tnum{}}{\tnum{}}}
+&
+\aMove{\dPrev{}} & \refrule{15e}
 \\
-  \hapP{\hlam{x}{x + 1}}{3} &           \hapP{\hlam{x}{x + \zwsel{1}}}{3}   & \textit{none}
+&
+\zwsel{\hlam{x}{\hhole{}}} : \tarr{\tnum{}}{\tnum{}}
+&
+\aMove{\dChild{}} & \refrule{15a}
 \\
-  \hline
+&
+\hlam{x}{\zwsel{\hhole{}}} : \tarr{\tnum{}}{\tnum{}}
+&
+\aConstruct{\fvar{x}} & \refrule{20c}
+\\
+\hlam{x}{\hhole{x}} : \tarr{\tnum{}}{\tnum{}}
+&
+\hlam{x}{\zwsel{\hhole{x}}} : \tarr{\tnum{}}{\tnum{}}
+&
+\aFinish{} & \refrule{21a}
+\\
+\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}
+&
+\hlam{x}{\zwsel{{x}}} : \tarr{\tnum{}}{\tnum{}}
+&
+&
+\\
+\hline
 \end{array}
 \]
-\caption{Example of editing terms interactively in Hazelnut
-}
+\caption{Example of constructing the identity function interactively in Hazelnut.}
 \label{fig:first-example}
 \end{figure}
 
