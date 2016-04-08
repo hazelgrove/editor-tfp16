@@ -293,7 +293,49 @@ For example, the primitive edit actions available in a text editor (e.g. inserti
 &
 \hlam{x}{\zwsel{{x}}} : \tarr{\tnum{}}{\tnum{}}
 &
+\quad\textrm{---{}---}
 &
+\quad\textrm{---{}---}
+\\
+\hline
+\hline
+\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}
+&
+\hlam{x}{\zwsel{{x}}} : \tarr{\tnum{}}{\tnum{}}
+&
+\aMove{\dParent{}} & ?
+\\
+%\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}
+&
+\zwsel{\hlam{x}{{{x}}}} : \tarr{\tnum{}}{\tnum{}}
+&
+\aMove{\dParent{}} & ?
+\\
+%\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}
+&
+\zwsel{\hlam{x}{{{x}}} : \tarr{\tnum{}}{\tnum{}}}
+&
+\aConstruct{\fap{}} & ?
+\\
+\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\hhole{}}
+&
+\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\zwsel{\hhole{}}}
+&
+\aConstruct{\fnumlit{3}} & ?
+\\
+\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\hhole{3}}
+&
+\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\zwsel{\hhole{3}}}
+&
+\aFinish{} & ?
+\\
+\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{{3}}
+&
+\hapP{\hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}}{\zwsel{{3}}}
+&
+\quad\textrm{---{}---}
+&
+\quad\textrm{---{}---}
 \\
 \hline
 \end{array}
