@@ -224,8 +224,8 @@ Programs are rich inductive structures, but  programmers typically construct and
 \emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  produce sensible changes to the program structure.
 Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. They also focus mainly on syntactic well-formedness, so programs can still be left semantically ill-defined as they are being constructed.
 
-In this paper, we report on our ongoing efforts to develop Hazelnut, a minimal  structure editor defined in the type-theoretic style that permits only syntactically and semantically sensible actions, without forcing the programmer to construct the program in a strictly ``top-down'' fashion.  
-Formally, Hazelnut is a bidirectionally typed lambda calculus extended with 
+In this paper, we report on our ongoing efforts to develop Hazelnut, a minimal  structure editor defined in the type-theoretic style that permits only syntactically and semantically sensible actions, without forcing the programmer to construct the program in a strictly ``top-down'' fashion.
+Formally, Hazelnut is a bidirectionally typed lambda calculus extended with
 1) \emph{holes} (which mark subterms that are under construction);
 %, which are identified by variables tracked in a separate linear \emph{hole context}
 2) a \emph{focus model}; and 3) a bidirectional \emph{action model} equipped with a useful \emph{action sensibility} theorem. %Programs with holes have a well-defined static semantics, and the action model is defined such that every performable action is both syntactically sensible (by construction) and semantically sensible (i.e. we can establish a useful \emph{action sensibility} theorem.)
@@ -262,14 +262,14 @@ determines where actions transform the expressions.
 The third column~(\textbf{Next Action}) lists the first user action:
 Constructing a lambda abstraction using variable~$x$.
 %
-The final column~(\textbf{Semantics}) indicates the semantic rule for
-this action, Rule (20e), which gives general semantics for introducing
-lambda terms into holes.
+The final column~(\textbf{Semantics}) indicates the semantic rule for this
+action, Rule (\ref{r:conelamhole}), which gives general semantics for
+introducing lambda terms into holes.
 %
-In Section~\ref{sec:?}, we list this rule, and the other rules used in
-this final column. In total, these rules give a formal semantics to
-the user actions, which relate each line's Z-Expression to the
-Z-Expression on the subsequent line.
+In Section~\ref{sec:hazel}, we list this rule, and the other rules used in
+this final column. In total, these rules give a formal semantics to the
+user actions, which relate each line's Z-Expression to the Z-Expression on
+the subsequent line.
 
 In addition to introducing the lambda term, and its variable, the
 first user action~$\aConstruct{\flam{x}}$ also introduces a type
