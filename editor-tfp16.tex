@@ -326,7 +326,7 @@ with the finish action.
 \label{fig:first-example}
 \end{figure}
 
-\section{Hazelnut}
+\section{Hazelnut, Formally}
 \label{sec:hazel}
 Hazelnut is based on the simply-typed lambda calculus extended with a single base type, $\tnum$. Its major constituents are:
 \begin{itemize}
@@ -361,7 +361,7 @@ $\arraycolsep=4pt\begin{array}{lllllll}
 
 The syntax of H-types and H-expressions is given in Figure \ref{fig:hexp-syntax}. Most forms correspond directly to those of the simply-typed lambda calculus extended with type $\tnum$. The number expression corresponding to the number $n$ is drawn $\hnum{n}$, and for simplicity, we define only a single arithmetic operation, $\hadd{\hexp}{\hexp}$.
 
-In addition to these standard forms, \emph{empty holes} are drawn $\hehole$ and \emph{non-empty H-expression holes} are drawn $\hhole{\hexp}$. Holes mark subterms that are, notionally, ``under construction.'' We will see what this formally corresponds to in a moment.
+In addition to these standard forms, \emph{empty holes} are drawn $\hehole$ and \emph{non-empty H-expression holes} are drawn $\hhole{\hexp}$. %Holes mark subterms that are, notionally, ``under construction.'' We will see what this formally corresponds to in a moment.
 
 We refer to terms that do not contain subterms of hole form as \emph{complete}. Informally, we will use metavariables $\tau$ and $e$ rather than $\htau$ and $\hexp$ for complete H-types and H-expressions, respectively. Formally, we can derive $\hcomplete{\tau}$ when $\tau$ is a complete H-type, and $\hcomplete{e}$ when $e$ is a complete H-expression. We omit the straightforward definitions of these judgements for concision. The dynamics of Hazelnut, which we need not detail here, is defined only  over complete H-expressions (i.e. the user cannot ``run'' an incomplete program.)
 
@@ -371,7 +371,7 @@ The statics of Hazelnut is organized as a \emph{bidirectional type system} \cite
 \hsyn{\hGamma}{\hexp}{\htau} & \text{$\hexp$ synthesizes $\htau$}\\
 \hana{\hGamma}{\hexp}{\htau} & \text{$\hexp$ analyzes against $\htau$}
 \end{array}\]
-where typing contexts, $\hGamma$, map the variables $x \in \domof{\hGamma}$ to hypotheses $x : \htau$.
+where typing contexts, $\hGamma$, map each variable $x \in \domof{\hGamma}$ to a hypothesis $x : \htau$.
 
 Algorithmically, the type synthesis judgement specifies a function where the type is an output, and type analysis judgement specifies a function where the type is an input. This defines a \emph{local type inference} scheme. Moreover, making a judgemental distinction between synthesis and analysis is essential for giving a sensible action semantics to our system (Sec. \ref{sec:actions}.)
 
@@ -609,7 +609,7 @@ As suggested by the descriptions of the judgements above, our action semantics m
 \end{enumerate}
 \end{theorem}
 
-In other words, every action leaves the program in a semantically well-defined state. More specifically, actions performed on expressions that synthesize a type can only produce expressions that also synthesize some (possibly different) type. Actions performed on expressions in analytic position (e.g. those under type ascriptions or in argument position) can only produce expressions that can be analyzed against the type provided. As such, Hazelnut enforces the natural type discipline described informally in the introduction. As we will see, non-empty holes allow us to maintain a slightly more flexible discipline, i.e. one where the programmer is not forced to construct the program from the outside-in but rather can construct fragments of the program inside a hole until ready to ``expose'' them to the surrounding program.
+In other words, every action leaves the program in a semantically well-defined state. More specifically, actions performed on expressions that synthesize a type can only produce expressions that also synthesize some (possibly different) type. Actions performed on expressions in analytic position (e.g. those under type ascriptions or in argument position) can only produce expressions that can be analyzed against the type provided. Non-empty holes allow us to maintain a more flexible type discipline, i.e. one where the programmer is not forced to construct the program from the outside-in but rather can construct fragments of the program inside a hole until ready to ``expose'' them to type analysis.
 
 The action semantics includes a subsumption rule much like the one for underlying semantics of H-expressions:
 \begin{equation}
@@ -870,8 +870,9 @@ For concision, we show only the rules for the ascription forms:
   }
 \end{equation}
 \end{subequations}
-\subsubsection{Deletion}
-Types:
+\subsubsection{Deletion} The $\aDel$ action replaces the selected subterm with an empty hole.
+
+Again, the rules for Z-types are self-explanatory:
 \begin{subequations}
 \begin{equation}
   \inferrule{ }{
@@ -900,7 +901,7 @@ Types:
 \end{equation}
 \end{subequations}
 
-Expressions also not type-dependent, so define auxiliary judgement:
+Deletion within a Z-expression is also a type-independent action, so we again defer to an auxiliary judgement:
 \begin{subequations}
 \begin{equation}
   \inferrule{
@@ -917,14 +918,14 @@ Expressions also not type-dependent, so define auxiliary judgement:
   }
 \end{equation}
 \end{subequations}
-Base case turns into a hole:
+The base case turns into a hole:
 \begin{subequations}
 \begin{equation}
 \inferrule{ }{
   \performDel{\zwsel{\hexp}}{\hehole}
 }
 \end{equation}
-Rule for ascription forms:
+The rules for the recursive ascription case is shown below. The other recursive cases are analagous:
 \begin{equation}
   \inferrule{
     \performDel{\zexp}{\zexp'}
@@ -939,12 +940,13 @@ Rule for ascription forms:
     \performDel{\hexp : \ztau}{\hexp : \ztau'}
   }
 \end{equation}
-If you delete the inside of a hole, it becomes the empty hole:
+If you delete the inside of a non-empty hole, it becomes the empty hole:
 \begin{equation}
   \inferrule{ }{
     \performDel{\hhole{\zwsel{\hexp}}}{\hehole}
   }
 \end{equation}
+Otherwise, we proceed recursively into the hole:
 \begin{equation}
   \inferrule{
     \zexp \neq \zwsel{\hexp}\\
@@ -954,7 +956,9 @@ If you delete the inside of a hole, it becomes the empty hole:
   }
 \end{equation}
 \end{subequations}
-\subsubsection{Construction} Types:
+\subsubsection{Construction} The construction action is used to make programs bigger. The construction action takes a \emph{form argument}, $\varphi$, which specifies which form of term is to be constructed at the focus.
+
+The $\aConstruct{\farr}$ action constructs an arrow type. The focused H-type becomes the argument type, and the focus is placed on an empty return type hole:
 \begin{subequations}
   \begin{equation}
     \label{r:contarr}
@@ -968,6 +972,8 @@ If you delete the inside of a hole, it becomes the empty hole:
     }
   }
 \end{equation}
+
+The $\aConstruct{\fnum}$ action replaces an empty hole with the $\tnum$ type.
   \begin{equation}
     \label{r:contnum}
   \inferrule{ }{
@@ -980,6 +986,8 @@ If you delete the inside of a hole, it becomes the empty hole:
     }
   }
 \end{equation}
+
+Construction proceeds recursively down the zipper:
   \begin{equation}
     \label{r:contarrL}
   \inferrule{
@@ -1010,19 +1018,20 @@ If you delete the inside of a hole, it becomes the empty hole:
 \end{equation}
 \end{subequations}
 
-Expressions:
+Let us now consider construction of expression forms.
 \begin{subequations}
 
-Ascription:
+The $\aConstruct{\fasc}$ action operates differently depending on whether the focused sub-term synthesizes a type or is being analyzed against a type. In the first case, the ascribed type is the synthesized type (which will be a hole if $\hexp$ is a hole):
 \begin{equation}
   \label{r:constructasc}
   \inferrule{ }{
-    \performSyn{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\zwsel{\hexp : \htau}}{\htau}
+    \performSyn{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\hexp : \zwsel{\htau}}{\htau}
   }
 \end{equation}
+In the second case, the ascribed type is the type provided for analysis:
 \begin{equation}
   \inferrule{ }{
-    \performAna{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\zwsel{\hexp : \htau}}
+    \performAna{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\hexp : \zwsel{\htau}}
   }
 \end{equation}
 
