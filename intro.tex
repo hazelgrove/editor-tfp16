@@ -1,3 +1,5 @@
+% !TEX root = editor-tfp16.tex
+
 %% Programs (and, by the Curry-Howard correspondence, proofs) are rich
 %% inductive structures. This fact is well understood amongst researchers
 %% and experienced programmers, but still somewhat obscure amongst
@@ -13,49 +15,35 @@
 
 % spj: describe the problem; state our contributions; STOP. one page max.
 
-When writing a program in a language with a rich type structure, the first
-thing an experienced programmer will is work out the types. Then, once she
-understands the shape of the goal, she knows what structures from the
-language might help her move towards that goal. She picks one and then
-applies this strategy inductively, knowing what types are required as she
-goes along.
+When constructing a program (or proof) in a language with rich type structure, skilled programmers generally follow a \emph{type discipline} where they first determine the type of the expression that they are constructing in order to constrain the ``mental search space'' that they are operating within. 
 
-For example, if asked to write a function from naturals to naturals, we
-immediately see that we have to write down something at arrow type. One
-easy we to do this is with a function literal, which always looks
-like $$\hlam{\mathit{variable:type}}{\mathit{body}}$$ Because we haven't
-tried anything else yet, there's nothing in the context at a reasonable
-type, so we start there. Since we're trying to write something that takes
-naturals, we name and mark the argument and work towards the
-body $$\hlam{\mathit{x:num}}{\mathit{body}}$$ We now do have something in
-the context, specifically the variable we just named, so we can easily
-complete the task by using it as the whole
-$$\hlam{\mathit{x:num}}{\mathit{x}}$$ This choice of writing the identity
-function isn't forced---it's type-correct with respect to the goal, and
-follows the strategy, but may or may not meet a particular spec we had in
-mind beyond the type.
+For example, if the programmer knows that an expression of type $\tarr{\tnum}{\tnum}$ is needed, then it is likely (though, of course, not necessary) that the expression will take the form $$\hlam{\mathit{x}}{e}$$
+for some variable $x$ and function body $e$. If the programmer chooses this form, then after picking a suitable variable name, her focus will be on constructing a suitable body, $e$. Following the type discipline, $e$ must be of type $\tnum$, and this process begins anew.
 
-This is the way that programs are written in languages with rich types. The
-problem is that this is not the way that traditional text editors allow
-programs to be written.
+The problem is that this is not the model of program construction that text editors best support.
+Rather, text editors operate on sequences of
+characters (i.e. \emph{text}.) Programs can be represented as text, but not every sequence of characters corresponds to a well-formed program, much less a well-typed program. Programmers (and the tools that they use) are thus often examining and manipulating text for which there are no useful reasoning principles, either because they are in the midst of a sequence of ``logical'' edit actions, or because they have made a mistake.
 
-Rather, text editors operate on the level of strings of
-characters. Well-formed strings denote actual programs, but programmers are
-stuck editing a representation of the program instead of the structures
-themselves. The editor does not restrict what the programmer may do: you
-can delete characters that belong, insert ones that don't, forget things
-that were needed, and so. There's nothing stopping us from accidentally
-writing $$\lambda \mathit{x:num}.\mathit{(x,x)}$$ even though it's obvious
-that building a pair can't hope to form a natural number.
 
-The type structure of the language makes this sort of error obvious: it's
-not that you're adding characters that make your program incorrect, or even
-malformed; you're adding characters that can't possibly create a structure
-you want because of the type. Simply put, the primitive operations
-available in text editors do not always correspond to sensible
-transformations on the structure of the program.
+% stuck editing a representation of the program instead of the structures
+% themselves. The editor does not restrict what the programmer may do: you
+% can delete characters that belong, insert ones that don't, forget things
+% that were needed, and so. There's nothing stopping us from accidentally
+% writing $$\lambda \mathit{x:num}.\mathit{(x,x)}$$ even though it's obvious
+% that building a pair can't hope to form a natural number.
 
-In this paper, we present our ongoing work towards a small \emph{structure
+% The type structure of the language makes this sort of error obvious: it's
+% not that you're adding characters that make your program incorrect, or even
+% malformed; you're adding characters that can't possibly create a structure
+% you want because of the type. Simply put, the primitive operations
+% available in text editors do not always correspond to sensible
+% transformations on the structure of the program.
+
+\emph{Structure editors} have shown some progress toward addressing this problem by allowing programmers to edit the tree structure of a program directly. Each editor action leaves the program being constructed in a structurally well-formed state. However, this provides only structural reasoning principles (i.e. those that tools like syntax highlighters rely on.) 
+
+TODO: some sort of transition that talks about how you still don't have semantic reasoning principles because you can be left in a semantically ill-defined state
+
+In this paper, we present our ongoing work towards a small {structure
   editor} with a firm type-theoretic foundation:
 \begin{itemize}
   \item We give an extended example, based on the above, of how to use our
