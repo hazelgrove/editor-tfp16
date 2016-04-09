@@ -1338,17 +1338,49 @@ At the time of submission, HZ should very much be considered a work in progress.
 
 \section{Related Work}
 \subsection{Structure Editors}
-Drag-and-drop / for novices: lots of examples, e.g. Alice and others
 
-Contemporary: Lamdu, MPS/Mbeddr, TouchDevelop
+Structured editing as a way to prevent syntactic errors has a long history.  An early example is the 
+The Cornell Program Synthesizer~\cite{teitelbaum_cornell_1981}, first published in 1981.
+The synthesizer generator~\cite{Reps:1984:SG:390010.808247} allows the user to create an attribute-grammar specification that then can be used to edit documents in a structured way.
+CENTAUR~\cite{Borras:1988:CS:64140.65005} produces a language specific environment from a user defined formal specification of a language.  However, none of the approaches include Holes or Zippers.
 
-Hybrid: Cyrus' active code completion paper
+
+A common application for structure editors has been for educational uses.  
+GNOME\cite{garlan_gnome:_1984} was developed to teach programming to undergraduates.
+Scratch~\cite{Resnick:2009:SP:1592761.1592779} is a structure editor targeted at children ages 8 to 16.
+Touchedevelop \cite{tillmann_touchdevelop:_2011} Incorporates a structure editor for enabling development on touch devices, and is used to teach highschool students. 
+Alice~\cite{Conway:2000:ALL:332040.332481} is a 3-D programming language with structure editor for teaching novice CS undergraduate students.
+In contrast with these, Hazelnut is not developed specifically for the purpose computer science education. 
+
+Not all structure editors are for educational purposes though.  
+mbeddr. \cite{voelter_mbeddr:_2012} is an extensible C-based Programming Language and IDE for embedded systems.
+mbeddr is build on top of the JetBrains MPS framework.  
+Another popular approach is to bring elements of structured editing into a traditional editor. 
+Codelets \cite{oney_codelets:_2012} uses structured editing to add interactive documentation and examples in an editor.
+Barista\cite{ko_barista:_2006} allows creating of user interfaces in Java using structured editing.
+Active code completion~\cite{Omar:2012:ACC:2337223.2337324} allows developers to introduce structured editing interfaces called  \emph{palettes} into their editor.
+These solutions all represent an incremental change from existing technologies.  However, in this paper we present a theoretical model for designing a type-theoretic structure editor from the ground up.
+
+Lamdu~\cite{lamdu} is both an editor and a language. The language is similar to Haskell, and the editor uses structure editing to enable Live Programming, where the code is always being executed as it is being written.
+While Lamdu has many great features, there is no theoretical basis presented for their work.
+
+
+
+
+
+
+
+%Drag-and-drop / for novices: lots of examples, e.g. Alice and others
+%
+%Contemporary: Lamdu, MPS/Mbeddr, TouchDevelop
+%
+%Hybrid: Cyrus' active code completion paper
 
 %\subsection{Refactoring Models}
 %(Michael, can you fill this section out?)
 
-\subsection{Formal Editor Models}
-Need to do a search to see what else has been done...
+%\subsection{Formal Editor Models}
+%Need to do a search to see what else has been done...
 
 \section{Discussion \& Conclusion}
 \subsection{Future Work}
