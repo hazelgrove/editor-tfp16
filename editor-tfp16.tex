@@ -1346,6 +1346,9 @@ On the theoretical side, the notion of having one of many possible holes in a te
   ways to finish a derivation. We intend to explore this connection to see
   if it's coincidental or more meaningful.
 
+
+  We already discussed a connection to gradual typing \cite{Siek06a}. We hope to explore this connection more thoroughly. In particular, it may be possible to better support exploratory and live programming by allowing even programs with holes in them to execute as long as those holes are only in the type portions, by deferring to the semantics given in work on gradual typing.
+
 Looking at terms with holes in them, it's clear that there are some
   terms that ought to be identified. For example, it may be that $\hhole{\hhole{e}}$
   should be identified with $\hhole{e}$. We have not yet explored an
