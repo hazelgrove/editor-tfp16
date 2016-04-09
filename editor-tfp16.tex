@@ -89,20 +89,24 @@ Formally, Hazelnut is a bidirectionally typed lambda calculus extended with
 \label{sec:example}
 %
 Figure~\ref{fig:first-example} gives an example of the Hazelnut user
-programming the identity function over numbers, then applying this function
-to an argument, the number literal $3$. The syntax here is all defined
-formally in Section \ref{sec:hazel}, but should be intuitive.
+performing two programming tasks.  First, they program the identity function over numbers, 
+then they apply this function to an argument, the number literal $3$. 
+Each of these tasks is carried out interactively, which each step being shown in Figure~\ref{fig:first-example}. 
+The syntax used is all defined formally in Section \ref{sec:hazel}.
 
-The example proceeds by tracing what happens to related terms as different
+The example traces what happens to related terms as different
 actions are performed. The terms are shown in the first two columns of the
 table: H-Expressions are terms that may have holes in them; Z-Expressions
-are H-Expressions with focus on working on filling just one of the
-holes. The third column names the action that is performed to the hole in
-focus in the Z-Expression to produce the next line, which may or may not
-produce a substantively different H-Expression.
-%
-Lines 1--10 consist of the user interactively constructing the identity
-function. After the break, lines 11--15 consist of the user editing this
+are H-Expressions with focus on some sub-expression.
+% on working on filling just one of the holes. 
+The third column names the action that is performed.
+Each action produces a new Z-Expression, but may or may not produce a new H-Expression.
+% to the hole in
+%focus in the Z-Expression to produce the next line, which may or may not
+%produce a substantively different H-Expression.
+
+Lines 1--9 consist of the user interactively constructing the identity
+function. After the break, lines 10--15 consist of the user editing this
 program so that it consists of a function application (of the first
 program) to the literal argument $3$.
 
@@ -303,8 +307,8 @@ with the finish action.
 %% \hline
 \end{array}
 \]
-\caption{Example of interactively constructing identity function in Hazelnut (Lines~1--10).
-  Afterward, the user applies this function to an argument~(Lines 11--15).}
+\caption{Example of interactively constructing identity function in Hazelnut (Lines~1--9).
+  Afterward, the user applies this function to an argument~(Lines 10--15).}
 \label{fig:first-example}
 \end{figure}
 
