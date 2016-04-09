@@ -215,7 +215,8 @@ University of Colorado Boulder
 
 \maketitle              % typeset the title of the contribution
 \begin{abstract}
-Programs are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of textual syntax, and it can take several text editor actions to make a single sensible change. During these sequences of editor actions, programmers and the tools that they use must reason about malformed or semantically ill-defined program text, complicating the programming process.
+Programs are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of textual syntax, and it can take several text editor actions to make a single syntactically and semantically well-defined change. %Manipulating ill-defined programs is difficult for programmers and complicates the design of programming tools. 
+During these sequences of editor actions, or when the programmer makes a mistake, programmers and programming tools must contend with malformed or semantically ill-defined program text, complicating the programming process.
 %Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser.
 %There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden.
 %For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations.
@@ -1370,7 +1371,7 @@ At the time of submission, HZ should very much be considered a work in progress.
 \section{Related Work}\label{sec:rw}
 \subsection{Structure Editors}
 
-Structured editing as a way to prevent syntactic errors has a long history.  An early example is the 
+Structured editing as a way to eliminate the possibility of syntax errors has a long history.  An early example is the 
 The Cornell Program Synthesizer~\cite{teitelbaum_cornell_1981}, first published in 1981.
 The synthesizer generator~\cite{Reps:1984:SG:390010.808247} allows the user to create an attribute-grammar specification that then can be used to edit documents in a structured way.
 CENTAUR~\cite{Borras:1988:CS:64140.65005} produces a language specific environment from a user defined formal specification of a language.  However, none of the approaches include Holes or Zippers.

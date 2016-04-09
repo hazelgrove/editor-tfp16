@@ -37,7 +37,7 @@ Although programs can be represented as text, not
 every sequence of characters corresponds to a well-formed program, much
 less a semantically well-defined program. Programmers and the tools that they use are thus 
 often left to examine and manipulate text for which there are no useful
-reasoning principles, either because they are in the midst of a sequence of
+reasoning principles, either because the programmer is in the midst of a sequence of
 text editor actions that leave the program ``temporarily'' malformed or ill-defined, or because the programmer has made a mistake.
 
 % stuck editing a representation of the program instead of the structures
@@ -57,37 +57,32 @@ text editor actions that leave the program ``temporarily'' malformed or ill-defi
 \emph{Structure editors} have made some progress toward addressing this
 problem by allowing programmers to edit the tree structure of a program
 directly. Each edit action leaves the program being constructed in a
-structurally well-formed state. We give examples of notable structure editors in Sec. \ref{sec:rw}.  This maintains structural
+structurally well-formed state. We give examples of notable structure editors in Sec. \ref{sec:rw}.  
+
+The problem is that while this maintains structural
 reasoning principles, i.e. those that tools like syntax highlighters rely
-on, but it is still possible to leave the program in a semantically undefined state.
+on, it is still possible to leave the program in a semantically undefined state.
 
 %% TODO: some sort of transition that talks about how you still don't have
 %% semantic reasoning principles because you can be left in a semantically
 %% ill-defined state
 
-In this paper, we present our ongoing work towards a small structure editor, Hazelnut,  defined in the type-theoretic style. In Hazelnut, every edit action leaves the program in both a structurally and semantically well-defined state.
+In this paper, we present our ongoing work on a minimal structure editor, Hazelnut,  defined in the type-theoretic style. In Hazelnut, every edit action leaves the program in both a structurally and semantically well-defined state. In fact, every edit action maintains an even stronger invariant that we will describe in Sec. \ref{sec:actions}. Importantly, programmers need not construct the program in a strictly top-down manner. For example, a programmer can construct what she intends to be an argument to some function without first constructing the outer term of function application form. Expressions that are well-typed but not type consistent with their surroundings are temporarily placed into \emph{holes} that delay type analysis.
+
+The remainder of the paper is organized as follows:
 \begin{itemize}
   \item We begin with an example to develop the reader's intuitions in Section
     \ref{sec:example}.
 
-  \item We then formally define Hazelnut in Section \ref{sec:hazel}. This
-    lambda calculus introduces an explicit notion of terms with holes in
-    them to represent programs that are not yet complete.
-    (Section \ref{sec:holes}) Programs may have many holes in them, and
-    holes are acted upon with respect to their type and which holes are
-    currently in focus. (Sections \ref{sec:cursors} and \ref{sec:actions})
+  \item We then formally define Hazelnut in Section \ref{sec:hazel} and state two key metatheoretic properties this definition 
+    enjoys.
 
-    We also state two key metatheoretic properties this type theory
-    enjoys. (Section \ref{sec:mt})
+  \item In Section \ref{sec:mech}, we describe our ongoing effort to formalize the semantics and metatheory of Hazelnut in Agda.
 
-  \item We describe our ongoing effort to formalize the metatheory of this
-    calculus, including the proofs of the theorems
-    above. (Section \ref{sec:mech})
-
-  \item We describe our ongoing work to connect this type theory with a
-    usable implementation of a real structure editor as a web
-    application. (Section \ref{sec:impl})
-
-  \item We conclude by describing our intentions for this work going
-    forward. (Section \ref{sec:future})
+  \item In Section \ref{sec:impl}, we describe our ongoing effort to implement Hazelnut in a web browser, using a functional reactive model for user interaction.
+  \item In Section \ref{sec:rw}, we give a brief overview of related work.
+  \item We conclude in Section \ref{sec:future} by describing our vision for this work going 
+    forward.
 \end{itemize}
+
+This paper should be considered a working draft at the time of submission.
