@@ -223,6 +223,20 @@ with the finish action.
 \hline
 \hline
 10 &
+\hhole{} &
+\zwsel{\hhole{}}
+&
+\aConstruct{\fasc} & \refrule{\ref{r:constructasc}}
+\\ 
+10 &
+\hhole{} : \hhole{} &
+% \performSyn{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\zwsel{\hhole{} : \hhole{}}}{\htau}
+
+\zwsel{\hhole{} : \hhole{}}
+&
+\aConstruct{\flam{x}} & \refrule{\ref{r:conelamhole}}
+\\
+10 &
 \hhole{\textrm{id}} : \tnum{} &
 \hhole{\zwsel{{\textrm{id}}}} : \tnum{}
 &
@@ -1001,6 +1015,7 @@ Expressions:
 
 Ascription:
 \begin{equation}
+  \label{r:constructasc}
   \inferrule{ }{
     \performSyn{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\zwsel{\hexp : \htau}}{\htau}
   }
