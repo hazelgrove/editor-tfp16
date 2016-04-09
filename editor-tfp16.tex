@@ -106,7 +106,7 @@ Each action produces a new Z-Expression, but may or may not produce a new H-Expr
 %produce a substantively different H-Expression.
 
 Lines 1--9 consist of the user interactively constructing the identity
-function. After the break, lines 10--15 consist of the user editing this
+function. After the break, lines 10--19 consist of the user editing this
 program so that it consists of a function application (of the first
 program, bound to the variable $id$, not shown) to the literal argument $3$.
 
@@ -254,45 +254,45 @@ with the finish action.
 \aConstruct{ \fvar{id}} & \refrule{\ref{r:conevar2}}
 \\
 14 &
-\hhole{\textrm{id}} : \tnum{} &
-\zwsel{{\hhole{\textrm{id}}}} : \tnum{}
+\hhole{\textrm{$id$}} : \tnum{} &
+\hhole{\zwsel{{\textrm{$id$}}}} : \tnum{}
 &
 \aConstruct{\fap{}} & \refrule{\ref{r:coneapfn}}
 \\
 15 &
-\hhole{\hap{{{\textrm{id}}}}{{\hhole{}}}} : \tnum{}
+\hhole{\hap{{{\textrm{$id$}}}}{{\hhole{}}}} : \tnum{}
 &
-\hhole{\hap{{{\textrm{id}}}}{\zwsel{\hhole{}}}} : \tnum{}
+\hhole{\hap{{{\textrm{$id$}}}}{\zwsel{\hhole{}}}} : \tnum{}
 &
 \aConstruct{\fnumlit{3}} &  \refrule{\ref{r:conenumnum}}
 \\
 16 &
-\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
+\hhole{\hap{{{\textrm{$id$}}}}{{\hnum{3}}}} : \tnum{}
 &
-\hhole{\hap{{{\textrm{id}}}}{\zwsel{\hnum{3}}}} : \tnum{}
+\hhole{\hap{{{\textrm{$id$}}}}{\zwsel{\hnum{3}}}} : \tnum{}
 &
 \aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
 \\
 17 &
 %\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
-\hhole{\zwsel{\hap{{{\textrm{id}}}}{{\hnum{3}}}}} : \tnum{}
+\hhole{\zwsel{\hap{{{\textrm{$id$}}}}{{\hnum{3}}}}} : \tnum{}
 &
 \aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
 \\
 18 &
 %\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
-\zwsel{\hhole{{\hap{{{\textrm{id}}}}{{\hnum{3}}}}}} : \tnum{}
-&
-\aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
-\\
-19 &
-{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
-&
-\zwsel{{{\hap{{{\textrm{id}}}}{{\hnum{3}}}}}} : \tnum{}
+\zwsel{\hhole{{\hap{{{\textrm{$id$}}}}{{\hnum{3}}}}}} : \tnum{}
 &
 \aFinish &  \refrule{\ref{r:finishana}}
+\\
+19 &
+{\hap{{{\textrm{$id$}}}}{{\hnum{3}}}} : \tnum{}
+&
+\zwsel{{{\hap{{{\textrm{$id$}}}}{{\hnum{3}}}}}} : \tnum{}
+&
+\quad\textrm{---{}---} & \quad\textrm{---{}---}
 \\
 \hline
 
@@ -339,7 +339,7 @@ with the finish action.
 \end{array}
 \]
 \caption{Example of interactively constructing identity function in Hazelnut (Lines~1--9).
-  Afterward, the user applies this function to an argument~(Lines 10--15).}
+  Afterward, the user applies this function to an argument~(Lines 10--19).}
 \label{fig:first-example}
 \end{figure}
 
