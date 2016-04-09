@@ -290,49 +290,43 @@ type to the codomain of the arrow type.
 \hhole{} &
 \zwsel{\hhole{}}
 &
-\aConstruct{\flam{x}} & \refrule{20e}
+\aConstruct{\flam{x}} & \refrule{\ref{r:conelamhole}}
 \\ 2 &
 \hlam{x}{\hhole{}} : \tarr{\hhole{}}{\hhole{}} &
 \hlam{x}{\hhole{}} : \tarr{\zwsel{\hhole{}}}{\hhole{}}
 &
-\aConstruct{\fnum{}} & \refrule{19b}
+\aConstruct{\fnum{}} & \refrule{\ref{r:contnum}}
 \\ 3 &
 \hlam{x}{\hhole{}} : \tarr{\tnum{}}{\hhole{}} &
 \hlam{x}{\hhole{}} : \tarr{\zwsel{\tnum{}}}{\hhole{}}
 &
-\aMove{\dNext{}} & \refrule{15d}
+\aMove{\dNext{}} & \refrule{\ref{r:movenextsib}}
 \\ 4 &
 &
 \hlam{x}{\hhole{}} : \tarr{\tnum}{\zwsel{\hhole{}}}
 &
-\aConstruct{\fnum{}} & \refrule{19b}
+\aConstruct{\fnum{}} & \refrule{\ref{r:contnum}}
 \\ 5 &
 \hlam{x}{\hhole{}} : \tarr{\tnum{}}{\tnum{}} &
 \hlam{x}{\hhole{}} : \tarr{\tnum{}}{\zwsel{\tnum{}}}
 &
-\aMove{\dParent{}} & \refrule{15b}
+\aMove{\dParent{}} & \refrule{\ref{r:moveparent}}
 \\ 6 &
 &
 \hlam{x}{\hhole{}} : \zwsel{\tarr{\tnum{}}{\tnum{}}}
 &
-\aMove{\dPrev{}} & \refrule{15e}
+\aMove{\dPrev{}} & \refrule{\ref{r:moveprevsib}}
 \\ 7 &
 &
 \zwsel{\hlam{x}{\hhole{}}} : \tarr{\tnum{}}{\tnum{}}
 &
-\aMove{\dChild{}} & \refrule{15a}
+\aMove{\dChild{}} & \refrule{\ref{r:movefirstchild}}
 \\ 8 &
 &
 \hlam{x}{\zwsel{\hhole{}}} : \tarr{\tnum{}}{\tnum{}}
 &
-\aConstruct{\fvar{x}} & \refrule{20c}
-%\\ 9 &
-%\hlam{x}{\hhole{x}} : \tarr{\tnum{}}{\tnum{}}
-%&
-%\hlam{x}{\zwsel{\hhole{x}}} : \tarr{\tnum{}}{\tnum{}}
-%&
-%\aFinish{} & \refrule{21a}
-\\ 10 &
+\aConstruct{\fvar{x}} & \refrule{\ref{r:conevar}}
+\\ 9 &
 \hlam{x}{{x}} : \tarr{\tnum{}}{\tnum{}}
 &
 \hlam{x}{\zwsel{{x}}} : \tarr{\tnum{}}{\tnum{}}
@@ -343,46 +337,46 @@ type to the codomain of the arrow type.
 \\
 \hline
 \hline
-11 &
+10 &
 \hhole{\textrm{id}} : \tnum{} &
 \hhole{\zwsel{{\textrm{id}}}} : \tnum{}
 &
-\aConstruct{\fap{}} & ?
+\aConstruct{\fap{}} & \refrule{\ref{r:coneapfn}}
 \\
-12 &
+11 &
 \hhole{\hap{{{\textrm{id}}}}{{\hhole{}}}} : \tnum{}
 &
 \hhole{\hap{{{\textrm{id}}}}{\zwsel{\hhole{}}}} : \tnum{}
 &
-\aConstruct{\fnumlit{3}} & ?
+\aConstruct{\fnumlit{3}} &  \refrule{\ref{r:conenumnum}}
 \\
-13 &
+12 &
 \hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
 \hhole{\hap{{{\textrm{id}}}}{\zwsel{\hnum{3}}}} : \tnum{}
 &
-\aMove{\dParent{}} & ?
+\aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
 \\
-14 &
+13 &
 %\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
 \hhole{\zwsel{\hap{{{\textrm{id}}}}{{\hnum{3}}}}} : \tnum{}
 &
-\aMove{\dParent{}} & ?
+\aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
 \\
-15 &
+14 &
 %\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
 \zwsel{\hhole{{\hap{{{\textrm{id}}}}{{\hnum{3}}}}}} : \tnum{}
 &
-\aMove{\dParent{}} & ?
+\aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
 \\
-16 &
+15 &
 {\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
 \zwsel{{{\hap{{{\textrm{id}}}}{{\hnum{3}}}}}} : \tnum{}
 &
-\aFinish & ?
+\aFinish &  \refrule{\ref{r:finishana}}
 \\
 \hline
 
@@ -397,19 +391,19 @@ type to the codomain of the arrow type.
 %% &
 %% \zwsel{\hlam{x}{{{x}}}} : \tarr{\tnum{}}{\tnum{}}
 %% &
-%% \aMove{\dParent{}} & \refrule{15b}
+%% \aMove{\dParent{}} & \refrule{15b} bad
 %% \\ 13 &
 %% %{\textrm{id}} : \tarr{\tnum{}}{\tnum{}}
 %% &
 %% \zwsel{\hlam{x}{{{x}}} : \tarr{\tnum{}}{\tnum{}}}
 %% &
-%% \aConstruct{\fap{}} & \refrule{20h}
+%% \aConstruct{\fap{}} & \refrule{20h} bad
 %% \\ 14 &
 %% \hapP{{\textrm{id}} : \tarr{\tnum{}}{\tnum{}}}{\hhole{}}
 %% &
 %% \hapP{{\textrm{id}} : \tarr{\tnum{}}{\tnum{}}}{\zwsel{\hhole{}}}
 %% &
-%% \aConstruct{\fnumlit{3}} & \refrule{20l}
+%% \aConstruct{\fnumlit{3}} & \refrule{20l} bad
 %% \\ 15 &
 %% %\hapP{{\textrm{id}} : \tarr{\tnum{}}{\tnum{}}}{\hhole{3}}
 %% %&
@@ -879,7 +873,8 @@ The rules for relative movement within Z-expressions are similar. Movement is ty
 \end{subequations}
 For concision, we show only the rules for the ascription forms:
 \begin{subequations}
-\begin{equation}
+  \begin{equation}
+    \label{r:movefirstchild}
   \inferrule{ }{
     \performTyp{
       \zwsel{\hexp : \htau}
@@ -891,6 +886,7 @@ For concision, we show only the rules for the ascription forms:
   }
 \end{equation}
 \begin{equation}
+  \label{r:moveparent}
   \inferrule{ }{
     \performTyp{
       \zwsel{\hexp} : \htau
@@ -913,6 +909,7 @@ For concision, we show only the rules for the ascription forms:
   }
 \end{equation}
 \begin{equation}
+  \label{r:movenextsib}
   \inferrule{ }{
     \performTyp{
       \zwsel{\hexp} : \htau
@@ -924,6 +921,7 @@ For concision, we show only the rules for the ascription forms:
   }
 \end{equation}
 \begin{equation}
+  \label{r:moveprevsib}
   \inferrule{ }{
     \performTyp{
       \hexp : \zwsel{\htau}
@@ -1059,7 +1057,8 @@ If you delete the inside of a hole, it becomes the empty hole:
 \end{subequations}
 \subsubsection{Construction} Types:
 \begin{subequations}
-\begin{equation}
+  \begin{equation}
+    \label{r:contarr}
   \inferrule{ }{
     \performTyp{
       \zwsel{\htau}
@@ -1070,7 +1069,8 @@ If you delete the inside of a hole, it becomes the empty hole:
     }
   }
 \end{equation}
-\begin{equation}
+  \begin{equation}
+    \label{r:contnum}
   \inferrule{ }{
     \performTyp{
       \zwsel{\tehole}
@@ -1081,7 +1081,8 @@ If you delete the inside of a hole, it becomes the empty hole:
     }
   }
 \end{equation}
-\begin{equation}
+  \begin{equation}
+    \label{r:contarrL}
   \inferrule{
     \performTyp{\ztau}{\aConstruct{\varphi}}{\ztau'}
   }{
@@ -1094,7 +1095,8 @@ If you delete the inside of a hole, it becomes the empty hole:
     }
   }
 \end{equation}
-\begin{equation}
+  \begin{equation}
+    \label{r:contarrR}
   \inferrule{
     \performTyp{\ztau}{\aConstruct{\varphi}}{\ztau'}
   }{
@@ -1126,6 +1128,7 @@ Ascription:
 
 variables:
 \begin{equation}
+  \label{r:conevar}
   \inferrule{ }{
     \performSyn{\hGamma, x : \htau}{\zwsel{\hehole}}{\tehole}{\aConstruct{\fvar{x}}}{\zwsel{x}}{\htau}
   }
@@ -1140,6 +1143,7 @@ variables:
 
 lambda:
 \begin{equation}
+  \label{r:conelamhole}
   \inferrule{ }{
     \performSyn
       {\hGamma}
@@ -1177,6 +1181,7 @@ lambda:
 
 application:
 \begin{equation}
+  \label{r:coneapfn}
   \inferrule{ }{
     \performSyn
       {\hGamma}
@@ -1227,6 +1232,7 @@ argument:
 
 number:
 \begin{equation}
+  \label{r:conenumnum}
   \inferrule{ }{
     \performSyn
       {\hGamma}
@@ -1282,7 +1288,8 @@ plus:
 \subsubsection{Finish Hole}
 
 \begin{subequations}
-\begin{equation}
+  \begin{equation}
+    \label{r:finishana}
   \inferrule{
     \hsyn{\hGamma}{\hexp}{\htau'}
   }{
