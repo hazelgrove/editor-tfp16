@@ -108,7 +108,7 @@ Each action produces a new Z-Expression, but may or may not produce a new H-Expr
 Lines 1--9 consist of the user interactively constructing the identity
 function. After the break, lines 10--15 consist of the user editing this
 program so that it consists of a function application (of the first
-program) to the literal argument $3$.
+program, bound to the variable $id$, not shown) to the literal argument $3$.
 
 Line~1 begins with the simplest initial state: the H-Expression in question
 is just the single hole and the Z-Expression is that single hole in focus,
@@ -1293,21 +1293,36 @@ While Lamdu has many great features, there is no theoretical basis presented for
 \label{sec:future}
 \subsection{Future Work}
 \begin{itemize}
-\item More powerful language (codesigned and mechanized as we go along -- having a powerful editor might allow us to dispense with certain complex language features; give example of ad hoc polymorphism?)
+\item More powerful language (codesigned and mechanized as we go along --
+  having a powerful editor might allow us to dispense with certain complex
+  language features; give example of ad hoc polymorphism?)
 \item Keyboard chords
 \item Formal action suggestion and ranking models
 \item Type-Specific Projections (ala TSLs)
 \item Typed Documents
 \item Collaboration (packaging system, diff algorithm, multiple cursors, etc.)
-\item Connection between our notion of focus in 2.2 and focusing in proof theory
-\item Investigate an equational theory of holes: $\hhole{\hhole{e}}$ should
-  mean the same thing as $\hhole{e}$, for example
+
+\item The notion of having one of many possible holes in a term in focus
+  given in Section \ref{sec:hazel} has a very strong intuitive connection
+  to the proof theoretic notion of focusing. \cite{Simmons11tr} Beyond just
+  the name, both seem to be a way to reduce the search space of possible
+  ways to finish a derivation. We intend to explore this connection to see
+  if it's coincidental or more meaningful.
+
+\item Looking at terms with holes in them, it's clear that there are some
+  terms that ought to be identified. For example, $\hhole{\hhole{e}}$
+  should mean the same thing as $\hhole{e}$. We have not yet explored an
+  equational theory for terms with holes, but intend to once formalization
+  effort is more mature.
 \end{itemize}
 
-This work provides a foundation for studying all of these concepts independently -- show how they work with this system and it should be straightforward to scale to bigger system.
+This work provides a foundation for studying all of these concepts
+independently -- show how they work with this system and it should be
+straightforward to scale to bigger system.
 
 \begin{quote}
-In any case, these are but steps toward more graphical program-description systems, for we will not forever stay confined to mere strings of symbols.
+In any case, these are but steps toward more graphical program-description
+systems, for we will not forever stay confined to mere strings of symbols.
 
 --- Minsky, Turing Award lecture
 \end{quote}
