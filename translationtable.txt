@@ -1,0 +1,11 @@
+num,label
+19b,r:contnum
+20e,r:conelamhole
+15a,r:movefirstchild
+15b,r:moveparent
+15d,r:movenextsib
+15e,r:moveprevsib
+20c,r:conevar
+20h,r:coneapfn
+20l,r:conenumnum
+21a,r:finishana
