@@ -15,23 +15,25 @@
 
 % spj: describe the problem; state our contributions; STOP. one page max.
 
-When constructing a program or proof in a language with rich type
-structure, skilled programmers generally follow a \emph{type discipline}
-where they first determine the type of the expression that they are
-constructing in order to constrain the mental search space that they are
-operating within.
+% When constructing a program or proof in a language with rich type
+% structure, skilled programmers generally follow a \emph{type discipline}
+% where they first determine the type of the expression that they are
+% constructing in order to constrain the mental search space that they are
+% operating within.
 
-For example, if the programmer knows that an expression of type
-$\tarr{\tnum}{\tnum}$ is needed, then it is often the case (though, of course, not
-necessarily the case) that the expression will take the form $$\hlam{\mathit{x}}{e}$$
-for some variable $x$ and function body $e$. If the programmer chooses this
-form, then after picking a suitable variable name, her focus will be on
-constructing a suitable body, $e$. Following the type discipline, $e$ must
-be of type $\tnum$, and so this process can begin anew.
+% For example, if the programmer knows that an expression of type
+% $\tarr{\tnum}{\tnum}$ is needed, then it is often the case (though, of course, not
+% necessarily the case) that the expression will take the form $$\hlam{\mathit{x}}{e}$$
+% for some variable $x$ and function body $e$. If the programmer chooses this
+% form, then after picking a suitable variable name, her focus will be on
+% constructing a suitable body, $e$. Following the type discipline, $e$ must
+% be of type $\tnum$, and so this process can begin anew.
 
-The problem is that when using a text
-editor to construct a program, it is easy to deviate from this disciplined process.  Rather, text editors operate on sequences of
-characters (i.e. \emph{text}.) Although programs can be represented as text, not
+% The problem is that when using a text
+% editor to construct a program, it is easy, and indeed necessary, to deviate from this disciplined process.  Rather, text editors operate on sequences of
+% characters (i.e. \emph{text}.) 
+
+Although programs can be represented as text, not
 every sequence of characters corresponds to a well-formed program, much
 less a semantically well-defined program. Programmers and the tools that they use are thus 
 often left to examine and manipulate text for which there are no useful
@@ -52,18 +54,18 @@ text editor actions that leave the program ``temporarily'' malformed or ill-defi
 % available in text editors do not always correspond to sensible
 % transformations on the structure of the program.
 
-\emph{Structure editors} have shown some progress toward addressing this
+\emph{Structure editors} have made some progress toward addressing this
 problem by allowing programmers to edit the tree structure of a program
-directly (we give examples of notable structure editors in Sec. \ref{sec:rw}.) Each editor action leaves the program being constructed in a
-structurally well-formed state. However, this maintains only structural
+directly. Each edit action leaves the program being constructed in a
+structurally well-formed state. We give examples of notable structure editors in Sec. \ref{sec:rw}.  This maintains structural
 reasoning principles, i.e. those that tools like syntax highlighters rely
-on. It is still possible to leave the program in a semantically undefined state.
+on, but it is still possible to leave the program in a semantically undefined state.
 
 %% TODO: some sort of transition that talks about how you still don't have
 %% semantic reasoning principles because you can be left in a semantically
 %% ill-defined state
 
-In this paper, we present our ongoing work towards a small structure editor, Hazelnut,  defined in the type-theoretic style. In Hazelnut, every edit action leaves the program in both a structurally and statically well-defined state.
+In this paper, we present our ongoing work towards a small structure editor, Hazelnut,  defined in the type-theoretic style. In Hazelnut, every edit action leaves the program in both a structurally and semantically well-defined state.
 \begin{itemize}
   \item We begin with an example to develop the reader's intuitions in Section
     \ref{sec:example}.
