@@ -85,26 +85,25 @@ Formally, Hazelnut is a bidirectionally typed lambda calculus extended with
 %
 \input{intro.tex}
 
-\section{Structured Interaction in Hazelnut}
+\section{Programming in Hazelnut}
 \label{sec:example}
 %
-Figure~\ref{fig:first-example} gives an example of the Hazelnut user
+Figure~\ref{fig:first-example} gives an example of a Hazelnut user
 programming the identity function over numbers, then applying this function
-to an argument, the number literal $3$. The syntax here is all defined
-formally in Section \ref{sec:hazel}, but should be intuitive.
+to an argument, the number literal $3$. 
 
-The example proceeds by tracing what happens to related terms as different
+The syntax is formally defined in Section \ref{sec:hazel}, but we will give the intuition here.
+The example proceeds by tracing what happens to a term as different
 actions are performed. The terms are shown in the first two columns of the
 table: H-Expressions are terms that may have holes in them; Z-Expressions
-are H-Expressions with focus on working on filling just one of the
-holes. The third column names the action that is performed to the hole in
-focus in the Z-Expression to produce the next line, which may or may not
-produce a substantively different H-Expression.
+are H-Expressions with a single subterm in focus. The third column names the action that is performed to the term in
+focus in the Z-Expression to produce the next line. All lines change the Z-expression, but some lines (e.g. those corresponding to movement within the Z-expression) do not cause the corresponding H-expression to change.
+
 %
-Lines 1--10 consist of the user interactively constructing the identity
-function. After the break, lines 11--15 consist of the user editing this
+Lines 1--9 consist of the user interactively constructing the identity
+function. After the break, lines 10--15 consist of the user editing this
 program so that it consists of a function application (of the first
-program) to the literal argument $3$.
+program, bound to the variable $id$, not shown) to the literal argument $3$.
 
 Line~1 begins with the simplest initial state: the H-Expression in question
 is just the single hole and the Z-Expression is that single hole in focus,
