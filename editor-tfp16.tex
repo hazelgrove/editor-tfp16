@@ -224,8 +224,8 @@ Programs are rich inductive structures, but  programmers typically construct and
 \emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  produce sensible changes to the program structure.
 Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. They also focus mainly on syntactic well-formedness, so programs can still be left semantically ill-defined as they are being constructed.
 
-In this paper, we report on our ongoing efforts to develop Hazelnut, a minimal  structure editor defined in the type-theoretic style that permits only syntactically and semantically sensible actions, without forcing the programmer to construct the program in a strictly ``top-down'' fashion.  
-Formally, Hazelnut is a bidirectionally typed lambda calculus extended with 
+In this paper, we report on our ongoing efforts to develop Hazelnut, a minimal  structure editor defined in the type-theoretic style that permits only syntactically and semantically sensible actions, without forcing the programmer to construct the program in a strictly ``top-down'' fashion.
+Formally, Hazelnut is a bidirectionally typed lambda calculus extended with
 1) \emph{holes} (which mark subterms that are under construction);
 %, which are identified by variables tracked in a separate linear \emph{hole context}
 2) a \emph{focus model}; and 3) a bidirectional \emph{action model} equipped with a useful \emph{action sensibility} theorem. %Programs with holes have a well-defined static semantics, and the action model is defined such that every performable action is both syntactically sensible (by construction) and semantically sensible (i.e. we can establish a useful \emph{action sensibility} theorem.)
@@ -262,14 +262,14 @@ determines where actions transform the expressions.
 The third column~(\textbf{Next Action}) lists the first user action:
 Constructing a lambda abstraction using variable~$x$.
 %
-The final column~(\textbf{Semantics}) indicates the semantic rule for
-this action, Rule (20e), which gives general semantics for introducing
-lambda terms into holes.
+The final column~(\textbf{Semantics}) indicates the semantic rule for this
+action, Rule (\ref{r:conelamhole}), which gives general semantics for
+introducing lambda terms into holes.
 %
-In Section~\ref{sec:?}, we list this rule, and the other rules used in
-this final column. In total, these rules give a formal semantics to
-the user actions, which relate each line's Z-Expression to the
-Z-Expression on the subsequent line.
+In Section~\ref{sec:hazel}, we list this rule, and the other rules used in
+this final column. In total, these rules give a formal semantics to the
+user actions, which relate each line's Z-Expression to the Z-Expression on
+the subsequent line.
 
 In addition to introducing the lambda term, and its variable, the
 first user action~$\aConstruct{\flam{x}}$ also introduces a type
@@ -1369,17 +1369,49 @@ At the time of submission, HZ should very much be considered a work in progress.
 
 \section{Related Work}\label{sec:rw}
 \subsection{Structure Editors}
-Drag-and-drop / for novices: lots of examples, e.g. Alice and others
 
-Contemporary: Lamdu, MPS/Mbeddr, TouchDevelop
+Structured editing as a way to prevent syntactic errors has a long history.  An early example is the 
+The Cornell Program Synthesizer~\cite{teitelbaum_cornell_1981}, first published in 1981.
+The synthesizer generator~\cite{Reps:1984:SG:390010.808247} allows the user to create an attribute-grammar specification that then can be used to edit documents in a structured way.
+CENTAUR~\cite{Borras:1988:CS:64140.65005} produces a language specific environment from a user defined formal specification of a language.  However, none of the approaches include Holes or Zippers.
 
-Hybrid: Cyrus' active code completion paper
+
+A common application for structure editors has been for educational uses.  
+GNOME\cite{garlan_gnome:_1984} was developed to teach programming to undergraduates.
+Scratch~\cite{Resnick:2009:SP:1592761.1592779} is a structure editor targeted at children ages 8 to 16.
+Touchedevelop \cite{tillmann_touchdevelop:_2011} Incorporates a structure editor for enabling development on touch devices, and is used to teach highschool students. 
+Alice~\cite{Conway:2000:ALL:332040.332481} is a 3-D programming language with structure editor for teaching novice CS undergraduate students.
+In contrast with these, Hazelnut is not developed specifically for the purpose computer science education. 
+
+Not all structure editors are for educational purposes though.  
+mbeddr. \cite{voelter_mbeddr:_2012} is an extensible C-based Programming Language and IDE for embedded systems.
+mbeddr is build on top of the JetBrains MPS framework.  
+Another popular approach is to bring elements of structured editing into a traditional editor. 
+Codelets \cite{oney_codelets:_2012} uses structured editing to add interactive documentation and examples in an editor.
+Barista\cite{ko_barista:_2006} allows creating of user interfaces in Java using structured editing.
+Active code completion~\cite{Omar:2012:ACC:2337223.2337324} allows developers to introduce structured editing interfaces called  \emph{palettes} into their editor.
+These solutions all represent an incremental change from existing technologies.  However, in this paper we present a theoretical model for designing a type-theoretic structure editor from the ground up.
+
+Lamdu~\cite{lamdu} is both an editor and a language. The language is similar to Haskell, and the editor uses structure editing to enable Live Programming, where the code is always being executed as it is being written.
+While Lamdu has many great features, there is no theoretical basis presented for their work.
+
+
+
+
+
+
+
+%Drag-and-drop / for novices: lots of examples, e.g. Alice and others
+%
+%Contemporary: Lamdu, MPS/Mbeddr, TouchDevelop
+%
+%Hybrid: Cyrus' active code completion paper
 
 %\subsection{Refactoring Models}
 %(Michael, can you fill this section out?)
 
-\subsection{Formal Editor Models}
-Need to do a search to see what else has been done...
+%\subsection{Formal Editor Models}
+%Need to do a search to see what else has been done...
 
 \section{Discussion \& Conclusion}
 \label{sec:future}
