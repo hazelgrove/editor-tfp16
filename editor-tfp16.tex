@@ -61,7 +61,7 @@ University of Colorado Boulder
 
 \maketitle              % typeset the title of the contribution
 \begin{abstract}
-Programs are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of textual syntax, and it can take several text editor actions to make a single syntactically and semantically well-defined change. %Manipulating ill-defined programs is difficult for programmers and complicates the design of programming tools. 
+Programs are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of textual syntax, and it can take several text editor actions to make a single syntactically and semantically well-defined change. %Manipulating ill-defined programs is difficult for programmers and complicates the design of programming tools.
 During these sequences of editor actions, or when the programmer makes a mistake, programmers and programming tools must contend with malformed or semantically ill-defined program text, complicating the programming process.
 %Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser.
 %There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden.
@@ -89,51 +89,76 @@ Formally, Hazelnut is a bidirectionally typed lambda calculus extended with
 \label{sec:example}
 %
 Figure~\ref{fig:first-example} gives an example of the Hazelnut user
-programming the identity function over numbers, then applying this
-function to an argument, the number literal $3$.
-%
-Lines 1--10 consist of the user interactively constructing the
-identity function.
-%
-After the break, lines 11--15 consist of the user editing this program
-so that it consists of a function application (of the first program)
-to the literal argument~3.
+programming the identity function over numbers, then applying this function
+to an argument, the number literal $3$. The syntax here is all defined
+formally in Section \ref{sec:hazel}, but should be intuitive.
 
-Line~1 begins with the initial, empty state: The H-Expression and
-Z-Expression are each empty; they differ only in that the Z-Expression
-focuses on the hole of the H-Expression.
+The example proceeds by tracing what happens to related terms as different
+actions are performed. The terms are shown in the first two columns of the
+table: H-Expressions are terms that may have holes in them; Z-Expressions
+are H-Expressions with focus on working on filling just one of the
+holes. The third column names the action that is performed to the hole in
+focus in the Z-Expression to produce the next line, which may or may not
+produce a substantively different H-Expression.
 %
-The syntax~$\zwsel{\cdot}$ indicates the current user focus, which
-determines where actions transform the expressions.
-%
-The third column~(\textbf{Next Action}) lists the first user action:
-Constructing a lambda abstraction using variable~$x$.
-%
-The final column~(\textbf{Semantics}) indicates the semantic rule for this
-action, Rule (\ref{r:conelamhole}), which gives general semantics for
-introducing lambda terms into holes.
-%
-In Section~\ref{sec:hazel}, we list this rule, and the other rules used in
-this final column. In total, these rules give a formal semantics to the
-user actions, which relate each line's Z-Expression to the Z-Expression on
-the subsequent line.
+Lines 1--10 consist of the user interactively constructing the identity
+function. After the break, lines 11--15 consist of the user editing this
+program so that it consists of a function application (of the first
+program) to the literal argument $3$.
 
-In addition to introducing the lambda term, and its variable, the
-first user action~$\aConstruct{\flam{x}}$ also introduces a type
-ascription for this function, as an arrow type, with holes for the
-type of its domain and codomain.
-%
-The actions for Lines~2--5 consist of the user filling these holes
-with the basetype $\tnum{}$.
-%
-To do so, the user constructs the type constructor twice (Lines 2 and
-4), and navigates between the holes with a move action (Line~3).
-%
-Generally, the move action~$\dNext$ moves the focus from one
-sub-structure to the next sibling sub-structure of the (common) parent
-structure; in this case, it moves from the domain type of the arrow
-type to the codomain of the arrow type.
-%
+Line~1 begins with the simplest initial state: the H-Expression in question
+is just the single hole and the Z-Expression is that single hole in focus,
+indicated by the syntax~$\zwsel{\cdot}$. Focus determines where actions
+transform the expressions.
+
+The first action the user performs on the hole on focus is to fill it by
+constructing a lambda abstraction. This results in the expressions on line
+2, which have holes propagated for the body and type of the lambda. The
+user then proceeds to move the focus between holes and fill them as
+appropriate, resulting in the final expression on Line 9.
+
+So far, this development is all largely type-driven. The user is trying to
+write a function, and so follows the forms given by that structure. On line
+10, the user decides to apply the lambda they've written to some
+arguments. This is no longer the top-down type directed reasoning, but a
+jump to a different task entirely.
+
+We let $\textrm{id}$ be a metavarible standing for the expression
+constructed at Line 9 and continue as the user chooses to construct an
+application site. This creates the obligation to provide arguments, so the
+user then constructs a literal value $3$. Intuitively we're now finished,
+since the expression contains no further holes. Within the formalism,
+though, we have to move to the outside of the expression before proceeding
+with the finish action.
+
+%% The third column~(\textbf{Next Action}) lists the first user action:
+%% Constructing a lambda abstraction using variable~$x$.
+%% %
+%% The final column~(\textbf{Semantics}) indicates the semantic rule for this
+%% action, Rule (\ref{r:conelamhole}), which gives general semantics for
+%% introducing lambda terms into holes.
+%% %
+%% In Section~\ref{sec:hazel}, we list this rule, and the other rules used in
+%% this final column. In total, these rules give a formal semantics to the
+%% user actions, which relate each line's Z-Expression to the Z-Expression on
+%% the subsequent line.
+
+%% In addition to introducing the lambda term, and its variable, the
+%% first user action~$\aConstruct{\flam{x}}$ also introduces a type
+%% ascription for this function, as an arrow type, with holes for the
+%% type of its domain and codomain.
+%% %
+%% The actions for Lines~2--5 consist of the user filling these holes
+%% with the basetype $\tnum{}$.
+%% %
+%% To do so, the user constructs the type constructor twice (Lines 2 and
+%% 4), and navigates between the holes with a move action (Line~3).
+%% %
+%% Generally, the move action~$\dNext$ moves the focus from one
+%% sub-structure to the next sibling sub-structure of the (common) parent
+%% structure; in this case, it moves from the domain type of the arrow
+%% type to the codomain of the arrow type.
+%% %
 
 \begin{figure}[t]
 \[
@@ -1217,7 +1242,7 @@ At the time of submission, HZ should very much be considered a work in progress.
 \section{Related Work}\label{sec:rw}
 \subsection{Structure Editors}
 
-Structured editing as a way to eliminate the possibility of syntax errors has a long history.  An early example is the 
+Structured editing as a way to eliminate the possibility of syntax errors has a long history.  An early example is the
 The Cornell Program Synthesizer~\cite{teitelbaum_cornell_1981}, first published in 1981.
 The synthesizer generator~\cite{Reps:1984:SG:390010.808247} allows the user to create an attribute-grammar specification that then can be used to edit documents in a structured way.
 CENTAUR~\cite{Borras:1988:CS:64140.65005} produces a language specific environment from a user defined formal specification of a language.  However, none of the approaches include Holes or Zippers.
