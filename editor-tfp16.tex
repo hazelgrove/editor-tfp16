@@ -436,14 +436,14 @@ type to the codomain of the arrow type.
 Hazelnut is based on the simply-typed lambda calculus extended with a single base type, $\tnum$. Its major constituents are:
 \begin{itemize}
 \item \textbf{H-types} and \textbf{H-expressions} (Sec. \ref{sec:holes}), which are terms with \emph{holes}. Holes mark subterms that are ``under construction.'' H-types classify H-expressions according to a {bidirectionally typed} static semantics.
-\item \textbf{Z-types} and \textbf{Z-expressions} (Sec. \ref{sec:cursors}), which superimpose a single \emph{cursor} onto H-types and H-expressions (using the \emph{zipper pattern}.)
-\item \textbf{Actions} (Sec. \ref{sec:actions}), which move the cursor or modify the subterm marked by the cursor.
+\item \textbf{Z-types} and \textbf{Z-expressions} (Sec. \ref{sec:cursors}), which superimpose a single \emph{focus} onto H-types and H-expressions (using Huet's \emph{zipper pattern} \cite{JFP::Huet1997}.)
+\item \textbf{Actions} (Sec. \ref{sec:actions}), which move the focus or modify the subterm in focus.
 
 Whenever an action is performed on a well-typed expression, it produces another well-typed expression in a \emph{sensible} manner -- we define \emph{sensibility} in Sec. \ref{sec:actions}.
 \end{itemize}
 
 \subsection{Holes}\label{sec:holes}
-\begin{figure}
+\begin{figure}[t]
 $\arraycolsep=4pt\begin{array}{lllllll}
 \mathsf{HTyp} & \tau,\htau & ::= &
   \tarr{\htau}{\htau} ~\vert~
@@ -468,13 +468,13 @@ The syntax of H-types and H-expressions is given in Figure \ref{fig:hexp-syntax}
 
 In addition to these standard forms, \emph{empty holes} are drawn $\hehole$ and \emph{non-empty H-expression holes} are drawn $\hhole{\hexp}$. Holes mark subterms that are, notionally, ``under construction.'' We will see what this formally corresponds to in a moment.
 
-We refer to terms that do not contain subterms of hole form as \emph{complete H-types} or \emph{complete H-expressions}. Informally, we will use metavariables $\tau$ and $e$ rather than $\htau$ and $\hexp$ for complete H-types and H-expressions, respectively. Formally, we can derive $\hcomplete{\tau}$ when $\tau$ is a complete H-type, and $\hcomplete{e}$ when $e$ is a complete H-expression. We omit the straightforward definitions of these judgements for concision. The dynamics of Hazelnut, which we need not detail here, is defined only  over complete H-expressions (i.e. the user cannot ``run'' an incomplete program.)
+We refer to terms that do not contain subterms of hole form as \emph{complete}. Informally, we will use metavariables $\tau$ and $e$ rather than $\htau$ and $\hexp$ for complete H-types and H-expressions, respectively. Formally, we can derive $\hcomplete{\tau}$ when $\tau$ is a complete H-type, and $\hcomplete{e}$ when $e$ is a complete H-expression. We omit the straightforward definitions of these judgements for concision. The dynamics of Hazelnut, which we need not detail here, is defined only  over complete H-expressions (i.e. the user cannot ``run'' an incomplete program.)
 
 The statics of Hazelnut is organized as a \emph{bidirectional type system} \cite{Pierce:2000:LTI:345099.345100}, i.e. around the following mutually defined typing judgements:
 \[\arraycolsep=15pt\begin{array}{ll}
 %\textbf{Judgement Form} & \textbf{Description}\\
-\hsyn{\hGamma}{\hexp}{\htau} & \text{$\hexp$ synthesizes H-type $\htau$}\\
-\hana{\hGamma}{\hexp}{\htau} & \text{$\hexp$ analyzes against H-type $\htau$}
+\hsyn{\hGamma}{\hexp}{\htau} & \text{$\hexp$ synthesizes $\htau$}\\
+\hana{\hGamma}{\hexp}{\htau} & \text{$\hexp$ analyzes against $\htau$}
 \end{array}\]
 where typing contexts, $\hGamma$, map the variables $x \in \domof{\hGamma}$ to hypotheses $x : \htau$.
 
@@ -484,7 +484,7 @@ Algorithmically, the type synthesis judgement specifies a function where the typ
 
 
 \begin{subequations}\label{rules:syn-ana}
-Type synthesis is stronger than type analysis, i.e. if an expression is able to synthesize a type, it can also be analyzed against that type, or any \emph{compatible} type. This is expressed by the following \emph{subsumption rule}:
+Type synthesis is stronger than type analysis, i.e. if an expression is able to synthesize a type, it can also be analyzed against that type or any \emph{compatible} type. This is expressed by the following \emph{subsumption rule}:
 \begin{equation}\label{rule:ana-subsume}
 \inferrule{
   \hsyn{\hGamma}{\hexp}{\htau'}\\
@@ -520,7 +520,7 @@ Functions are not themselves annotated with types, so they can only appear in an
 }
 \end{equation}
 
-In a function application, if the expression in function position synthesizes an arrow type, the argument is analyzed against the synthesized argument type:
+For function application, if the expression in function position synthesizes an arrow type, the argument is analyzed against the synthesized argument type:
 \begin{equation}\label{rule:syn-ap}
 \inferrule{
   \hsyn{\hGamma}{\hexp_1}{\tarr{\htau_2}{\htau}}\\
@@ -605,7 +605,7 @@ The final rule handles function applications where the expression in function po
 }
 \end{equation}
 
-The hole type behaves much like the type $?$ in prior work on gradual types for functional languages \cite{Siek06a}. That system also needed to define two rules for function application. In general, when a premise requires that a synthesized type be of a particular form, we need a special case where the synthesized hole type is treated instead as if it were the ``holey-est'' term of that form.\footnote{Alternatively, we might add a rule that allows expressions that synthesize hole type to then non-deterministically synthesize any other type, but maintaining determinism is useful in practice, so we avoid this approach.}
+The hole type behaves much like the type $?$ in prior work by Siek and Taha on gradual types for functional languages \cite{Siek06a}. Their system (which was not bidirectionally typed) also needed to define two rules for function application. In general, when a premise requires that a synthesized type be of a particular form, we need a special case where the synthesized hole type is treated instead as if it were the ``holey-est'' term of that form.\footnote{Alternatively, we might add a rule that allows expressions that synthesize hole type to then non-deterministically synthesize any other type, but maintaining determinism is useful in practice, so we avoid this approach.}
 
 \end{subequations}
 \subsection{Focus Model}\label{sec:cursors}
@@ -635,9 +635,9 @@ The hole type behaves much like the type $?$ in prior work on gradual types for 
 \label{fig:zexp-syntax}
 \end{figure}
 
-In order to identify a single subtree of an H-type or H-expression as the current focus of action, we apply Huet's \emph{zipper pattern} \cite{JFP::Huet1997}. The syntax of Z-types, $\ztau$, and Z-expressions, $\zexp$, is given in Figure \ref{fig:zexp-syntax}. The only base cases in these inductive grammars are $\zwsel{\htau}$ and $\zwsel{\hexp}$, which identify the H-type or H-expression that is the current focus. All other forms correspond to the recursive forms in the syntax of H-types and H-expressions, and contain exactly one ``hatted'' subterm. All other sub-terms are H-types or H-expressions. Taken together, every syntactically well-formed Z-type and Z-expression contains exactly one focused H-type or H-expression.
+In order to identify a single subtree of an H-type or H-expression as the current focus of action, we apply Huet's \emph{zipper pattern} \cite{JFP::Huet1997}. The syntax of Z-types, $\ztau$, and Z-expressions, $\zexp$, is given in Figure \ref{fig:zexp-syntax}. The only base cases in these inductive grammars are $\zwsel{\htau}$ and $\zwsel{\hexp}$, which identify the H-type or H-expression that is the current focus. All other forms correspond to the recursive forms in the syntax of H-types and H-expressions, and contain exactly one ``hatted'' subterm that identifies the subtree where the focus will be found. All other sub-terms are H-types or H-expressions. Taken together, every syntactically well-formed Z-type and Z-expression contains exactly one focused H-type or H-expression.
 
-We write $\removeSel{\ztau}$ for the H-type constructed by removing the focus markers from the Z-type $\ztau$. This straightforward metafunction is defined as follows:
+We write $\removeSel{\ztau}$ for the H-type constructed by removing the focus marker from the Z-type $\ztau$. This straightforward metafunction is defined as follows:
 \begin{align*}
 %\removeSel{(\zlsel{\htau})} & = \htau\\
 \removeSel{(\zwsel{\htau})} & = \htau\\
@@ -646,7 +646,7 @@ We write $\removeSel{\ztau}$ for the H-type constructed by removing the focus ma
 \removeSel{(\tarr{\htau}{\ztau})} & = \tarr{\htau}{\removeSel{\ztau}}
 \end{align*}
 
-Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by removing the focus markers from the Z-expression $\zexp$:
+Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by removing the focus marker from the Z-expression $\zexp$:
 \begin{align*}
 %\removeSel{(\zlsel{\hexp})} & = \hexp\\
 \removeSel{(\zwsel{\hexp})} & = \hexp\\
@@ -661,8 +661,8 @@ Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by remo
 \removeSel{\hhole{\zexp}} &= \hhole{\removeSel{\zexp}}
 \end{align*}
 
-\subsection{Action Model}\label{sec:actions}
-\begin{figure}
+\subsection{Action Semantics}\label{sec:actions}
+\begin{figure}[t]
 \hspace{-3px}$\arraycolsep=3pt\begin{array}{llcllll}
 \mathsf{Action} & \alpha & ::= &
   \aMove{\delta} ~\vert~
@@ -694,11 +694,16 @@ Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by remo
 \label{fig:action-syntax}
 \end{figure}
 
-\fbox{$\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$}
-and
-\fbox{$\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$}
-and
-\fbox{$\performTyp{\ztau}{\alpha}{\ztau'}$}
+The syntax of \emph{actions}, $\alpha$, is given in Figure \ref{fig:action-syntax}. The \emph{action semantics} of Hazelnut is organized around three judgements:
+\[\arraycolsep=10pt\begin{array}{ll}
+%\textbf{Judgement Form} & \textbf{Description}\\
+\performTyp{\ztau}{\alpha}{\ztau'} & \text{Performing $\alpha$ on $\ztau$ produces $\ztau'$}\\
+\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'} & \text{Performing $\alpha$ on $\zexp$ when $\removeSel{\zexp}$ synthesizes type $\htau$}\\
+& \text{produces $\zexp'$ such that $\removeSel{\zexp'}$ synthesizes type $\htau'$}\\
+\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'} & \text{Performing $\alpha$ on $\zexp$ when analyzing $\removeSel{\zexp}$ against $\htau$}\\
+& \text{produces $\zexp'$, such that $\removeSel{\zexp'}$ can also be analyzed}\\
+& \text{against $\htau$}
+\end{array}\]
 
 A subsumption rule:
 \begin{equation}
