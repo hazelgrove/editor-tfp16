@@ -238,55 +238,56 @@ with the finish action.
 \hhole{} :\tnum{} &
 \hhole{} : \zwsel{\tnum{}}
 &
-\aConstruct{\fap{}} & \refrule{\ref{r:coneapfn}}
-\\
-13 &
-\hhole{} :\tnum{} &
-\zwsel{\hhole{}} : \tnum{}
-&
 \aMove{\dPrev{}} & \refrule{\ref{r:moveprevsib}}
 \\
-14 &
-\hhole{} :\tnum{} &
+%13 &
+%\hhole{} :\tnum{} &
+%\zwsel{\hhole{}} : \tnum{}
+%&
+%\aMove{\dPrev{}} & \refrule{\ref{r:moveprevsib}}
+%\\
+13 &
+%\hhole{} :\tnum{}
+ &
 \zwsel{\hhole{}} : \tnum{}
 &
-\aConstruct{ \fvar{id}} & \refrule{\ref{r:conevar}}
+\aConstruct{ \fvar{id}} & \refrule{\ref{r:conevar2}}
 \\
-15 &
-\textrm{id} : \tnum{} &
-\zwsel{{\textrm{id}}} : \tnum{}
+14 &
+\hhole{\textrm{id}} : \tnum{} &
+\zwsel{{\hhole{\textrm{id}}}} : \tnum{}
 &
 \aConstruct{\fap{}} & \refrule{\ref{r:coneapfn}}
 \\
-16 &
-\hap{{{\textrm{id}}}}{{\hhole{}}} : \tnum{}
+15 &
+\hhole{\hap{{{\textrm{id}}}}{{\hhole{}}}} : \tnum{}
 &
-\hap{{{\textrm{id}}}}{\zwsel{\hhole{}}} : \tnum{}
+\hhole{\hap{{{\textrm{id}}}}{\zwsel{\hhole{}}}} : \tnum{}
 &
 \aConstruct{\fnumlit{3}} &  \refrule{\ref{r:conenumnum}}
 \\
-17 &
-\hap{{{\textrm{id}}}}{{\hnum{3}}} : \tnum{}
+16 &
+\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
-\hap{{{\textrm{id}}}}{\zwsel{\hnum{3}}} : \tnum{}
+\hhole{\hap{{{\textrm{id}}}}{\zwsel{\hnum{3}}}} : \tnum{}
+&
+\aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
+\\
+17 &
+%\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
+&
+\hhole{\zwsel{\hap{{{\textrm{id}}}}{{\hnum{3}}}}} : \tnum{}
 &
 \aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
 \\
 18 &
 %\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
-\zwsel{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
+\zwsel{\hhole{{\hap{{{\textrm{id}}}}{{\hnum{3}}}}}} : \tnum{}
 &
 \aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
 \\
-%19 &
-%%\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
-%&
-%\zwsel{{\hap{{{\textrm{id}}}}{{\hnum{3}}}}} : \tnum{}
-%&
-%\aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
-%\\
-20 &
+19 &
 {\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
 \zwsel{{{\hap{{{\textrm{id}}}}{{\hnum{3}}}}}} : \tnum{}
@@ -1058,7 +1059,9 @@ variables:
     \performSyn{\hGamma, x : \htau}{\zwsel{\hehole}}{\tehole}{\aConstruct{\fvar{x}}}{\zwsel{x}}{\htau}
   }
 \end{equation}
+
 \begin{equation}
+ \label{r:conevar2}
   \inferrule{
     \tincompat{\htau}{\htau'}
   }{
