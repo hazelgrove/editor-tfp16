@@ -178,6 +178,7 @@
 \mainmatter              % start of the contributions
 %
 \title{Hazelnut: A Minimal Bidirectionally Typed Structure Editor}
+\subtitle{(Research Paper)}
 %
 %\titlerunning{Hamiltonian Mechanics}  % abbreviated title (for running head)
 %                                     also used for the TOC unless
@@ -207,20 +208,21 @@ University of Colorado Boulder
 
 \maketitle              % typeset the title of the contribution
 \begin{abstract}
-Programs (and proofs) are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of textual syntax, and it can take several text editor actions to make a single structural change. During these sequences of text editor actions, code highlighters and various other assistive tools are asked to reason about malformed program text, complicating their design.
+Programs are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of textual syntax, and it can take several text editor actions to make a single sensible change. During these sequences of editor actions, programmers and the tools that they use must reason about malformed or semantically ill-defined program text, complicating the programming process.
 %Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser.
 %There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden.
 %For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations.
 %Indeed, most structural  transformations require performing many primitive edit actions.
 
-\emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  correspond to  sensible structural  transformations.
-Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}.
-Our aim in this paper is to report on our ongoing efforts to develop Hazelnut, a minimal type-theoretic structure editor.
-Hazelnut is based on  a standard bidirectionally typed lambda calculus. We extend this calculus with
-1) \emph{holes} (which mark portions of the program that remain under construction);
+\emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  produce sensible changes to the program structure.
+Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. They also focus mainly on syntactic well-formedness, so programs can still be left semantically ill-defined as they are being constructed.
+
+In this paper, we report on our ongoing efforts to develop Hazelnut, a minimal  structure editor defined in the type-theoretic style that permits only syntactically and semantically sensible actions, without forcing the programmer to construct the program in a strictly ``top-down'' fashion.  
+Formally, Hazelnut is a bidirectionally typed lambda calculus extended with 
+1) \emph{holes} (which mark subterms that are under construction);
 %, which are identified by variables tracked in a separate linear \emph{hole context}
-2) a \emph{cursor model}; and 3) an \emph{action model}. Programs with holes have a well-defined static semantics in Hazelnut, and the action model is defined such that every performable action is both syntactically sensible (by construction) and semantically sensible (i.e. we can establish an \emph{action sensibility} theorem.)
-We conclude by outlining our vision of a full-scale programming system grown ``from the ground up'' around the same fundamental concepts as Hazelnut.
+2) a \emph{focus model}; and 3) a bidirectional \emph{action model} equipped with a useful \emph{action sensibility} theorem. %Programs with holes have a well-defined static semantics, and the action model is defined such that every performable action is both syntactically sensible (by construction) and semantically sensible (i.e. we can establish a useful \emph{action sensibility} theorem.)
+%We conclude by outlining our vision of a full-scale programming system grown ``from the ground up'' around the same fundamental principles as Hazelnut.
 
 %\keywords{computational geometry, graph theory, Hamilton cycles}
 \end{abstract}
@@ -1351,7 +1353,7 @@ In order to take advantage of all the benefits of FRP, we chose to implement HZ 
 Our code as well as directions for how to run and compile can be found here: \url{https://github.com/MichaelHilton/impl-tfp16}
 At the time of submission, HZ should very much be considered a work in progress.
 
-\section{Related Work}
+\section{Related Work}\label{sec:rw}
 \subsection{Structure Editors}
 Drag-and-drop / for novices: lots of examples, e.g. Alice and others
 

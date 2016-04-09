@@ -22,21 +22,21 @@ constructing in order to constrain the mental search space that they are
 operating within.
 
 For example, if the programmer knows that an expression of type
-$\tarr{\tnum}{\tnum}$ is needed, then it is likely (though, of course, not
-necessary) that the expression will take the form $$\hlam{\mathit{x}}{e}$$
+$\tarr{\tnum}{\tnum}$ is needed, then it is often the case (though, of course, not
+necessarily the case) that the expression will take the form $$\hlam{\mathit{x}}{e}$$
 for some variable $x$ and function body $e$. If the programmer chooses this
 form, then after picking a suitable variable name, her focus will be on
 constructing a suitable body, $e$. Following the type discipline, $e$ must
 be of type $\tnum$, and this process begins anew.
 
-The problem is that this is not the model of program construction that text
-editors best support.  Rather, text editors operate on sequences of
-characters (i.e. \emph{text}.) Programs can be represented as text, but not
+The problem is that when using a text
+editor to construct a program, it is easy to deviate from this disciplined process.  Rather, text editors operate on sequences of
+characters (i.e. \emph{text}.) Although programs can be represented as text, not
 every sequence of characters corresponds to a well-formed program, much
-less a well-typed program. Programmers and the tools that they use are
-often forced to examine and manipulating text for which there are no useful
+less a semantically well-defined program. Programmers and the tools that they use are thus 
+often left to examine and manipulate text for which there are no useful
 reasoning principles, either because they are in the midst of a sequence of
-locally sensible edit actions, or because they have made a mistake.
+text editor actions that leave the program ``temporarily'' malformed or ill-defined, or because the programmer has made a mistake.
 
 % stuck editing a representation of the program instead of the structures
 % themselves. The editor does not restrict what the programmer may do: you
@@ -54,24 +54,21 @@ locally sensible edit actions, or because they have made a mistake.
 
 \emph{Structure editors} have shown some progress toward addressing this
 problem by allowing programmers to edit the tree structure of a program
-directly. Each editor action leaves the program being constructed in a
-structurally well-formed state. However, this provides only structural
-reasoning principles---i.e. those that tools like syntax highlighters rely
-on---rather than the full principles given by the type structure.
+directly (we give examples of notable structure editors in Sec. \ref{sec:rw}.) Each editor action leaves the program being constructed in a
+structurally well-formed state. However, this maintains only structural
+reasoning principles, i.e. those that tools like syntax highlighters rely
+on. It is still possible to leave the program in a semantically undefined state.
 
 %% TODO: some sort of transition that talks about how you still don't have
 %% semantic reasoning principles because you can be left in a semantically
 %% ill-defined state
 
-In this paper, we present our ongoing work towards a small structure editor
-with a firm type-theoretic foundation:
+In this paper, we present our ongoing work towards a small structure editor, Hazelnut,  defined in the type-theoretic style. In Hazelnut, every edit action leaves the program in both a structurally and statically well-defined state.
 \begin{itemize}
-  \item We give an extended example, based on the above, of how to use our
-    type theory to reason through the construction of a term. (Section
-    \ref{sec:example})
+  \item We begin with an example to develop the reader's intuitions in Section
+    \ref{sec:example}.
 
-  \item We give a formal type theory describing the act of structure
-    editing for a small lambda calculus. (Section \ref{sec:hazel}) This
+  \item We then formally define Hazelnut in Section \ref{sec:hazel}. This
     lambda calculus introduces an explicit notion of terms with holes in
     them to represent programs that are not yet complete.
     (Section \ref{sec:holes}) Programs may have many holes in them, and
