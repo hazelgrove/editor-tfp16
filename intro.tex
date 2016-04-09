@@ -15,15 +15,28 @@
 
 % spj: describe the problem; state our contributions; STOP. one page max.
 
-When constructing a program (or proof) in a language with rich type structure, skilled programmers generally follow a \emph{type discipline} where they first determine the type of the expression that they are constructing in order to constrain the ``mental search space'' that they are operating within. 
+When constructing a program or proof in a language with rich type
+structure, skilled programmers generally follow a \emph{type discipline}
+where they first determine the type of the expression that they are
+constructing in order to constrain the mental search space that they are
+operating within.
 
-For example, if the programmer knows that an expression of type $\tarr{\tnum}{\tnum}$ is needed, then it is likely (though, of course, not necessary) that the expression will take the form $$\hlam{\mathit{x}}{e}$$
-for some variable $x$ and function body $e$. If the programmer chooses this form, then after picking a suitable variable name, her focus will be on constructing a suitable body, $e$. Following the type discipline, $e$ must be of type $\tnum$, and this process begins anew.
+For example, if the programmer knows that an expression of type
+$\tarr{\tnum}{\tnum}$ is needed, then it is likely (though, of course, not
+necessary) that the expression will take the form $$\hlam{\mathit{x}}{e}$$
+for some variable $x$ and function body $e$. If the programmer chooses this
+form, then after picking a suitable variable name, her focus will be on
+constructing a suitable body, $e$. Following the type discipline, $e$ must
+be of type $\tnum$, and this process begins anew.
 
-The problem is that this is not the model of program construction that text editors best support.
-Rather, text editors operate on sequences of
-characters (i.e. \emph{text}.) Programs can be represented as text, but not every sequence of characters corresponds to a well-formed program, much less a well-typed program. Programmers (and the tools that they use) are thus often examining and manipulating text for which there are no useful reasoning principles, either because they are in the midst of a sequence of ``logical'' edit actions, or because they have made a mistake.
-
+The problem is that this is not the model of program construction that text
+editors best support.  Rather, text editors operate on sequences of
+characters (i.e. \emph{text}.) Programs can be represented as text, but not
+every sequence of characters corresponds to a well-formed program, much
+less a well-typed program. Programmers and the tools that they use are
+often forced to examine and manipulating text for which there are no useful
+reasoning principles, either because they are in the midst of a sequence of
+locally sensible edit actions, or because they have made a mistake.
 
 % stuck editing a representation of the program instead of the structures
 % themselves. The editor does not restrict what the programmer may do: you
@@ -39,50 +52,43 @@ characters (i.e. \emph{text}.) Programs can be represented as text, but not ever
 % available in text editors do not always correspond to sensible
 % transformations on the structure of the program.
 
-\emph{Structure editors} have shown some progress toward addressing this problem by allowing programmers to edit the tree structure of a program directly. Each editor action leaves the program being constructed in a structurally well-formed state. However, this provides only structural reasoning principles (i.e. those that tools like syntax highlighters rely on.) 
+\emph{Structure editors} have shown some progress toward addressing this
+problem by allowing programmers to edit the tree structure of a program
+directly. Each editor action leaves the program being constructed in a
+structurally well-formed state. However, this provides only structural
+reasoning principles---i.e. those that tools like syntax highlighters rely
+on---rather than the full principles given by the type structure.
 
-TODO: some sort of transition that talks about how you still don't have semantic reasoning principles because you can be left in a semantically ill-defined state
+%% TODO: some sort of transition that talks about how you still don't have
+%% semantic reasoning principles because you can be left in a semantically
+%% ill-defined state
 
-In this paper, we present our ongoing work towards a small {structure
-  editor} with a firm type-theoretic foundation:
+In this paper, we present our ongoing work towards a small structure editor
+with a firm type-theoretic foundation:
 \begin{itemize}
   \item We give an extended example, based on the above, of how to use our
     type theory to reason through the construction of a term. (Section
-    \ref{})
+    \ref{sec:example})
 
   \item We give a formal type theory describing the act of structure
-    editing for a small lambda calculus. This lambda calculus introduces an
-    explicit notion of terms with holes in them to represent programs that
-    are not yet complete.  (Section \ref{}) Programs may have many holes in
-    them, and holes are acted upon with respect to their type. (Section
-    \ref{})
+    editing for a small lambda calculus. (Section \ref{sec:hazel}) This
+    lambda calculus introduces an explicit notion of terms with holes in
+    them to represent programs that are not yet complete.
+    (Section \ref{sec:holes}) Programs may have many holes in them, and
+    holes are acted upon with respect to their type and which holes are
+    currently in focus. (Sections \ref{sec:cursors} and \ref{sec:actions})
 
     We also state two key metatheoretic properties this type theory
-    enjoys. (Section \ref{})
+    enjoys. (Section \ref{sec:mt})
 
   \item We describe our ongoing effort to formalize the metatheory of this
-    calculus, including the proofs of the theorems above. (Section \ref{})
+    calculus, including the proofs of the theorems
+    above. (Section \ref{sec:mech})
 
   \item We describe our ongoing work to connect this type theory with a
     usable implementation of a real structure editor as a web
-    application. (Section \ref{})
+    application. (Section \ref{sec:impl})
 
   \item We conclude by describing our intentions for this work going
-    forward. (Section \ref{})
+    forward. (Section \ref{sec:future})
 \end{itemize}
-
-
-
-
-
-
-
-%% Programming languages equipped with rich type structure give programmers a
-%% powerful tool for reasoning about their programs as they write
-%% them. Unfortunately, the actual way in which programs are written does not
-%% take advantage of this structure. The operations of traditional text
-%% editors are on strings of characters of text rather than the actual
-%% structures of the program being written.
-
-%% and do not take advantage of the defining structure of
-%% the language.

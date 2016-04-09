@@ -229,7 +229,8 @@ We conclude by outlining our vision of a full-scale programming system grown ``f
 %
 \input{intro.tex}
 
-\paragraph{Example: Structured Interaction in Hazelnut.}
+\section{Structured Interaction in Hazelnut}
+\label{sec:example}
 %
 Figure~\ref{fig:first-example} gives an example of the Hazelnut user
 programming the identity function over numbers, then applying this
@@ -433,6 +434,7 @@ type to the codomain of the arrow type.
 \end{figure}
 
 \section{Hazelnut}
+\label{sec:hazel}
 Hazelnut is based on the simply-typed lambda calculus extended with a single base type, $\tnum$. Its major constituents are:
 \begin{itemize}
 \item \textbf{H-types} and \textbf{H-expressions} (Sec. \ref{sec:holes}), which are terms with \emph{holes}. Holes mark subterms that are ``under construction.'' H-types classify H-expressions according to a {bidirectionally typed} static semantics.
@@ -1306,7 +1308,7 @@ plus:
   }
 \end{equation}
 \end{subequations}
-\subsection{Metatheory}
+\subsection{Metatheory}\label{sec:mt}
 
 \begin{theorem}[Action Determinism] All of the following hold:
 \label{thrm:actdet}
@@ -1319,9 +1321,11 @@ plus:
 
 
 \subsubsection{Mechanization}
+\label{sec:mech}
 \input{agda.tex}
 
 \section{Implementation}
+\label{sec:impl}
 
 \subsection{Implementation Concepts}
 
@@ -1362,6 +1366,7 @@ Hybrid: Cyrus' active code completion paper
 Need to do a search to see what else has been done...
 
 \section{Discussion \& Conclusion}
+\label{sec:future}
 \subsection{Future Work}
 \begin{itemize}
 \item More powerful language (codesigned and mechanized as we go along -- having a powerful editor might allow us to dispense with certain complex language features; give example of ad hoc polymorphism?)
