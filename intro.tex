@@ -1,11 +1,100 @@
-Programs (and, by the Curry-Howard correspondence, proofs) are rich
-inductive structures. This fact is well understood amongst researchers and
-experienced programmers, but still somewhat obscure amongst programmers at
-large because programmers normally construct and interact with programs
-only indirectly, e.g. using a text editor composed with a parser.
+%% Programs (and, by the Curry-Howard correspondence, proofs) are rich
+%% inductive structures. This fact is well understood amongst researchers
+%% and experienced programmers, but still somewhat obscure amongst
+%% programmers at large because programmers normally construct and interact
+%% with programs only indirectly, e.g. using a text editor composed with a
+%% parser.
 
-There are some benefits to this approach, to be sure, but the structural
-mismatch between programs and their textual representations also imposes
-various burdens.  For example, the primitive edit actions available in a
-text editor (e.g. inserting or deleting a character or word) do not always
-correspond to sensible structural transformations.
+%% There are some benefits to this approach, to be sure, but the structural
+%% mismatch between programs and their textual representations also imposes
+%% various burdens.  For example, the primitive edit actions available in a
+%% text editor (e.g. inserting or deleting a character or word) do not
+%% always correspond to sensible structural transformations.
+
+% spj: describe the problem; state our contributions; STOP. one page max.
+
+When writing a program in a language with a rich type structure, the first
+thing an experienced programmer will is work out the types. Then, once she
+understands the shape of the goal, she knows what structures from the
+language might help her move towards that goal. She picks one and then
+applies this strategy inductively, knowing what types are required as she
+goes along.
+
+For example, if asked to write a function from naturals to naturals, we
+immediately see that we have to write down something at arrow type. One
+easy we to do this is with a function literal, which always looks
+like $$\hlam{\mathit{variable:type}}{\mathit{body}}$$ Because we haven't
+tried anything else yet, there's nothing in the context at a reasonable
+type, so we start there. Since we're trying to write something that takes
+naturals, we name and mark the argument and work towards the
+body $$\hlam{\mathit{x:num}}{\mathit{body}}$$ We now do have something in
+the context, specifically the variable we just named, so we can easily
+complete the task by using it as the whole
+$$\hlam{\mathit{x:num}}{\mathit{x}}$$ This choice of writing the identity
+function isn't forced---it's type-correct with respect to the goal, and
+follows the strategy, but may or may not meet a particular spec we had in
+mind beyond the type.
+
+This is the way that programs are written in languages with rich types. The
+problem is that this is not the way that traditional text editors allow
+programs to be written.
+
+Rather, text editors operate on the level of strings of
+characters. Well-formed strings denote actual programs, but programmers are
+stuck editing a representation of the program instead of the structures
+themselves. The editor does not restrict what the programmer may do: you
+can delete characters that belong, insert ones that don't, forget things
+that were needed, and so. There's nothing stopping us from accidentally
+writing $$\lambda \mathit{x:num}.\mathit{(x,x)}$$ even though it's obvious
+that building a pair can't hope to form a natural number.
+
+The type structure of the language makes this sort of error obvious: it's
+not that you're adding characters that make your program incorrect, or even
+malformed; you're adding characters that can't possibly create a structure
+you want because of the type. Simply put, the primitive operations
+available in text editors do not always correspond to sensible
+transformations on the structure of the program.
+
+In this paper, we present our ongoing work towards a small \emph{structure
+  editor} with a firm type-theoretic foundation:
+\begin{itemize}
+  \item We give an extended example, based on the above, of how to use our
+    type theory to reason through the construction of a term. (Section
+    \ref{})
+
+  \item We give a formal type theory describing the act of structure
+    editing for a small lambda calculus. This lambda calculus introduces an
+    explicit notion of terms with holes in them to represent programs that
+    are not yet complete.  (Section \ref{}) Programs may have many holes in
+    them, and holes are acted upon with respect to their type. (Section
+    \ref{})
+
+    We also state two key metatheoretic properties this type theory
+    enjoys. (Section \ref{})
+
+  \item We describe our ongoing effort to formalize the metatheory of this
+    calculus, including the proofs of the theorems above. (Section \ref{})
+
+  \item We describe our ongoing work to connect this type theory with a
+    usable implementation of a real structure editor as a web
+    application. (Section \ref{})
+
+  \item We conclude by describing our intentions for this work going
+    forward. (Section \ref{})
+\end{itemize}
+
+
+
+
+
+
+
+%% Programming languages equipped with rich type structure give programmers a
+%% powerful tool for reasoning about their programs as they write
+%% them. Unfortunately, the actual way in which programs are written does not
+%% take advantage of this structure. The operations of traditional text
+%% editors are on strings of characters of text rather than the actual
+%% structures of the program being written.
+
+%% and do not take advantage of the defining structure of
+%% the language.
