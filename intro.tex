@@ -67,20 +67,19 @@ on, it is still possible to leave the program in a semantically undefined state.
 %% semantic reasoning principles because you can be left in a semantically
 %% ill-defined state
 
-In this paper, we present our ongoing work on a minimal structure editor, Hazelnut,  defined in the type-theoretic style. In Hazelnut, every edit action leaves the program in both a structurally and semantically well-defined state. In fact, every edit action maintains an even stronger invariant that we will describe in Sec. \ref{sec:actions}. Importantly, programmers need not construct the program in a strictly top-down manner. For example, a programmer can construct what she intends to be an argument to some function without first constructing the outer term of function application form. Expressions that are well-typed but not type consistent with their surroundings are temporarily placed into \emph{holes} that delay type analysis.
+In this paper, we present our ongoing work on a minimal structure editor, Hazelnut,  defined in the type-theoretic style. In Hazelnut, edit actions are type-aware and leave the program in both a structurally and semantically well-defined state. In fact, edit actions maintain an even stronger invariant -- when acting on a subterm whose type is fixed by its surroundings, only edit actions consistent with that type are permitted (we will formally state this invariant in Sec. \ref{sec:actions}.) This does not imply that programs need to be constructed in a strictly top-down manner, however, because a well-defined expression that is not yet consistent with its surroundings can temporarily be put into a \emph{hole} that defers consistency analysis. 
 
 The remainder of the paper is organized as follows:
 \begin{itemize}
   \item We begin with an example to develop the reader's intuitions in Section
     \ref{sec:example}.
 
-  \item We then formally define Hazelnut in Section \ref{sec:hazel} and state two key metatheoretic properties this definition 
-    enjoys.
+  \item We then formally define Hazelnut in Section \ref{sec:hazel} and state two key metatheoretic properties.
 
   \item In Section \ref{sec:mech}, we describe our ongoing effort to formalize the semantics and metatheory of Hazelnut in Agda.
 
   \item In Section \ref{sec:impl}, we describe our ongoing effort to implement Hazelnut in a web browser, using a functional reactive model for user interaction.
-  \item In Section \ref{sec:rw}, we give a brief overview of related work.
+  \item In Section \ref{sec:rw}, we give an overview of related work.
   \item We conclude in Section \ref{sec:future} by describing our vision for this work going 
     forward.
 \end{itemize}
