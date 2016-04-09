@@ -228,49 +228,65 @@ with the finish action.
 &
 \aConstruct{\fasc} & \refrule{\ref{r:constructasc}}
 \\ 
-10 &
+11 &
 \hhole{} : \hhole{} &
-% \performSyn{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\zwsel{\hhole{} : \hhole{}}}{\htau}
-
-\zwsel{\hhole{} : \hhole{}}
+\hhole{} : \zwsel{ \hhole{}}
 &
-\aConstruct{\flam{x}} & \refrule{\ref{r:conelamhole}}
+\aConstruct{\fnum{}} & \refrule{\ref{r:contnum}}
 \\
-10 &
-\hhole{\textrm{id}} : \tnum{} &
-\hhole{\zwsel{{\textrm{id}}}} : \tnum{}
+12 &
+\hhole{} :\tnum{} &
+\hhole{} : \zwsel{\tnum{}}
 &
 \aConstruct{\fap{}} & \refrule{\ref{r:coneapfn}}
 \\
-11 &
-\hhole{\hap{{{\textrm{id}}}}{{\hhole{}}}} : \tnum{}
+13 &
+\hhole{} :\tnum{} &
+\zwsel{\hhole{}} : \tnum{}
 &
-\hhole{\hap{{{\textrm{id}}}}{\zwsel{\hhole{}}}} : \tnum{}
+\aMove{\dPrev{}} & \refrule{\ref{r:moveprevsib}}
+\\
+14 &
+\hhole{} :\tnum{} &
+\zwsel{\hhole{}} : \tnum{}
+&
+\aConstruct{ \fvar{id}} & \refrule{\ref{r:conevar}}
+\\
+15 &
+\textrm{id} : \tnum{} &
+\zwsel{{\textrm{id}}} : \tnum{}
+&
+\aConstruct{\fap{}} & \refrule{\ref{r:coneapfn}}
+\\
+16 &
+\hap{{{\textrm{id}}}}{{\hhole{}}} : \tnum{}
+&
+\hap{{{\textrm{id}}}}{\zwsel{\hhole{}}} : \tnum{}
 &
 \aConstruct{\fnumlit{3}} &  \refrule{\ref{r:conenumnum}}
 \\
-12 &
-\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
+17 &
+\hap{{{\textrm{id}}}}{{\hnum{3}}} : \tnum{}
 &
-\hhole{\hap{{{\textrm{id}}}}{\zwsel{\hnum{3}}}} : \tnum{}
+\hap{{{\textrm{id}}}}{\zwsel{\hnum{3}}} : \tnum{}
 &
 \aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
 \\
-13 &
+18 &
 %\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
-\hhole{\zwsel{\hap{{{\textrm{id}}}}{{\hnum{3}}}}} : \tnum{}
+\zwsel{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
 \aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
 \\
-14 &
-%\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
-&
-\zwsel{\hhole{{\hap{{{\textrm{id}}}}{{\hnum{3}}}}}} : \tnum{}
-&
-\aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
-\\
-15 &
+%19 &
+%%\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
+%&
+%\zwsel{{\hap{{{\textrm{id}}}}{{\hnum{3}}}}} : \tnum{}
+%&
+%\aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
+%\\
+20 &
 {\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
 \zwsel{{{\hap{{{\textrm{id}}}}{{\hnum{3}}}}}} : \tnum{}
