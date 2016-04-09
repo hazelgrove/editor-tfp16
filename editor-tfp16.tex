@@ -705,7 +705,18 @@ The syntax of \emph{actions}, $\alpha$, is given in Figure \ref{fig:action-synta
 & \text{against $\htau$}
 \end{array}\]
 
-A subsumption rule:
+As suggested by the descriptions of the judgements above, our action semantics maintains the following \emph{action sensibility} theorem:
+\begin{theorem}[Action Sensibility] Both of the following hold:
+\label{thrm:actsafe}
+\begin{enumerate}
+\item If $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ and $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$ then $\hsyn{\hGamma}{\removeSel{\zexp'}}{\htau'}$.
+\item If $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$ and $\hana{\hGamma}{\removeSel{\zexp}}{\htau}$ then $\hana{\hGamma}{\removeSel{\zexp'}}{\htau}$.
+\end{enumerate}
+\end{theorem}
+
+In other words, every action leaves the program in a semantically well-defined state. More specifically, actions performed on expressions that synthesize a type can only produce expressions that also synthesize some (possibly different) type. Actions performed on expressions in analytic position (e.g. those under type ascriptions or in argument position) can only produce expressions that can be analyzed against the type provided. As such, Hazelnut enforces the natural type discipline described informally in the introduction. As we will see, non-empty holes allow us to maintain a slightly more flexible discipline, i.e. one where the programmer is not forced to construct the program from the outside-in but rather can construct fragments of the program inside a hole until ready to ``expose'' them to the surrounding program.
+
+The action semantics includes a subsumption rule much like the one for underlying semantics of H-expressions:
 \begin{equation}
   \inferrule{
     \performSyn{\hGamma}{\zexp}{\htau'}{\alpha}{\zexp'}{\htau''}\\
@@ -716,7 +727,7 @@ A subsumption rule:
 \end{equation}
 
 
-We will need to define type incompatibility, $\tincompat{\htau}{\htau'}$, as follows:
+We will also need to define type incompatibility, $\tincompat{\htau}{\htau'}$, as follows:
 \begin{subequations}
   \begin{equation}
     \inferrule{
@@ -747,8 +758,9 @@ We will need to define type incompatibility, $\tincompat{\htau}{\htau'}$, as fol
 \end{subequations}
 
 
-\subsubsection{Relative Movement}
-Types
+\subsubsection{Relative Movement} Movement actions change the focus but do not change the underlying H-type or H-expression (so action sensibility is easy to show.)
+
+The rules for relative movement within Z-types are given below and should be fairly self-explanatory:
 \begin{subequations}
 \begin{equation}
   \inferrule{ }{
@@ -844,8 +856,9 @@ Types
   }
 \end{equation}
 \end{subequations}
+The final two rules above recurse into the zipper structure.
 
-Rules for expressions are similar. Movement is type-independent, so defer to auxiliary judgements:
+The rules for relative movement within Z-expressions are similar. Movement is type-independent, so we defer to an auxiliary judgement:
 \begin{subequations}
 \begin{equation}
 \inferrule{
@@ -862,7 +875,7 @@ Rules for expressions are similar. Movement is type-independent, so defer to aux
 }
 \end{equation}
 \end{subequations}
-Show only rules for ascription form:
+For concision, we show only the rules for the ascription forms:
 \begin{subequations}
 \begin{equation}
   \inferrule{ }{
@@ -1294,13 +1307,6 @@ plus:
 \end{equation}
 \end{subequations}
 \subsection{Metatheory}
-\begin{theorem}[Action Safety] Both of the following hold:
-\label{thrm:actsafe}
-\begin{enumerate}
-\item If $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$  and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ then $\hsyn{\hGamma}{\removeSel{\zexp'}}{\htau'}$.
-\item If  $\hana{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$ then $\hana{\hGamma}{\removeSel{\zexp'}}{\htau}$.
-\end{enumerate}
-\end{theorem}
 
 \begin{theorem}[Action Determinism] All of the following hold:
 \label{thrm:actdet}
