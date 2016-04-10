@@ -1,0 +1,98 @@
+Before TFP (June 7-10)
+======================
+Ideally, I'd like to be able to say during the talk that the Agda formalization and the implementation of what's in the paper, exactly as-is, is done.
+
+Before Final Submission (July 14)
+=================================
+
+Abstract + Intro
+----------------
+- Tweak text and make sure terms are used consistently
+
+Hazelnut By Example
+-------------------
+- Make the split in the example less awkward
+- Normalize "line x" and "Line x", "Sec. X" and "Section X", etc.
+- Check that line numbers are correct (or use labels)
+- Make sure rule references in Figure 1 are correct
+
+Hazelnut, Formally
+------------------
+- Smooth transition between Sec. 2 and Sec. 3
+
+3.1
+- Mention that we assume the usual principles of alpha equivalence, renaming and substitution.
+- Define e complete and \tau complete in appendix/TR
+- Do we want to define the dynamics?
+- Make the numbering of (1ja-d) less weird if possible.
+- Mention that it is not exactly the ? type from Siek and Taha in that it can always be covariant, whereas there they needed to make ? invariant in, e.g., reference types.
+- The footnote about non-deterministic synthesis seems correct to me, but we should actually think more carefully about that.
+- Maybe briefly distinguish compatibility from subtyping.
+
+3.2
+- Say something more about Huet's zipper pattern, i.e. that it is actually defined for trees, not over inductive structures, but inductive structures are a sort of tree.
+- Reference the column in the table.
+- Compress the space taken by the diamond function definitions if necessary.
+
+3.3
+- Should the sort "Form" be renamed to something else?
+- Change "produces" to "has result"?
+- Is the second part of Theorem 2 actually its own theorem? Analog in other bidirectional systems? Analog in the semantics of H-expressions?
+- State that type incompatibility is reflexive and symmetric. Is it true that we wouldn't need incompatibility if we didn't care about determinism? Maybe move this definition into Sec. 1 since its related to compatibility.
+- Do we need to add a type synthesis premise to the action subsumption rule?
+
+[Relative Movement]
+- Need analytic version of movement rule I think (can't appeal to action subsumption in the proof of Theorem 1)
+- Give the remaining rules for movement in the appendix/TR
+- State the lemma about movement necessary to prove Theorem 1, i.e. that it preserves the defocused H-expression.
+
+[Deletion]
+- Give the remaining recursive cases in the appendix/TR. Make sure that the rule for ascription works properly.
+
+[Construction]
+- Add "in some cases using the term in focus as an 'argument'" or something to that effect.
+- Rename "arr" to "arrow"?
+- "The rule above was used..." be more specific.
+- Mention that there is no way to edit the variable in a lambda after it has been constructed for simplicity.
+- Should we give each action its own eqn number?
+- "exactly as described in Sec. 3.1" expand on this
+- refer to Theorem 1 by reference, not absolutely
+- Write down recursive rules (asc in paper, others in appendix/TR)
+
+[Finishing]
+- "always be finished" -> something else
+- "are consistent" -> "is consistent"
+
+Mechanization
+-------------
+- Tweak / write more?
+
+Implementation
+--------------
+- Tweak / write more?
+- Screenshot?
+- Different name than HZ?
+
+Related Work
+------------
+- Characterize Barista differently
+- Look more thoroughly for work that maintained semantic properties
+- Is there really no paper anywhere about Lamdu?
+- Examine Idris a bit more 
+- Tweak / expand on description of relationship with Agda
+- Cite Agda and Idris
+
+Discussion & Conclusion
+-----------------------
+- Tweak summary
+- "with language support" -> "with editor support"
+- "one of many possible holes" -> "one of many possible subterms"
+- can we say something smarter about reln. with focusing?
+- same for gradual typing (see above)
+- talk about system as a source of data for various things
+- Concluding paragraph before Minsky quote
+
+References
+----------
+- Clean up garbage.
+- Fix capitalization in paper titles.
