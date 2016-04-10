@@ -61,21 +61,21 @@ University of Colorado Boulder
 
 \maketitle              % typeset the title of the contribution
 \begin{abstract}
-Programs are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of textual syntax, and perform several text editor actions to make a single syntactically and semantically well-defined change. %Manipulating ill-defined programs is difficult for programmers and complicates the design of programming tools.
-During these sequences of editor actions, or when the programmer makes a mistake, programmers and programming tools must contend with malformed or semantically ill-defined program text, complicating the programming process.
+Programs are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of parsing, and it can require many text editor actions to make a single syntactically and semantically well-defined change. %Manipulating ill-defined programs is difficult for programmers and complicates the design of programming tools.
+During these sequences of text editor actions, or when the programmer makes a mistake, programmers and programming tools must contend with malformed or semantically ill-defined program text, complicating the programming process.
 %Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser.
 %There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden.
 %For example, the primitive edit actions available in a text editor (e.g. inserting or deleting a character or word)  do not always correspond to  sensible structural transformations.
 %Indeed, most structural  transformations require performing many primitive edit actions.
 
 \emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  produce sensible changes to the program structure.
-Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. They also focus mainly on syntactic well-formedness, so programs can still be left semantically ill-defined as they are being constructed.
+Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. They also focus primarily on syntactic well-formedness, so programs can still be left semantically ill-defined as they are being constructed.
 
 In this paper, we report on our ongoing efforts to develop Hazelnut, a minimal  structure editor defined in a principled type-theoretic style that permits only syntactically and semantically well-defined actions, without forcing the programmer to construct the program in a strictly ``top-down'' fashion.
 Formally, Hazelnut is a bidirectionally typed lambda calculus extended with
 1) \emph{holes} (which mark subterms that are under construction);
 %, which are identified by variables tracked in a separate linear \emph{hole context}
-2) a \emph{focus model}; and 3) a bidirectional \emph{action model} equipped with a useful \emph{action sensibility} theorem. %Programs with holes have a well-defined static semantics, and the action model is defined such that every performable action is both syntactically sensible (by construction) and semantically sensible (i.e. we can establish a useful \emph{action sensibility} theorem.)
+2) a \emph{focus model}; and 3) a bidirectional \emph{action model} equipped with a useful \emph{action sensibility} metatheorem. %Programs with holes have a well-defined static semantics, and the action model is defined such that every performable action is both syntactically sensible (by construction) and semantically sensible (i.e. we can establish a useful \emph{action sensibility} theorem.)
 %We conclude by outlining our vision of a full-scale programming system grown ``from the ground up'' around the same fundamental principles as Hazelnut.
 
 %\keywords{computational geometry, graph theory, Hamilton cycles}
@@ -495,7 +495,7 @@ The hole type behaves much like the type $?$ in prior work by Siek and Taha on g
 
 \end{subequations}
 \subsection{Focus Model}\label{sec:cursors}
-\begin{figure}
+\begin{figure}[t]
 \hspace{-3px}$\arraycolsep=3pt\begin{array}{lllllll}
 \mathsf{ZTyp} & \ztau & ::= &
   %\zlsel{\htau} ~\vert~
@@ -580,7 +580,7 @@ Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by remo
 \label{fig:action-syntax}
 \end{figure}
 
-The syntax of \emph{actions}, $\alpha$, is given in Figure \ref{fig:action-syntax}. The \emph{action semantics} of Hazelnut is organized around three judgements:
+The syntax of \emph{actions}, $\alpha$, is given in Figure \ref{fig:action-syntax}. Actions can be performed on Z-types and Z-expressions according to the \emph{action semantics} of Hazelnut, which is organized around three judgements:
 \[\arraycolsep=10pt\begin{array}{ll}
 %\textbf{Judgement Form} & \textbf{Description}\\
 \performTyp{\ztau}{\alpha}{\ztau'} & \text{Performing $\alpha$ on $\ztau$ produces $\ztau'$}\\
@@ -1034,7 +1034,7 @@ In the second case, the ascribed type is the type provided for analysis:
   }
 \end{equation}
 
-The $\aConstruct{\fvar{x}}$ action places the variable $x$ into an empty hole. If the focused empty hole is being asked to synthesize a type, then the result of the action synthesized the type assigned to $x$ in the context: 
+The $\aConstruct{\fvar{x}}$ action places the variable $x$ into the focused empty hole. If that hole is being asked to synthesize a type, then the result of the action synthesizes the type assigned to $x$ in the context: 
 \begin{equation}
   \label{r:conevar}
   \inferrule{ }{
@@ -1331,7 +1331,7 @@ Agda and Idris are two dependently typed languages that attempt to simulate a st
 This paper presented Hazelnut, a type theoretic structure editor for a simply typed lambda calculus. We aim to take a principled approach to its design by formally specifying its semantics, providing strong metatheoretic guarantees, mechanizing its semantics and metatheory in Agda and implementing it using the concepts of  functional reactive programming. As of this submission, we have achieved reasonable confidence in the formal system presented above, and have transitioned our focus toward the mechanization and implementation efforts. By the time of presentation, we anticipate having complete or nearly complete versions of these. 
 
 \subsection{Future Work}
-Hazelnut is, obviously, a very limited language at its core. So the most obvious avenue for future work is to increase the expressive power of this language. Our plan is to simultaneously maintain a mechanization and implementation (following, for example, Standard ML) as we proceed, ultimately producing the first large-scale, formally verified bidirectionally typed language codesigned with a type-aware editor. It may be that certain language features are unnecessary given a sufficiently advanced type-aware structure editor, while others are practical only with language support. We intend to explore such questions.
+Hazelnut is, obviously, a very limited language at its core. So the most obvious avenue for future work is to increase the expressive power of this language. Our plan is to simultaneously maintain a mechanization and implementation (following, for example, Standard ML) as we proceed, ultimately producing the first large-scale, formally verified bidirectionally typed language codesigned with a type-aware editor. It may be that certain language features are unnecessary given a sufficiently advanced type-aware structure editor, while others are practical only with editor support. We intend to use Hazelnut and derivative systems thereof as a platform for rigorously exploring such questions.
 
 There are various aspects of the editor model that we have not yet formalized. For example, our action model does not consider how actions are actually entered using, for example, key combinations or chords. It also did not provide any specific model of how available actions will be determined for presentation to the user. In practice, we would want also to rank available actions in some reasonable manner (perhaps based on usage data gathered from other users or code repositories.)
 
