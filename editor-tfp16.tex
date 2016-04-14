@@ -2060,7 +2060,9 @@ TODO: Zipper cases?
 TODO: Zipper case?
 
 \end{subequations}
-\subsubsection{Synthetic Expression Actions}
+\subsubsection{Synthetic Expression Actions}~\\~\\
+\noindent\fbox{$\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$}
+
 \begin{subequations}
 \paragraph{Movement} 
 \begin{equation}
@@ -2078,24 +2080,239 @@ TODO: Zipper case?
   }
 \end{equation}
 
-\paragraph{Construction} c
+\paragraph{Construction}
+\begin{equation}
+  \inferrule{ }{
+    \performSyn{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\hexp : \zwsel{\htau}}{\htau}
+  }
+\end{equation} 
 
-\paragraph{Finishing} d
+\begin{equation}
+  \inferrule{ }{
+    \performSyn{\hGamma, x : \htau}{\zwsel{\hehole}}{\tehole}{\aConstruct{\fvar{x}}}{\zwsel{x}}{\htau}
+  }
+\end{equation}
+
+\begin{equation}
+  \inferrule{ }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hehole}}
+      {\tehole}
+      {\aConstruct{\flam{x}}}
+      {\hlam{x}{\hehole} : \tarr{\zwsel{\tehole}}{\tehole}}
+      {\tarr{\tehole}{\tehole}}
+  }
+\end{equation}
+
+\begin{equation}
+  \inferrule{ }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hexp}}
+      {\tarr{\htau_1}{\htau_2}}
+      {\aConstruct{\fap}}
+      {\hap{\hexp}{\zwsel{\hehole}}}
+      {\htau_2}
+  }
+\end{equation}
+
+\begin{equation}
+  \inferrule{ }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hexp}}
+      {\tehole}
+      {\aConstruct{\fap}}
+      {\hap{\hexp}{\zwsel{\hehole}}}
+      {\tehole}
+  }
+\end{equation}
+
+\begin{equation}
+  \inferrule{
+    \tincompat{\htau}{\tarr{\tehole}{\tehole}}
+  }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hexp}}
+      {\htau}
+      {\aConstruct{\fap}}
+      {\hap{\hhole{\hexp}}{\zwsel{\hehole}}}
+      {\tehole}
+  }
+\end{equation}
+
+\begin{equation}
+  \inferrule{ }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hexp}}
+      {\htau}
+      {\aConstruct{\farg}}
+      {\hap{\zwsel{\hehole}}{\hexp}}
+      {\tehole}
+  }
+\end{equation}
+
+\begin{equation}
+  \inferrule{ }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hehole}}
+      {\tehole}
+      {\aConstruct{\fnumlit{n}}}
+      {\zwsel{\hnum{n}}}
+      {\tnum}
+  }
+\end{equation}
+
+\begin{equation}
+  \inferrule{
+    \tcompat{\htau}{\tnum}
+  }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hexp}}
+      {\htau}
+      {\aConstruct{\fplus}}
+      {\hadd{\hexp}{\zwsel{\hehole}}}
+      {\tnum}
+  }
+\end{equation}
+
+\begin{equation}
+  \inferrule{
+    \tincompat{\htau}{\tnum}
+  }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hexp}}
+      {\htau}
+      {\aConstruct{\fplus}}
+      {\hadd{\hhole{\hexp}}{\zwsel{\hehole}}}
+      {\tnum}
+  }
+\end{equation}
+
+\paragraph{Finishing}
+  \begin{equation}
+    \label{r:finishana}
+  \inferrule{
+    \hsyn{\hGamma}{\hexp}{\htau'}
+  }{
+    \performSyn
+      {\hGamma}
+      {\zwsel{\hhole{\hexp}}}
+      {\tehole}
+      {\aFinish}
+      {\zwsel{\hexp}}
+      {\htau'}
+  }
+\end{equation}
+
 
 \paragraph{Zipper Cases} e
 \end{subequations}
 
-\subsubsection{Analytic Expression Actions}
-\paragraph{Subsumption} 0 
+\subsubsection{Analytic Expression Actions}~\\~\\
+\noindent\fbox{$\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$}
+\begin{subequations}
+\paragraph{Subsumption} 
+\begin{equation}
+  \inferrule{
+    \performSyn{\hGamma}{\zexp}{\htau'}{\alpha}{\zexp'}{\htau''}\\
+    \tcompat{\htau}{\htau''}
+  }{
+    \performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}
+  }
+\end{equation}
 
-\paragraph{Movement} a
+TODO: require synthesis as premise? 
 
-\paragraph{Deletion} b
+\paragraph{Movement}
+\begin{equation}
+  \inferrule{
+  \performMove{\zexp}{\aMove{\delta}}{\zexp'}
+}{
+  \performAna{\hGamma}{\zexp}{\htau}{\aMove{\delta}}{\zexp'}
+}
+\end{equation} 
 
-\paragraph{Construction} c
+\paragraph{Deletion}
+\begin{equation}
+  \inferrule{ }{
+    \performAna{\hGamma}{\zwsel{\hexp}}{\htau}{\aDel}{\zwsel{\hehole}}
+  }
+\end{equation}
 
-\paragraph{Finishing} d
+\paragraph{Construction}
+\begin{equation}
+  \inferrule{ }{
+    \performAna{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\hexp : \zwsel{\htau}}
+  }
+\end{equation} 
+
+\begin{equation}
+  \inferrule{
+    \tincompat{\htau}{\htau'}
+  }{
+    \performAna{\hGamma, x : \htau'}{\zwsel{\hehole}}{\htau}{\aConstruct{\fvar{x}}}{\hhole{\zwsel{x}}}
+  }
+\end{equation}
+
+\begin{equation}
+  \inferrule{ }{
+    \performAna
+      {\hGamma}
+      {\zwsel{\hehole}}
+      {\tarr{\htau_1}{\htau_2}}
+      {\aConstruct{\flam{x}}}
+      {\hlam{x}{\zwsel{\hehole}}}
+  }
+\end{equation}
+
+\begin{equation}
+  \inferrule{
+    \tincompat{\htau}{\tarr{\tehole}{\tehole}}
+  }{
+    \performAna
+      {\hGamma}
+      {\zwsel{\hehole}}
+      {\htau}
+      {\aConstruct{\flam{x}}}
+      {\hhole{
+        \hlam{x}{\hehole} : \tarr{\zwsel{\tehole}}{\tehole}
+      }}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule[test]{
+    \tincompat{\htau}{\tnum}
+  }{
+    \performAna
+      {\hGamma}
+      {\zwsel{\hehole}}
+      {\htau}
+      {\aConstruct{\fnumlit{n}}}
+      {\hhole{\zwsel{\hnum{n}}}}
+  }
+\end{equation}
+\paragraph{Finishing} 
+\begin{equation}
+  \inferrule{
+    \hana{\hGamma}{\hexp}{\htau}
+  }{
+    \performAna
+      {\hGamma}
+      {\zwsel{\hhole{\hexp}}}
+      {\htau}
+      {\aFinish}
+      {\zwsel{\hexp}}
+  }
+\end{equation}
 
 \paragraph{Zipper Cases} e
 
+\end{subequations}
 \end{document}
