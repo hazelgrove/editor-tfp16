@@ -30,7 +30,7 @@
 
 \mainmatter              % start of the contributions
 %
-\title{Hazelnut: A Minimal Bidirectionally Typed Structure Editor}
+\title{Hazelnut: A Bidirectionally Typed \\Structure Editor Calculus}
 \subtitle{(Research Paper Draft)}
 %
 %\titlerunning{Hamiltonian Mechanics}  % abbreviated title (for running head)
@@ -764,13 +764,13 @@ The rules for relative movement within Z-expressions are similar. Movement is ty
   \performSyn{\hGamma}{\zexp}{\htau}{\aMove{\delta}}{\zexp'}{\htau}
 }
 \end{equation}
-% \begin{equation}
-% \inferrule{
-%   \performMove{\zexp}{\aMove{\delta}}{\zexp'}
-% }{
-%   \performAna{\hGamma}{\zexp}{\htau}{\aMove{\delta}}{\zexp'}
-% }
-% \end{equation}
+\begin{equation}
+  \inferrule{
+  \performMove{\zexp}{\aMove{\delta}}{\zexp'}
+}{
+  \performAna{\hGamma}{\zexp}{\htau}{\aMove{\delta}}{\zexp'}
+}
+\end{equation}
 \end{subequations}
 For concision, we show only the rules for the ascription forms:
 \begin{subequations}
@@ -1794,7 +1794,308 @@ By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H
 \end{equation}
 \end{subequations}
 
-\subsubsection{Synthetic and Analytic Actions}
+\subsubsection{Expression Movement Actions}~\\~\\
+\noindent\fbox{$\performMove{\zexp}{\aMove{\delta}}{\zexp'}$}
 
+\begin{subequations}
+\paragraph{Ascription}
+
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \zwsel{\hexp : \htau}
+    }{
+      \aMove{\dChild}
+    }{
+      \zwsel{\hexp} : \htau
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \zwsel{\hexp} : \htau
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\hexp : \htau}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \hexp : \zwsel{\htau}
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\hexp : \htau}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \zwsel{\hexp} : \htau
+    }{
+      \aMove{\dNext}
+    }{
+      \hexp : \zwsel{\htau}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \hexp : \zwsel{\htau}
+    }{
+      \aMove{\dPrev}
+    }{
+      \zwsel{\hexp} : \htau
+    }
+  }
+\end{equation}
+\begin{equation}
+\inferrule{
+  \performMove{
+    \zexp
+  }{
+    \aMove{\delta}
+  }{
+    \zexp'
+  }
+}{
+  \performMove{
+    \zexp : \htau
+  }{
+    \aMove{\delta}
+  }{
+    \zexp' : \htau
+  }
+}
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \performMove{
+      \ztau
+    }{
+      \aMove{\delta}
+    }{
+      \ztau'
+    }
+  }{
+    \performMove{
+      \hexp : \ztau
+    }{
+      \aMove{\delta}
+    }{
+      \hexp : \ztau'
+    }
+  }
+\end{equation}
+
+\paragraph{Lambda}
+\begin{equation}
+\inferrule{ }{
+  \performMove{
+    \zwsel{\hlam{x}{\hexp}}
+  }{
+    \aMove{\dChild}
+  }{
+    \hlam{x}{\zwsel{\hexp}}
+  }
+}
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \hlam{x}{\zwsel{\hexp}}
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\hlam{x}{\hexp}}
+    }
+  }
+\end{equation}
+TODO: zipper cases?
+\paragraph{Application}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \zwsel{\hap{\hexp_1}{\hexp_2}}
+    }{
+      \aMove{\dChild}
+    }{
+      \hap{\zwsel{\hexp_1}}{\hexp_2}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \hap{\zwsel{\hexp_1}}{\hexp_2}
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\hap{\hexp_1}{\hexp_2}}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \hap{{\hexp_1}}{\zwsel{\hexp_2}}
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\hap{\hexp_1}{\hexp_2}}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \hap{\zwsel{\hexp_1}}{\hexp_2}
+    }{
+      \aMove{\dNext}
+    }{
+      \hap{\hexp_1}{\zwsel{\hexp_2}}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \hap{\hexp_1}{\zwsel{\hexp_2}}
+    }{
+      \aMove{\dPrev}
+    }{
+      \hap{\zwsel{\hexp_1}}{\hexp_2}
+    }
+  }
+\end{equation}
+TODO: Zipper cases?
+
+\paragraph{Plus}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \zwsel{\hadd{\hexp_1}{\hexp_2}}
+    }{
+      \aMove{\dChild}
+    }{
+      \hadd{\zwsel{\hexp_1}}{\hexp_2}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \hadd{\zwsel{\hexp_1}}{\hexp_2}
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\hadd{\hexp_1}{\hexp_2}}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \hadd{{\hexp_1}}{\zwsel{\hexp_2}}
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\hadd{\hexp_1}{\hexp_2}}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \hadd{\zwsel{\hexp_1}}{\hexp_2}
+    }{
+      \aMove{\dNext}
+    }{
+      \hadd{\hexp_1}{\zwsel{\hexp_2}}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \hadd{\hexp_1}{\zwsel{\hexp_2}}
+    }{
+      \aMove{\dPrev}
+    }{
+      \hadd{\zwsel{\hexp_1}}{\hexp_2}
+    }
+  }
+\end{equation}
+TODO: Zipper cases?
+
+\paragraph{Non-Empty Hole}
+\begin{equation}
+\inferrule{ }{
+  \performMove{
+    \zwsel{\hhole{\hexp}}
+  }{
+    \aMove{\dChild}
+  }{
+    \hhole{\zwsel{\hexp}}
+  }
+}
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performMove{
+      \hhole{\zwsel{\hexp}}
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\hhole{\hexp}}
+    }
+  }
+\end{equation}
+TODO: Zipper case?
+
+\end{subequations}
+\subsubsection{Synthetic Expression Actions}
+\begin{subequations}
+\paragraph{Movement} 
+\begin{equation}
+\inferrule{
+  \performMove{\zexp}{\aMove{\delta}}{\zexp'}
+}{
+  \performSyn{\hGamma}{\zexp}{\htau}{\aMove{\delta}}{\zexp'}{\htau}
+}
+\end{equation}
+
+\paragraph{Deletion} 
+\begin{equation}
+  \inferrule{ }{
+    \performSyn{\hGamma}{\zwsel{\hexp}}{\htau}{\aDel}{\zwsel{\hehole}}{\tehole}
+  }
+\end{equation}
+
+\paragraph{Construction} c
+
+\paragraph{Finishing} d
+
+\paragraph{Zipper Cases} e
+\end{subequations}
+
+\subsubsection{Analytic Expression Actions}
+\paragraph{Subsumption} 0 
+
+\paragraph{Movement} a
+
+\paragraph{Deletion} b
+
+\paragraph{Construction} c
+
+\paragraph{Finishing} d
+
+\paragraph{Zipper Cases} e
 
 \end{document}
