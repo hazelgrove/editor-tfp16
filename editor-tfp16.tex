@@ -714,46 +714,46 @@ The rules for relative movement within Z-types are given below and should be fai
     }
   }
 \end{equation}
-\begin{equation}
-\inferrule{
-  \performTyp{
-    \ztau
-  }{
-    \aMove{\delta}
-  }{
-    \ztau'
-  }
-}{
-  \performTyp{
-    \tarr{\ztau}{\htau}
-  }{
-    \aMove{\delta}
-  }{
-    \tarr{\ztau'}{\htau}
-  }
-}
-\end{equation}
-\begin{equation}
-  \inferrule{
-    \performTyp{
-      \ztau
-    }{
-      \aMove{\delta}
-    }{
-      \ztau'
-    }
-  }{
-    \performTyp{
-      \tarr{\htau}{\ztau}
-    }{
-      \aMove{\delta}
-    }{
-      \tarr{\htau}{\ztau}
-    }
-  }
-\end{equation}
+% \begin{equation}
+% \inferrule{
+%   \performTyp{
+%     \ztau
+%   }{
+%     \aMove{\delta}
+%   }{
+%     \ztau'
+%   }
+% }{
+%   \performTyp{
+%     \tarr{\ztau}{\htau}
+%   }{
+%     \aMove{\delta}
+%   }{
+%     \tarr{\ztau'}{\htau}
+%   }
+% }
+% \end{equation}
+% \begin{equation}
+%   \inferrule{
+%     \performTyp{
+%       \ztau
+%     }{
+%       \aMove{\delta}
+%     }{
+%       \ztau'
+%     }
+%   }{
+%     \performTyp{
+%       \tarr{\htau}{\ztau}
+%     }{
+%       \aMove{\delta}
+%     }{
+%       \tarr{\htau}{\ztau}
+%     }
+%   }
+% \end{equation}
 \end{subequations}
-The final two rules above recurse into the zipper structure.
+% The final two rules above recurse into the zipper structure.
 
 The rules for relative movement within Z-expressions are similar. Movement is type-independent, so we defer to an auxiliary judgement:
 \begin{subequations}
@@ -874,7 +874,7 @@ For concision, we show only the rules for the ascription forms:
 \end{subequations}
 \subsubsection{Deletion} The $\aDel$ action replaces the selected subterm with an empty hole.
 
-Again, the rules for Z-types are self-explanatory:
+Again, the rule for Z-types are self-explanatory:
 \begin{subequations}
 \begin{equation}
   \inferrule{ }{
@@ -887,20 +887,20 @@ Again, the rules for Z-types are self-explanatory:
     }
   }
 \end{equation}
-\begin{equation}
-  \inferrule{
-    \performTyp{\ztau}{\aDel}{\ztau'}
-  }{
-    \performTyp{\tarr{\ztau}{\htau}}{\aDel}{\tarr{\ztau'}{\htau}}
-  }
-\end{equation}
-\begin{equation}
-  \inferrule{
-    \performTyp{\ztau}{\aDel}{\ztau'}
-  }{
-    \performTyp{\tarr{\htau}{\ztau}}{\aDel}{\tarr{\htau}{\ztau'}}
-  }
-\end{equation}
+% \begin{equation}
+%   \inferrule{
+%     \performTyp{\ztau}{\aDel}{\ztau'}
+%   }{
+%     \performTyp{\tarr{\ztau}{\htau}}{\aDel}{\tarr{\ztau'}{\htau}}
+%   }
+% \end{equation}
+% \begin{equation}
+%   \inferrule{
+%     \performTyp{\ztau}{\aDel}{\ztau'}
+%   }{
+%     \performTyp{\tarr{\htau}{\ztau}}{\aDel}{\tarr{\htau}{\ztau'}}
+%   }
+% \end{equation}
 \end{subequations}
 
 Deletion within a Z-expression is defined as follows:
@@ -987,35 +987,35 @@ The $\aConstruct{\fnum}$ action replaces an empty Z-type hole with the $\tnum$ t
   }
 \end{equation}
 
-Construction proceeds recursively down the zipper:
-  \begin{equation}
-    \label{r:contarrL}
-  \inferrule{
-    \performTyp{\ztau}{\aConstruct{\varphi}}{\ztau'}
-  }{
-    \performTyp{
-      \tarr{\ztau}{\htau}
-    }{
-      \aConstruct{\varphi}
-    }{
-      \tarr{\ztau'}{\htau}
-    }
-  }
-\end{equation}
-  \begin{equation}
-    \label{r:contarrR}
-  \inferrule{
-    \performTyp{\ztau}{\aConstruct{\varphi}}{\ztau'}
-  }{
-    \performTyp{
-      \tarr{\htau}{\ztau}
-    }{
-      \aConstruct{\varphi}
-    }{
-      \tarr{\htau}{\ztau'}
-    }
-  }
-\end{equation}
+% Construction proceeds recursively down the zipper:
+%   \begin{equation}
+%     \label{r:contarrL}
+%   \inferrule{
+%     \performTyp{\ztau}{\aConstruct{\varphi}}{\ztau'}
+%   }{
+%     \performTyp{
+%       \tarr{\ztau}{\htau}
+%     }{
+%       \aConstruct{\varphi}
+%     }{
+%       \tarr{\ztau'}{\htau}
+%     }
+%   }
+% \end{equation}
+%   \begin{equation}
+%     \label{r:contarrR}
+%   \inferrule{
+%     \performTyp{\ztau}{\aConstruct{\varphi}}{\ztau'}
+%   }{
+%     \performTyp{
+%       \tarr{\htau}{\ztau}
+%     }{
+%       \aConstruct{\varphi}
+%     }{
+%       \tarr{\htau}{\ztau'}
+%     }
+%   }
+% \end{equation}
 \end{subequations}
 
 \begin{subequations}
@@ -1245,7 +1245,7 @@ If the focused non-empty hole appears in analytic position, then it can only be 
 \end{equation}
 \end{subequations}
 
-
+\subsubsection{Zipper Cases} TODO: write this
 \section{Mechanization}
 \label{sec:mech}\label{sec:mt}
 \input{agda.tex}
@@ -1374,28 +1374,28 @@ systems, for we will not forever stay confined to mere strings of symbols.
 \appendix
 \section{Hazelnut}
 \subsection{H-Types and H-Expressions}
-\subsubsection{Type Compatibility}
+\subsubsection{Type Compatibility and Incompatibility}
 ~\\~\\
 \noindent\fbox{$\tcompat{\htau}{\htau'}$}
-\begin{subequations}\label{rules:tcompat}
-\begin{equation}\label{rule:tcompat-hole}
-\inferrule{ }{
-  \tcompat{\htau}{\tehole}
-}
-\end{equation}
-\begin{equation}\label{rule:tcompat-comm}
+\begin{subequations}%\label{rules:tcompat}
+\begin{equation}%\label{rule:tcompat-comm}
 \inferrule{
   \tcompat{\htau}{\htau'}
 }{
   \tcompat{\htau'}{\htau}
 }
 \end{equation}
-\begin{equation}\label{rule:tcompat-num}
+\begin{equation}%\label{rule:tcompat-hole}
+\inferrule{ }{
+  \tcompat{\htau}{\tehole}
+}
+\end{equation}
+\begin{equation}%\label{rule:tcompat-num}
 \inferrule{ }{
   \tcompat{\tnum}{\tnum}
 }
 \end{equation}
-\begin{equation}\label{rule:tcompat-arr}
+\begin{equation}%\label{rule:tcompat-arr}
 \inferrule{
   \tcompat{\htau_1}{\htau_1'}\\
   \tcompat{\htau_2}{\htau_2'}
@@ -1405,10 +1405,41 @@ systems, for we will not forever stay confined to mere strings of symbols.
 \end{equation}
 \end{subequations}
 
+\noindent\fbox{$\tincompat{\htau}{\htau'}$}
+\begin{subequations}
+  \begin{equation}
+    \inferrule{
+      \tincompat{\htau}{\htau'}
+    }{
+      \tincompat{\htau'}{\htau}
+    }
+  \end{equation}
+  \begin{equation}
+    \inferrule{ }{
+      \tincompat{\tnum}{\tarr{\htau_1}{\htau_2}}
+    }
+  \end{equation}
+  \begin{equation}
+    \inferrule{
+      \tincompat{\htau_1}{\htau_1'}
+    }{
+      \tincompat{\tarr{\htau_1}{\htau_2}}{\tarr{\htau_1'}{\htau_2'}}
+    }
+  \end{equation}
+  \begin{equation}
+    \inferrule{
+      \tincompat{\htau_2}{\htau_2'}
+    }{
+      \tincompat{\tarr{\htau_1}{\htau_2}}{\tarr{\htau_1'}{\htau_2'}}
+    }
+  \end{equation}
+\end{subequations}
+
+
 \subsubsection{Synthesis and Analysis}
 The judgements $\hsyn{\hGamma}{\hexp}{\htau}$ and $\hana{\hGamma}{\hexp}{\htau}$ are defined mutually inductively by Rules (\ref{rules:hsyn}) and Rules (\ref{rules:hana}), respectively.
 
-\noindent\fbox{$\hsyn{\hGamma}{\hexp}{\htau}$} ~Synthesis
+\noindent\fbox{$\hsyn{\hGamma}{\hexp}{\htau}$}
 \begin{subequations}\label{rules:hsyn}
 \begin{equation}%\label{rule:syn-asc}
 \inferrule{
@@ -1465,7 +1496,7 @@ The judgements $\hsyn{\hGamma}{\hexp}{\htau}$ and $\hana{\hGamma}{\hexp}{\htau}$
 \end{equation}
 \end{subequations}
 
-\noindent\fbox{$\hana{\hGamma}{\hexp}{\htau}$}~Analysis
+\noindent\fbox{$\hana{\hGamma}{\hexp}{\htau}$}
 \begin{subequations}\label{rules:hana}
 \begin{equation}
 \inferrule{
@@ -1593,4 +1624,177 @@ By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H
 \end{align}
 \end{subequations}
 \subsection{Action Model}
+\subsubsection{Type Actions}~\\~\\
+\noindent\fbox{$\performTyp{\ztau}{\alpha}{\ztau'}$}
+\paragraph{Type Movement}
+\begin{subequations}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \zwsel{\tarr{\htau_1}{\htau_2}}
+    }{
+      \aMove{\dChild}
+    }{
+      \tarr{\zwsel{\htau_1}}{\htau_2}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \tarr{\zwsel{\htau_1}}{\htau_2}
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\tarr{\htau_1}{\htau_2}}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \tarr{{\htau_1}}{\zwsel{\htau_2}}
+    }{
+      \aMove{\dParent}
+    }{
+      \zwsel{\tarr{\htau_1}{\htau_2}}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \tarr{\zwsel{\htau_1}}{{\htau_2}}
+    }{
+      \aMove{\dNext}
+    }{
+      {\tarr{\htau_1}{\zwsel{\htau_2}}}
+    }
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \tarr{{\htau_1}}{\zwsel{\htau_2}}
+    }{
+      \aMove{\dPrev}
+    }{
+      {\tarr{\zwsel{\htau_1}}{{\htau_2}}}
+    }
+  }
+\end{equation}
+\begin{equation}
+\inferrule{
+  \performTyp{
+    \ztau
+  }{
+    \aMove{\delta}
+  }{
+    \ztau'
+  }
+}{
+  \performTyp{
+    \tarr{\ztau}{\htau}
+  }{
+    \aMove{\delta}
+  }{
+    \tarr{\ztau'}{\htau}
+  }
+}
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \performTyp{
+      \ztau
+    }{
+      \aMove{\delta}
+    }{
+      \ztau'
+    }
+  }{
+    \performTyp{
+      \tarr{\htau}{\ztau}
+    }{
+      \aMove{\delta}
+    }{
+      \tarr{\htau}{\ztau}
+    }
+  }
+\end{equation}
+
+\paragraph{Type Deletion}
+\begin{equation}
+  \inferrule{ }{
+    \performTyp{
+      \zwsel{\htau}
+    }{
+      \aDel
+    }{
+      \zwsel{\tehole}
+    }
+  }
+\end{equation}
+
+\paragraph{Type Construction}
+\begin{equation}
+    %\label{r:contarr}
+  \inferrule{ }{
+    \performTyp{
+      \zwsel{\htau}
+    }{
+      \aConstruct{\farr}
+    }{
+      \tarr{\htau}{\zwsel{\tehole}}
+    }
+  }
+\end{equation}
+
+  \begin{equation}
+    %\label{r:contnum}
+  \inferrule{ }{
+    \performTyp{
+      \zwsel{\tehole}
+    }{
+      \aConstruct{\fnum}
+    }{
+      \zwsel{\tnum}
+    }
+  }
+\end{equation}
+
+
+\paragraph{Zipper Cases}
+  \begin{equation}
+    %\label{r:contarrL}
+  \inferrule{
+    \performTyp{\ztau}{\alpha}{\ztau'}
+  }{
+    \performTyp{
+      \tarr{\ztau}{\htau}
+    }{
+      \alpha
+    }{
+      \tarr{\ztau'}{\htau}
+    }
+  }
+\end{equation}
+  \begin{equation}
+    %\label{r:contarrR}
+  \inferrule{
+    \performTyp{\ztau}{\alpha}{\ztau'}
+  }{
+    \performTyp{
+      \tarr{\htau}{\ztau}
+    }{
+      \alpha
+    }{
+      \tarr{\htau}{\ztau'}
+    }
+  }
+\end{equation}
+\end{subequations}
+
+\subsubsection{Synthetic and Analytic Actions}
+
+
 \end{document}
