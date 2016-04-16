@@ -1741,7 +1741,7 @@ By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H
 \end{equation}
 \end{subequations}
 
-\subsubsection{Expression Movement}~\\~\\
+\subsubsection{Expression Movement Actions}~\\~\\
 \noindent\fbox{$\performMove{\zexp}{\aMove{\delta}}{\zexp'}$}
 
 \begin{subequations}
@@ -2003,10 +2003,13 @@ By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H
 \end{equation}
 
 \end{subequations}
-\subsubsection{Synthetic Expression Actions}~\\~\\
+\subsubsection{Synthetic and Analytic Expression Actions}
+The synthetic and analytic expression action performance judgements are defined mutually inductively by Rules (\ref{rules:performSyn}) and Rules (\ref{rules:performAna}), respectively.
+
+~\\~\\
 \noindent\fbox{$\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$}
 
-\begin{subequations}
+\begin{subequations}\label{rules:performSyn}
 \paragraph{Movement} 
 \begin{equation}
 \inferrule{
@@ -2350,9 +2353,8 @@ By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H
 \end{equation}
 \end{subequations}
 
-\subsubsection{Analytic Expression Actions}~\\~\\
 \noindent\fbox{$\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$}
-\begin{subequations}
+\begin{subequations}\label{rules:performAna}
 \paragraph{Subsumption} 
 \begin{equation}
   \inferrule{
