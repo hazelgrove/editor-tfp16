@@ -1533,11 +1533,6 @@ By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H
   \hcomplete{\tnum}
 }
 \end{equation}
-\begin{equation}
-\inferrule{ }{
-  \hcomplete{\tehole}
-}
-\end{equation}
 \end{subequations}
 
 \noindent\fbox{$\hcomplete{e}$}
@@ -1579,16 +1574,6 @@ By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H
     \hcomplete{\hexp_2}
   }{
     \hcomplete{\hadd{\hexp_1}{\hexp_2}}
-  }
-\end{equation}
-\begin{equation}
-  \inferrule{ }{\hcomplete{\hehole}}
-\end{equation}
-\begin{equation}
-  \inferrule{
-    \hcomplete{\hexp}
-  }{
-    \hcomplete{\hhole{\hexp}}
   }
 \end{equation}
 \end{subequations}
