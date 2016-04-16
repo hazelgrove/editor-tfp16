@@ -1683,44 +1683,6 @@ By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H
     }
   }
 \end{equation}
-\begin{equation}
-\inferrule{
-  \performTyp{
-    \ztau
-  }{
-    \aMove{\delta}
-  }{
-    \ztau'
-  }
-}{
-  \performTyp{
-    \tarr{\ztau}{\htau}
-  }{
-    \aMove{\delta}
-  }{
-    \tarr{\ztau'}{\htau}
-  }
-}
-\end{equation}
-\begin{equation}
-  \inferrule{
-    \performTyp{
-      \ztau
-    }{
-      \aMove{\delta}
-    }{
-      \ztau'
-    }
-  }{
-    \performTyp{
-      \tarr{\htau}{\ztau}
-    }{
-      \aMove{\delta}
-    }{
-      \tarr{\htau}{\ztau}
-    }
-  }
-\end{equation}
 
 \paragraph{Type Deletion}
 \begin{equation}
@@ -1794,7 +1756,7 @@ By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H
 \end{equation}
 \end{subequations}
 
-\subsubsection{Expression Movement Actions}~\\~\\
+\subsubsection{Expression Movement}~\\~\\
 \noindent\fbox{$\performMove{\zexp}{\aMove{\delta}}{\zexp'}$}
 
 \begin{subequations}
@@ -1855,44 +1817,44 @@ By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H
     }
   }
 \end{equation}
-\begin{equation}
-\inferrule{
-  \performMove{
-    \zexp
-  }{
-    \aMove{\delta}
-  }{
-    \zexp'
-  }
-}{
-  \performMove{
-    \zexp : \htau
-  }{
-    \aMove{\delta}
-  }{
-    \zexp' : \htau
-  }
-}
-\end{equation}
-\begin{equation}
-  \inferrule{
-    \performMove{
-      \ztau
-    }{
-      \aMove{\delta}
-    }{
-      \ztau'
-    }
-  }{
-    \performMove{
-      \hexp : \ztau
-    }{
-      \aMove{\delta}
-    }{
-      \hexp : \ztau'
-    }
-  }
-\end{equation}
+% \begin{equation}
+% \inferrule{
+%   \performMove{
+%     \zexp
+%   }{
+%     \aMove{\delta}
+%   }{
+%     \zexp'
+%   }
+% }{
+%   \performMove{
+%     \zexp : \htau
+%   }{
+%     \aMove{\delta}
+%   }{
+%     \zexp' : \htau
+%   }
+% }
+% \end{equation}
+% \begin{equation}
+%   \inferrule{
+%     \performMove{
+%       \ztau
+%     }{
+%       \aMove{\delta}
+%     }{
+%       \ztau'
+%     }
+%   }{
+%     \performMove{
+%       \hexp : \ztau
+%     }{
+%       \aMove{\delta}
+%     }{
+%       \hexp : \ztau'
+%     }
+%   }
+% \end{equation}
 
 \paragraph{Lambda}
 \begin{equation}
@@ -1917,7 +1879,6 @@ By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H
     }
   }
 \end{equation}
-TODO: zipper cases?
 \paragraph{Application}
 \begin{equation}
   \inferrule{ }{
@@ -1974,7 +1935,6 @@ TODO: zipper cases?
     }
   }
 \end{equation}
-TODO: Zipper cases?
 
 \paragraph{Plus}
 \begin{equation}
@@ -2032,7 +1992,6 @@ TODO: Zipper cases?
     }
   }
 \end{equation}
-TODO: Zipper cases?
 
 \paragraph{Non-Empty Hole}
 \begin{equation}
@@ -2057,7 +2016,6 @@ TODO: Zipper cases?
     }
   }
 \end{equation}
-TODO: Zipper case?
 
 \end{subequations}
 \subsubsection{Synthetic Expression Actions}~\\~\\
@@ -2212,7 +2170,199 @@ TODO: Zipper case?
 \end{equation}
 
 
-\paragraph{Zipper Cases} e
+\paragraph{Zipper Cases}
+\begin{equation}
+\inferrule{
+  \performAna
+    {\hGamma}
+    {\zexp}
+    {\htau}
+    {\alpha}
+    {\zexp'}
+}{
+  \performSyn
+    {\hGamma}
+    {\zexp : \htau}
+    {\htau}
+    {\alpha}
+    {\zexp' : \htau}
+    {\htau}
+}
+\end{equation}
+\begin{equation}
+\inferrule{
+  \performTyp{\ztau}{\alpha}{\ztau'}\\
+  \hana{\hGamma}{\hexp}{\removeSel{\ztau'}}
+}{
+  \performSyn
+    {\hGamma}
+    {\hexp : \ztau}
+    {\removeSel{\ztau}}
+    {\alpha}
+    {\hexp : \ztau'}
+    {\removeSel{\ztau'}}
+}
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \hsyn{\hGamma}{\removeSel{\zexp}}{\htau_2}\\
+    \performSyn
+      {\hGamma}
+      {\zexp}
+      {\htau_2}
+      {\alpha}
+      {\zexp'}
+      {\tarr{\htau_3}{\htau_4}}\\
+    \hana{\hGamma}{\hexp}{\htau_3}
+  }{
+    \performSyn
+      {\hGamma}
+      {\hap{\zexp}{\hexp}}
+      {\htau_1}
+      {\alpha}
+      {\hap{\zexp'}{\hexp}}
+      {\htau_4}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \hsyn{\hGamma}{\removeSel{\zexp}}{\htau_2}\\
+    \performSyn
+      {\hGamma}
+      {\zexp}
+      {\htau_2}
+      {\alpha}
+      {\zexp'}
+      {\tehole}\\
+    \hana{\hGamma}{\hexp}{\tehole}
+  }{
+    \performSyn
+      {\hGamma}
+      {\hap{\zexp}{\hexp}}
+      {\htau_1}
+      {\alpha}
+      {\hap{\zexp'}{\hexp}}
+      {\htau'}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \hsyn{\hGamma}{\hexp}{\tarr{\htau_2}{\htau}}\\
+    \performAna
+      {\hGamma}
+      {\zexp}
+      {\htau_2}
+      {\alpha}
+      {\zexp'}
+  }{
+    \performSyn
+      {\hGamma}
+      {\hap{\hexp}{\zexp}}
+      {\htau}
+      {\alpha}
+      {\hap{\hexp}{\zexp'}}
+      {\htau}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \hsyn{\hGamma}{\hexp}{\tehole}\\
+    \performAna
+      {\hGamma}
+      {\zexp}
+      {\tehole}
+      {\alpha}
+      {\zexp'}
+  }{
+    \performSyn
+      {\hGamma}
+      {\hap{\hexp}{\zexp}}
+      {\tehole}
+      {\alpha}
+      {\hap{\hexp}{\zexp'}}
+      {\tehole}
+  }
+\end{equation}
+
+\begin{equation}
+  \inferrule{
+    \performAna
+      {\hGamma}
+      {\zexp}
+      {\tnum}
+      {\alpha}
+      {\zexp'}
+  }{
+    \performSyn
+      {\hGamma}
+      {\hadd{\zexp}{\hexp}}
+      {\tnum}
+      {\alpha}
+      {\hadd{\zexp'}{\hexp}}
+      {\tnum}
+  }
+\end{equation}
+
+\begin{equation}
+  \inferrule{
+    \performAna
+      {\hGamma}
+      {\zexp}
+      {\tnum}
+      {\alpha}
+      {\zexp'}
+  }{
+    \performSyn
+      {\hGamma}
+      {\hadd{\hexp}{\zexp}}
+      {\tnum}
+      {\alpha}
+      {\hadd{\hexp}{\zexp'}}
+      {\tnum}
+  }
+\end{equation}
+
+\begin{equation}
+  \inferrule{
+    \hsyn{\hGamma}{\removeSel{\zexp}}{\htau}\\
+    \performSyn
+      {\hGamma}
+      {\zexp}
+      {\htau}
+      {\alpha}
+      {\zexp'}
+      {\htau'}\\
+    \zexp' \neq \zwsel{\hehole}
+  }{
+    \performSyn
+      {\hGamma}
+      {\hhole{\zexp}}
+      {\tehole}
+      {\alpha}
+      {\hhole{\zexp'}}
+      {\tehole}
+  }
+\end{equation}
+\begin{equation}
+  \inferrule{
+    \hsyn{\hGamma}{\removeSel{\zexp}}{\htau}\\
+    \performSyn
+      {\hGamma}
+      {\zexp}
+      {\htau}
+      {\alpha}
+      {\zwsel{\hehole}}
+      {\tehole}\\
+  }{
+    \performSyn
+      {\hGamma}
+      {\hhole{\zexp}}
+      {\tehole}
+      {\alpha}
+      {\zwsel{\hehole}}
+      {\tehole}
+  }
+\end{equation}
 \end{subequations}
 
 \subsubsection{Analytic Expression Actions}~\\~\\
@@ -2221,14 +2371,13 @@ TODO: Zipper case?
 \paragraph{Subsumption} 
 \begin{equation}
   \inferrule{
+    \hsyn{\hGamma}{\removeSel{\zexp}}{\htau'}\\
     \performSyn{\hGamma}{\zexp}{\htau'}{\alpha}{\zexp'}{\htau''}\\
     \tcompat{\htau}{\htau''}
   }{
     \performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}
   }
 \end{equation}
-
-TODO: require synthesis as premise? 
 
 \paragraph{Movement}
 \begin{equation}
@@ -2312,7 +2461,24 @@ TODO: require synthesis as premise?
   }
 \end{equation}
 
-\paragraph{Zipper Cases} e
+\paragraph{Zipper Cases}
+\begin{equation}
+\inferrule{
+  \performAna
+    {\hGamma, x : \htau_1}
+    {\zexp}
+    {\htau_2}
+    {\alpha}
+    {\zexp'}
+}{
+  \performAna
+    {\hGamma}
+    {\hlam{x}{\zexp}}
+    {\tarr{\htau_1}{\htau_2}}
+    {\alpha}
+    {\hlam{x}{\zexp'}}
+}
+\end{equation}
 
 \end{subequations}
 \end{document}
