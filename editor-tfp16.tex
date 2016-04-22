@@ -1293,11 +1293,14 @@ Each model change results in an updated view which is then presented to the user
 We explore the concepts presented in the paper in HZ, our ongoing implementation of Hazelnut.
 In order to reach the widest possible audience, we decided to implement HZ in the web browser.
 In order to take advantage of all the benefits of FRP, we chose to implement HZ using OCaml\footnote{https://ocaml.org/}, js\_of\_ocaml\footnote{http://ocsigen.org/js\_of\_ocaml/} and the OCaml React library\footnote{http://erratique.ch/software/react}.
-Our preliminary code as well as directions for how to compile and run it can be found here: \url{https://github.com/MichaelHilton/impl-tfp16}.
-At the time of submission, HZ should very much be considered a work in progress.
+
+At the time of the writing of this paper, our implementation of HZ supports building a ZExp expression as presented in this paper.
+We consider this ZExp to be our model.
+HZ renders the model as a string embedded in HTML.
+Currently we support only the Del action, which deletes the selected expression.  More actions are currently under development.
+The work-in-progress code as well as directions for how to compile and run it can be found here: \url{https://github.com/hazelgrove/impl-tfp16}.
 
 A substantially simpler system that we developed while exploring the ideas that led to Hazelnut can be interacted with at the following URL:
-
 \url{http://www.cs.cmu.edu/~comar/nestedpairs/}
 
 \section{Related Work}\label{sec:rw}
