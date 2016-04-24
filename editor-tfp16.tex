@@ -550,20 +550,12 @@ Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by remo
 \subsection{Action Semantics}\label{sec:actions}
 \begin{figure}[t]
 \hspace{-3px}$\arraycolsep=3pt\begin{array}{llcllll}
-\mathsf{Action} & \alpha & ::= &
-  \aMove{\delta} ~\vert~
-  %\aSelect{\delta} ~\vert~
-  \aDel ~\vert~
-  %\aReplace{\htau} ~\vert~
-  %\aReplace{\hexp} ~\vert~
-  \aConstruct{\varphi} ~\vert~
-  \aFinish\\
 \mathsf{Direction} & \delta & ::= &
   \dChild ~\vert~
   \dParent ~\vert~
   \dNext ~\vert~
   \dPrev\\
-\mathsf{Form} & \varphi & ::= &
+\mathsf{Shape} & \varphi & ::= &
   \farr ~\vert~
   \fnum \\
 & & \vert &
@@ -573,7 +565,15 @@ Similarly, we write $\removeSel{\zexp}$ for the H-expression constructed by remo
   \fap ~\vert~
   \farg ~\vert~
   \fnumlit{n} ~\vert~
-  \fplus
+  \fplus\\
+\mathsf{Action} & \alpha & ::= &
+  \aMove{\delta} ~\vert~
+  %\aSelect{\delta} ~\vert~
+  \aDel ~\vert~
+  %\aReplace{\htau} ~\vert~
+  %\aReplace{\hexp} ~\vert~
+  \aConstruct{\varphi} ~\vert~
+  \aFinish\\
 \end{array}$
 %\textbf{Sort} & & & \textbf{Operational Form} & \textbf{Stylized Form} & \textbf{Description}\\
 \caption{Syntax of actions.}
@@ -1397,7 +1397,7 @@ systems, for we will not forever stay confined to mere strings of symbols.
 \noindent\fbox{$\tcompat{\htau}{\htau'}$}
 \begin{subequations}%\label{rules:tcompat}
 \begin{equation}%\label{rule:tcompat-comm}
-\inferrule{
+\inferrule[TCSym]{
   \tcompat{\htau}{\htau'}
 }{
   \tcompat{\htau'}{\htau}
@@ -2164,7 +2164,7 @@ The synthetic and analytic expression action performance judgements are defined 
 
 \paragraph{Finishing}
   \begin{equation}
-    \label{r:finishana}
+    %% \label{r:finishana} %% TODO; get labels right
   \inferrule{
     \hsyn{\hGamma}{\hexp}{\htau'}
   }{
