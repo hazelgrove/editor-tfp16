@@ -11,11 +11,11 @@ at \url{http://wiki.portal.chalmers.se/agda/}.
 This formalization is a work in progress at the time of submission, but we
 plan on completing it by the time this work is presented. The goal is fully
 mechanized proofs Theorem \ref{thrm:actsafe} and Theorem \ref{thrm:actdet}
-that act as a platform to explore more sophisticated designs. The
-development can be found at
+that act as a platform to explore more sophisticated designs and
+metatheory. The development can be found at
 \url{http://github.com/hazelgrove/agda-tfp16}, which includes the actual Agda
-source as well as a more detailed discussion of the various representation
-decisions and assumptions made.
+source and a more detailed discussion of the technical representation
+decisions made.
 
 The core idea of our formalization is to encode each judgement as a
 dependent type. The rules of the judgements become the constructors of the
@@ -24,11 +24,23 @@ setting that allows proofs to take advantage of pattern matching on the
 shape of derivations, closely matching on-paper proofs of similar
 properties.
 
+The formalization differs from the precise calculus listed here in a few
+ways. Most interestingly, instead of giving separate rules for the movement
+of each form of H-expressions and corresponding Z-expressions, we abstract
+over different corresponding forms that happen to have the same arity. This
+formalizes the observation that the rules for movements on additions and
+movements on applications are morally the same. Formalizing this intuition
+reduces the number of cases we need to consider in the inductive
+considerably, but more importantly allows us to write a slightly more
+general calculus. The rules will work for any form of a particular arity,
+so it's much more straightforward to extend this calculus to work for more
+interesting language features.
+
 Because the metatheory in this paper is largely concerned with the statics
-of Hazelnut, rather than the dynamics, we adopt Barendregt's convention for
+of Hazelnut rather than the dynamics, we adopt Barendregt's convention for
 bound variables and avoid substitution entirely.\cite{urban} Future
-iterations of this formalization will need a more mature technique for
-reasoning about binding---likely de Bruijn indices or abstract bounding
-trees.\cite{} \cite{} By avoiding them now, when they are not truly needed,
-we can offer a clear first formalization that hews closely to the informal
-mathematics.
+iterations will need a more mature technique for reasoning about
+binding---likely de Bruijn indices or abstract bounding
+trees.\cite{lh09unibind} \cite{Pouillard11} By avoiding these issues when
+they are not yet relevant, we offer a clear first-pass formalization that
+hews closely to the mathematics presented in the paper.

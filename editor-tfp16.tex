@@ -73,7 +73,7 @@ During these sequences of text editor actions, or when the programmer makes a mi
 %Indeed, most structural  transformations require performing many primitive edit actions.
 
 \emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  produce sensible changes to the program structure.
-Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. They also focus primarily on syntactic well-formedness, so programs can still be left semantically ill-defined as they are being constructed. 
+Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. They also focus primarily on syntactic well-formedness, so programs can still be left semantically ill-defined as they are being constructed.
 In this paper, we report on our ongoing efforts to develop Hazelnut, a minimal  structure editor defined in a principled type-theoretic style where all edit actions leave the program in both a syntactically and semantically well-defined state. Uniquely, Hazelnut does not force the programmer to construct the program in a strictly ``outside-in'' fashion.
 Formally, Hazelnut is a bidirectionally typed lambda calculus extended with
 1) \emph{holes} (which mark subterms that are being  constructed from the inside out);
@@ -1377,11 +1377,13 @@ On the theoretical side, the notion of having one of many possible holes in a te
 
   We already discussed a connection to gradual typing \cite{Siek06a}. We hope to explore this connection more thoroughly. In particular, it may be possible to better support exploratory and live programming by allowing even programs with holes in them to execute as long as those holes are only in the type portions, by deferring to the semantics given in work on gradual typing.
 
-Looking at terms with holes in them, it's clear that there are some
-  terms that ought to be identified. For example, it may be that $\hhole{\hhole{e}}$
-  should be identified with $\hhole{e}$. We have not yet explored an
-  equational theory for terms with holes, but intend to once our formalization
-  effort is more mature.
+Looking at terms with holes in them, it's clear that there are some terms
+that ought to be identified. For example, it may be that
+$\hhole{\hhole{e}}$ should be identified with $\hhole{e}$. These sorts of
+questions arise naturally when considering a dynamics for expressions with
+holes in them, rather than just complete expressions. We have not yet
+explored an equational theory for terms with holes, but intend to once our
+formalization effort is more mature. TODO: cite something here?
 
 \begin{quote}
 In any case, these are but steps toward more graphical program-description
