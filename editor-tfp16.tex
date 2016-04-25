@@ -16,6 +16,10 @@
 \usepackage{url}
 \usepackage{xcolor}
 \usepackage[bookmarks=true,colorlinks=true,allcolors=Green,breaklinks]{hyperref}
+
+
+\usepackage[inline, shortlabels]{enumitem} % enumerates with weird spacing
+
 %\usepackage[pdfborder={0 0 0}]{hyperref}
 %\usepackage[colorlinks=true,allcolors=Green,backref,pageanchor=true,plainpages=false, pdfpagelabels, bookmarks,bookmarksnumbered,
 %pdfborder={0 0 0},  %removes outlines around hyper links in online display
@@ -614,15 +618,19 @@ We also strive to maintain a \emph{deterministic} action semantics, i.e. each ac
   $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ and
   $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}{\htau''}$ then
   $\zexp' = \zexp''$ and $\htau' = \htau''$.
-\item If
-  \begin{enumerate}
+\item If all of
+
+  \begin{quote}
+    \begin{enumerate}
     \item $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$, and
     \item $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$, and
     \item $\tcompat{\htau}{\htau'}$, and
-    \item $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}$ or
+    \item either $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}$ or
       $\performAna{\hGamma}{\zexp}{\htau'}{\alpha}{\zexp''}$
-  \end{enumerate}
-  then $\zexp' = \zexp''$.
+    \end{enumerate}
+  \end{quote}
+  hold, then $\zexp' = \zexp''$.
+
 \item If $\hana{\hGamma}{\removeSel{\zexp}}{\htau}$ and
   $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$ and
   $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}$ then $\zexp' =
