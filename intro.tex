@@ -33,9 +33,9 @@
 % editor to construct a program, it is easy, and indeed necessary, to deviate from this disciplined process.  Rather, text editors operate on sequences of
 % characters (i.e. \emph{text}.) 
 
-Although programs can be represented as text, most text does not correspond to a syntactically well-formed program, much less a semantically well-defined one. Programmers, and the tools that they use, can thus be left to examine and manipulate text for which there are no useful
-reasoning principles, either because the programmer is in the midst of a sequence of
-text editor actions that leave the program ``temporarily'' malformed or ill-defined, or because the programmer has simply made a mistake.
+%Although all programs can be represented as text, most text does not correspond to a syntactically well-formed and semantically well-defined program. 
+Programmers and the tools that they use are often presented with text that does not correspond to a well-defined program, either because the programmer is in the midst of a sequence of
+text editor actions that leave the program ``temporarily'' malformed or ill-defined, or because the programmer has made a mistake. This is problematic, because the reasoning principles that the language provides are not directly relevant to such text.%Tool designers often develop \emph{ad hoc} heuristic methods that allow one to 
 
 % stuck editing a representation of the program instead of the structures
 % themselves. The editor does not restrict what the programmer may do: you
@@ -58,20 +58,20 @@ structurally well-formed state. We give examples of notable structure editors in
 
 The problem is that while this maintains structural
 reasoning principles, i.e. those that tools like syntax highlighters rely
-on, it is still possible to leave the program in a semantically undefined state. Reasoning thus remains difficult.
+on, it is still possible to leave the program in a semantically undefined state. This makes it difficult for humans to cognitively maintain the usual type discipline, and it also makes it difficult for editors to assist programmers in a type-aware manner (e.g. by suggesting variables of an appropriate type.)%More sophisticated semantic reasoning principles thus remain .
 
 %% TODO: some sort of transition that talks about how you still don't have
 %% semantic reasoning principles because you can be left in a semantically
 %% ill-defined state
 
-In this paper, we present our ongoing work on a minimal structure editor, Hazelnut,  defined in the type-theoretic style. In Hazelnut, edit actions are type-aware and leave the program in both a structurally and semantically well-defined state. In fact, edit actions maintain an even stronger invariant -- when acting on a subterm whose type is fixed by its surroundings, only edit actions consistent with that type are permitted (we will formally state this invariant in Sec. \ref{sec:actions}.) This does not imply that programs need to be constructed in a strictly top-down manner, however, because a well-defined expression that is not yet consistent with its surroundings can temporarily be put into a \emph{hole} that defers consistency analysis until that hole is marked as finished by the user.
+In this paper, we present our ongoing work on a minimal structure editor, Hazelnut,  defined in the type-theoretic style (i.e. Hazelnut is a \emph{structure editor calculus}.) In Hazelnut, edit actions are type-aware and leave the program in both a structurally and semantically well-defined state. In fact, edit actions maintain an even stronger invariant -- when acting on a subterm whose type is fixed by its surroundings, only edit actions consistent with that type are permitted (we will formally state this invariant in Sec. \ref{sec:actions}.) This does not imply that programs need to be constructed in a strictly outside-in manner, however, because a well-defined expression that is not yet consistent with its surroundings can temporarily be put into a \emph{hole} that defers consistency analysis until the hole is \emph{finished}.
 
 The remainder of the paper is organized as follows:
 \begin{itemize}
   \item We begin with an example to develop the reader's intuitions in Section
     \ref{sec:example}.
 
-  \item We then formally define Hazelnut in Section \ref{sec:hazel} and state two key metatheoretic properties.
+  \item We then formally define Hazelnut in Section \ref{sec:hazel} and state the key metatheoretic properties.
 
   \item In Section \ref{sec:mech}, we describe our ongoing effort to formalize the semantics and metatheory of Hazelnut in Agda.
 

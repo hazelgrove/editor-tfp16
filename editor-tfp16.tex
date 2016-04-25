@@ -61,7 +61,7 @@ University of Colorado Boulder
 
 \maketitle              % typeset the title of the contribution
 \begin{abstract}
-Programs are rich inductive structures, but  programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of parsing, and it can require many text editor actions to make a single syntactically and semantically well-defined change. %Manipulating ill-defined programs is difficult for programmers and complicates the design of programming tools.
+Programs are rich inductive structures, but human programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of parsing, and it can require many text editor actions to make a single syntactically and semantically well-defined change. %Manipulating ill-defined programs is difficult for programmers and complicates the design of programming tools.
 During these sequences of text editor actions, or when the programmer makes a mistake, programmers and programming tools must contend with malformed or semantically ill-defined program text, complicating the programming process.
 %Unfortunately, this fact is somewhat obscure because  programmers typically construct and interact with  programs only indirectly, using a text editor composed with a parser.
 %There are some benefits to this approach, to be sure, but the structural mismatch between programs and text  also imposes a cognitive burden.
@@ -69,13 +69,12 @@ During these sequences of text editor actions, or when the programmer makes a mi
 %Indeed, most structural  transformations require performing many primitive edit actions.
 
 \emph{Structure editors} promise to alleviate these burdens by exposing only edit actions that  produce sensible changes to the program structure.
-Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. They also focus primarily on syntactic well-formedness, so programs can still be left semantically ill-defined as they are being constructed.
-
-In this paper, we report on our ongoing efforts to develop Hazelnut, a minimal  structure editor defined in a principled type-theoretic style that permits only syntactically and semantically well-defined actions, without forcing the programmer to construct the program in a strictly ``top-down'' fashion.
+Existing designs for structure editors, however, are complex and somewhat \emph{ad hoc}. They also focus primarily on syntactic well-formedness, so programs can still be left semantically ill-defined as they are being constructed. 
+In this paper, we report on our ongoing efforts to develop Hazelnut, a minimal  structure editor defined in a principled type-theoretic style where all edit actions leave the program in both a syntactically and semantically well-defined state. Uniquely, Hazelnut does not force the programmer to construct the program in a strictly ``outside-in'' fashion.
 Formally, Hazelnut is a bidirectionally typed lambda calculus extended with
-1) \emph{holes} (which mark subterms that are under construction);
+1) \emph{holes} (which mark subterms that are being  constructed from the inside out);
 %, which are identified by variables tracked in a separate linear \emph{hole context}
-2) a \emph{focus model}; and 3) a bidirectional \emph{action model} equipped with a useful \emph{action sensibility} metatheorem. %Programs with holes have a well-defined static semantics, and the action model is defined such that every performable action is both syntactically sensible (by construction) and semantically sensible (i.e. we can establish a useful \emph{action sensibility} theorem.)
+2) a \emph{focus model}; and 3) a bidirectional \emph{action model} equipped with a useful \emph{action sensibility} theorem. %Programs with holes have a well-defined static semantics, and the action model is defined such that every performable action is both syntactically sensible (by construction) and semantically sensible (i.e. we can establish a useful \emph{action sensibility} theorem.)
 %We conclude by outlining our vision of a full-scale programming system grown ``from the ground up'' around the same fundamental principles as Hazelnut.
 
 %\keywords{computational geometry, graph theory, Hamilton cycles}
