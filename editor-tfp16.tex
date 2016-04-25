@@ -149,7 +149,7 @@ Formally, Hazelnut is a bidirectionally typed lambda calculus extended with
 \zwsel{\hhole{}}
 &
 \aConstruct{\fasc} & \refrule{\ref{r:constructasc}}
-\\ 
+\\
 11 &
 \hhole{} : \hhole{} &
 \hhole{} : \zwsel{ \hhole{}}
@@ -265,20 +265,20 @@ Formally, Hazelnut is a bidirectionally typed lambda calculus extended with
 \end{figure}
 %
 Figure~\ref{fig:first-example} gives an example of the Hazelnut user
-performing two programming tasks. 
-The syntax used in this figure will be formally defined in Section \ref{sec:hazel} -- for now, we will give only the intuitions. In the first task (Lines 1-9), the user constructs the identity function over numbers. In the second task (Lines 10-19), the user applies this function (assumed to be bound to a variable, $id$), to the number expression $\hnum{3}$. 
-Each of these tasks is carried out interactively, through the sequence of \emph{actions} shown in the fourth column. 
+performing two programming tasks.
+The syntax used in this figure will be formally defined in Section \ref{sec:hazel} -- for now, we will give only the intuitions. In the first task (Lines 1-9), the user constructs the identity function over numbers. In the second task (Lines 10-19), the user applies this function (assumed to be bound to a variable, $id$), to the number expression $\hnum{3}$.
+Each of these tasks is carried out interactively, through the sequence of \emph{actions} shown in the fourth column.
 
 The second and third columns of the
 table show the program as it is being constructed in two forms. The second column shows it as an H-expression, which is an expression that can contain \emph{holes}, delimited by $\llparenthesis$ and $\rrparenthesis$. Z-expressions
-are H-expressions with a single focus on some sub-term, indicated by $\triangleright$ and $\triangleleft$. The focus need not be on a hole. 
-% on working on filling just one of the holes. 
+are H-expressions with a single focus on some sub-term, indicated by $\triangleright$ and $\triangleleft$. The focus need not be on a hole.
+% on working on filling just one of the holes.
 Each action produces a new Z-expression, which may or may not correspond to a new H-expression.
 % to the hole in
 %focus in the Z-Expression to produce the next line, which may or may not
 %produce a substantively different H-Expression.
 
-Line~1 begins with the simplest initial program: an H-expression 
+Line~1 begins with the simplest initial program: an H-expression
 consisting of a single hole. The corresponding Z-Expression has that hole in focus,
 indicated by the syntax~$\zwsel{\hehole}$. Focus determines the locus of action. The first action the user performs is $\aConstruct{\flam{x}}$, which replaces the hole with a lambda abstraction binding the variable $x$. This results in the program on line
 2, consisting of a lambda abstraction ascribed an arrow type with holes in all positions and the argument type hole in focus. The
@@ -594,8 +594,12 @@ As suggested by the descriptions of the judgements above, our action semantics m
 \begin{theorem}[Action Sensibility] Both of the following hold:
 \label{thrm:actsafe}
 \begin{enumerate}
-\item If $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ and $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$ then $\hsyn{\hGamma}{\removeSel{\zexp'}}{\htau'}$.
-\item If $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$ and $\hana{\hGamma}{\removeSel{\zexp}}{\htau}$ then $\hana{\hGamma}{\removeSel{\zexp'}}{\htau}$.
+\item If $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ and
+  $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$ then
+  $\hsyn{\hGamma}{\removeSel{\zexp'}}{\htau'}$.
+\item If $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$ and
+  $\hana{\hGamma}{\removeSel{\zexp}}{\htau}$ then
+  $\hana{\hGamma}{\removeSel{\zexp'}}{\htau}$.
 \end{enumerate}
 \end{theorem}
 
@@ -605,9 +609,23 @@ We also strive to maintain a \emph{deterministic} action semantics, i.e. each ac
 \begin{theorem}[Action Determinism] All of the following hold:
 \label{thrm:actdet}
 \begin{enumerate}
-\item If $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}{\htau''}$ then $\zexp' = \zexp''$ and $\htau' = \htau''$.
-\item If $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ and $\tcompat{\htau}{\htau'}$ and $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}$ or $\performAna{\hGamma}{\zexp}{\htau'}{\alpha}{\zexp''}$ then $\zexp' = \zexp''$.
-\item If $\hana{\hGamma}{\removeSel{\zexp}}{\htau}$ and $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$ and $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}$ then $\zexp' = \zexp''$.
+\item If $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$ and
+  $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$ and
+  $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}{\htau''}$ then
+  $\zexp' = \zexp''$ and $\htau' = \htau''$.
+\item If
+  \begin{enumerate}
+    \item $\hsyn{\hGamma}{\removeSel{\zexp}}{\htau}$, and
+    \item $\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$, and
+    \item $\tcompat{\htau}{\htau'}$, and
+    \item $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}$ or
+      $\performAna{\hGamma}{\zexp}{\htau'}{\alpha}{\zexp''}$
+  \end{enumerate}
+  then $\zexp' = \zexp''$.
+\item If $\hana{\hGamma}{\removeSel{\zexp}}{\htau}$ and
+  $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$ and
+  $\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp''}$ then $\zexp' =
+  \zexp''$.
 \end{enumerate}
 \end{theorem}
 
@@ -1033,7 +1051,7 @@ In the second case, the ascribed type is the type provided for analysis:
   }
 \end{equation}
 
-The $\aConstruct{\fvar{x}}$ action places the variable $x$ into the focused empty hole. If that hole is being asked to synthesize a type, then the result of the action synthesizes the type assigned to $x$ in the context: 
+The $\aConstruct{\fvar{x}}$ action places the variable $x$ into the focused empty hole. If that hole is being asked to synthesize a type, then the result of the action synthesizes the type assigned to $x$ in the context:
 \begin{equation}
   \label{r:conevar}
   \inferrule{ }{
@@ -1261,24 +1279,27 @@ If the focused non-empty hole appears in analytic position, then it can only be 
 \label{fig:FRP}
 \end{figure}
 
-The key question that must be answered for any implementation strategy is how do we model a stream of actions from a user. Let us assume that these actions are chosen (using some input device, preferably, a keyboard) from some ``palette'' that never presents the user with actions that are not semantically valid, according to the action semantics defined earlier. 
+The key question that must be answered for any implementation strategy is how do we model a stream of actions from a user. Let us assume that these actions are chosen (using some input device, preferably, a keyboard) from some ``palette'' that never presents the user with actions that are not semantically valid, according to the action semantics defined earlier.
 %In a traditional editor, the input from the user is a stream of characters, and there are no guarantees that at any point that the program is syntactically well-formed, so the designer leaves editing as an .
-%In contrast, in a structure editor, the input from the user is a stream of operations.  
-As such, these actions can be considered atomic, and will always leave the program in a well-defined state. 
+%In contrast, in a structure editor, the input from the user is a stream of operations.
+As such, these actions can be considered atomic, and will always leave the program in a well-defined state.
 This insight leads us to conclude that a natural way to implement this editor would be using event-based Functional Reactive Programming~\cite{Wan:2000:FRP:349299.349331} (FRP).
 Figure~\ref{fig:FRP} illustrates the concept of an FRP-based implementation of a  structure editor organized like Hazelnut.
-The input from the user is a stream of actions.  Each action results in a change to the underlying model (i.e., a new Zipper Structure object is created after each input action from the user.) 
+The input from the user is a stream of actions.  Each action results in a change to the underlying model (i.e., a new Zipper Structure object is created after each input action from the user.)
 Each model change results in an updated view which is then presented to the user.  The user can then consider this new view when they choose a new action as input.
 
 \subsection{HZ}
 We explore the concepts presented in the paper in HZ, our ongoing implementation of Hazelnut.
 In order to reach the widest possible audience, we decided to implement HZ in the web browser.
 In order to take advantage of all the benefits of FRP, we chose to implement HZ using OCaml\footnote{https://ocaml.org/}, js\_of\_ocaml\footnote{http://ocsigen.org/js\_of\_ocaml/} and the OCaml React library\footnote{http://erratique.ch/software/react}.
-Our preliminary code as well as directions for how to compile and run it can be found here: \url{https://github.com/MichaelHilton/impl-tfp16}. 
-At the time of submission, HZ should very much be considered a work in progress.
+
+At the time of the writing of this paper, our implementation of HZ supports building a ZExp expression as presented in this paper.
+We consider this ZExp to be our model.
+HZ renders the model as a string embedded in HTML.
+Currently we support only the Del action, which deletes the selected expression.  More actions are currently under development.
+The work-in-progress code as well as directions for how to compile and run it can be found here: \url{https://github.com/hazelgrove/impl-tfp16}.
 
 A substantially simpler system that we developed while exploring the ideas that led to Hazelnut can be interacted with at the following URL:
-
 \url{http://www.cs.cmu.edu/~comar/nestedpairs/}
 
 \section{Related Work}\label{sec:rw}
@@ -1286,17 +1307,17 @@ A substantially simpler system that we developed while exploring the ideas that 
 
 Structured editing as a means to eliminate the possibility of syntax errors has a long history.  An early example is the
 The Cornell Program Synthesizer~\cite{teitelbaum_cornell_1981}, first published in 1981.
-The synthesizer generator~\cite{Reps:1984:SG:390010.808247} allows the user to create an attribute-grammar specification that then can be used to generate a structured editor. 
+The synthesizer generator~\cite{Reps:1984:SG:390010.808247} allows the user to create an attribute-grammar specification that then can be used to generate a structured editor.
 CENTAUR~\cite{Borras:1988:CS:64140.65005} produces a language specific environment from a user defined formal specification of a language.  However, none of the systems are rooted in the type-theoretic tradition.
 
-A common application for structure editors has been for novice users. For example, 
+A common application for structure editors has been for novice users. For example,
 GNOME\cite{garlan_gnome:_1984} was developed to teach programming to undergraduates.
 Scratch~\cite{Resnick:2009:SP:1592761.1592779} is a structure editor targeted at children ages 8 to 16.
 Touchdevelop \cite{tillmann_touchdevelop:_2011} incorporates a structure editor for programming on touch-based devices, and is used to teach high school students.
-Alice~\cite{Conway:2000:ALL:332040.332481} is a 3-D programming language with an integrated structure editor for teaching novice CS undergraduate students. These are largely drag-and-drop user interfaces with a limited action model and an unclear semantics. 
+Alice~\cite{Conway:2000:ALL:332040.332481} is a 3-D programming language with an integrated structure editor for teaching novice CS undergraduate students. These are largely drag-and-drop user interfaces with a limited action model and an unclear semantics.
 
-Not all structure editors are for educational purposes. For example, 
-mbeddr \cite{voelter_mbeddr:_2012} is an extensible C-based Programming Language and IDE (nominally, for programming embedded systems.) 
+Not all structure editors are for educational purposes. For example,
+mbeddr \cite{voelter_mbeddr:_2012} is an extensible C-based Programming Language and IDE (nominally, for programming embedded systems.)
 mbeddr is build on top of the commercial JetBrains MPS framework for constructing structure editors.
 Another popular approach is to bring elements of structured editing into a traditional editor.
 Codelets \cite{oney_codelets:_2012} uses structured editing to add interactive documentation and examples in an editor.
@@ -1305,9 +1326,9 @@ Graphite~\cite{Omar:2012:ACC:2337223.2337324} allows developers to introduce str
 These solutions all represent an incremental change from existing technologies.  However, in this paper we present a theoretical model for designing a type-theoretic structure editor from the ground up.
 
 Perhaps the system most similar in spirit to Hazelnut is Lamdu~\cite{lamdu}. Like Hazelnut, Lambdu is both an editor and a functional language. The language is similar to Haskell, and the editor uses structure editing to enable Live Programming, where the code is always being executed as it is being written.
-While Lamdu has many great features, there is no theoretical basis presented for their work -- it is a rather large body of Haskell code with an unclear (and indeed, often quite perplexing, in our experience) action model. 
+While Lamdu has many great features, there is no theoretical basis presented for their work -- it is a rather large body of Haskell code with an unclear (and indeed, often quite perplexing, in our experience) action model.
 
-Agda and Idris are two dependently typed languages that attempt to simulate a structured editor from within a rich text editor (e.g. Emacs). These systems also have notions of holes and use types to guide the user toward filling these holes. These  systems are, to our knowledge, not formally well-defined but rather exist only as part of system implementations. 
+Agda and Idris are two dependently typed languages that attempt to simulate a structured editor from within a rich text editor (e.g. Emacs). These systems also have notions of holes and use types to guide the user toward filling these holes. These  systems are, to our knowledge, not formally well-defined but rather exist only as part of system implementations.
 
 
 
@@ -1327,7 +1348,7 @@ Agda and Idris are two dependently typed languages that attempt to simulate a st
 
 \section{Discussion \& Conclusion}
 \label{sec:future}
-This paper presented Hazelnut, a type theoretic structure editor for a simply typed lambda calculus. We aim to take a principled approach to its design by formally specifying its semantics, providing strong metatheoretic guarantees, mechanizing its semantics and metatheory in Agda and implementing it using the concepts of  functional reactive programming. As of this submission, we have achieved reasonable confidence in the formal system presented above, and have transitioned our focus toward the mechanization and implementation efforts. By the time of presentation, we anticipate having complete or nearly complete versions of these. 
+This paper presented Hazelnut, a type theoretic structure editor for a simply typed lambda calculus. We aim to take a principled approach to its design by formally specifying its semantics, providing strong metatheoretic guarantees, mechanizing its semantics and metatheory in Agda and implementing it using the concepts of  functional reactive programming. As of this submission, we have achieved reasonable confidence in the formal system presented above, and have transitioned our focus toward the mechanization and implementation efforts. By the time of presentation, we anticipate having complete or nearly complete versions of these.
 
 \subsection{Future Work}
 Hazelnut is, obviously, a very limited language at its core. So the most obvious avenue for future work is to increase the expressive power of this language. Our plan is to simultaneously maintain a mechanization and implementation (following, for example, Standard ML) as we proceed, ultimately producing the first large-scale, formally verified bidirectionally typed language codesigned with a type-aware editor. It may be that certain language features are unnecessary given a sufficiently advanced type-aware structure editor, while others are practical only with editor support. We intend to use Hazelnut and derivative systems thereof as a platform for rigorously exploring such questions.
@@ -1436,7 +1457,9 @@ systems, for we will not forever stay confined to mere strings of symbols.
 
 
 \subsubsection{Synthesis and Analysis}
-The judgements $\hsyn{\hGamma}{\hexp}{\htau}$ and $\hana{\hGamma}{\hexp}{\htau}$ are defined mutually inductively by Rules (\ref{rules:hsyn}) and Rules (\ref{rules:hana}), respectively.
+The judgements $\hsyn{\hGamma}{\hexp}{\htau}$ and
+$\hana{\hGamma}{\hexp}{\htau}$ are defined mutually inductively by Rules
+(\ref{rules:hsyn}) and Rules (\ref{rules:hana}), respectively.
 
 \noindent\fbox{$\hsyn{\hGamma}{\hexp}{\htau}$}
 \begin{subequations}\label{rules:hsyn}
@@ -1515,9 +1538,10 @@ The judgements $\hsyn{\hGamma}{\hexp}{\htau}$ and $\hana{\hGamma}{\hexp}{\htau}$
 \end{subequations}
 
 \subsubsection{Complete H-Types and H-Expressions}
-By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H-types, and $e$ rather than $\hexp$ for complete H-expressions.
+By convention, we use the metavariable $\tau$ rather than $\htau$ for
+complete H-types, and $e$ rather than $\hexp$ for complete H-expressions.
 
-~\\~\\\noindent\fbox{$\hcomplete{\tau}$} 
+~\\~\\\noindent\fbox{$\hcomplete{\tau}$}
 \begin{subequations}
 \begin{equation}
 \inferrule{
@@ -1527,7 +1551,7 @@ By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H
   \hcomplete{\tarr{\tau_1}{\tau_2}}
 }
 \end{equation}
-\begin{equation} 
+\begin{equation}
 \inferrule{ }{
   \hcomplete{\tnum}
 }
@@ -1550,7 +1574,7 @@ By convention, we use the metavariable $\tau$ rather than $\htau$ for complete H
   }
 \end{equation}
 \begin{equation}
-  \inferrule{ 
+  \inferrule{
     \hcomplete{\hexp}
   }{
     \hcomplete{\hlam{x}{\hexp}}
@@ -2009,7 +2033,7 @@ The synthetic and analytic expression action performance judgements are defined 
 \noindent\fbox{$\performSyn{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}{\htau'}$}
 
 \begin{subequations}\label{rules:performSyn}
-\paragraph{Movement} 
+\paragraph{Movement}
 \begin{equation}
 \inferrule{
   \performMove{\zexp}{\aMove{\delta}}{\zexp'}
@@ -2018,7 +2042,7 @@ The synthetic and analytic expression action performance judgements are defined 
 }
 \end{equation}
 
-\paragraph{Deletion} 
+\paragraph{Deletion}
 \begin{equation}
   \inferrule{ }{
     \performSyn{\hGamma}{\zwsel{\hexp}}{\htau}{\aDel}{\zwsel{\hehole}}{\tehole}
@@ -2030,7 +2054,7 @@ The synthetic and analytic expression action performance judgements are defined 
   \inferrule{ }{
     \performSyn{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\hexp : \zwsel{\htau}}{\htau}
   }
-\end{equation} 
+\end{equation}
 
 \begin{equation}
   \inferrule{ }{
@@ -2354,7 +2378,7 @@ The synthetic and analytic expression action performance judgements are defined 
 
 \noindent\fbox{$\performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}$}
 \begin{subequations}\label{rules:performAna}
-\paragraph{Subsumption} 
+\paragraph{Subsumption}
 \begin{equation}
   \inferrule{
     \hsyn{\hGamma}{\removeSel{\zexp}}{\htau'}\\
@@ -2372,7 +2396,7 @@ The synthetic and analytic expression action performance judgements are defined 
 }{
   \performAna{\hGamma}{\zexp}{\htau}{\aMove{\delta}}{\zexp'}
 }
-\end{equation} 
+\end{equation}
 
 \paragraph{Deletion}
 \begin{equation}
@@ -2386,7 +2410,7 @@ The synthetic and analytic expression action performance judgements are defined 
   \inferrule{ }{
     \performAna{\hGamma}{\zwsel{\hexp}}{\htau}{\aConstruct{\fasc}}{\hexp : \zwsel{\htau}}
   }
-\end{equation} 
+\end{equation}
 
 \begin{equation}
   \inferrule{
@@ -2433,7 +2457,7 @@ The synthetic and analytic expression action performance judgements are defined 
       {\hhole{\zwsel{\hnum{n}}}}
   }
 \end{equation}
-\paragraph{Finishing} 
+\paragraph{Finishing}
 \begin{equation}
   \inferrule{
     \hana{\hGamma}{\hexp}{\htau}
