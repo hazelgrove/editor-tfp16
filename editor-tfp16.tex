@@ -34,7 +34,7 @@
 
 \mainmatter              % start of the contributions
 %
-\title{Hazelnut: A Bidirectionally Typed \\Structure Editor Calculus}
+\title{Hazelnut: A Bidirectionally Typed \\ Structure Editor Calculus}
 \subtitle{(Research Paper Draft)}
 %
 %\titlerunning{Hamiltonian Mechanics}  % abbreviated title (for running head)
@@ -131,7 +131,7 @@ Formally, Hazelnut is a bidirectionally typed lambda calculus extended with
 &
 \zwsel{\hlam{x}{\hhole{}}} : \tarr{\tnum{}}{\tnum{}}
 &
-\aMove{\dChild{}} & \refrule{\ref{r:movefirstchild}}
+\aMove{\dChild{}} & \refrule{\ref{r:movefirstchild-lam}}
 \\ 8 &
 &
 \hlam{x}{\zwsel{\hhole{}}} : \tarr{\tnum{}}{\tnum{}}
@@ -198,14 +198,14 @@ Formally, Hazelnut is a bidirectionally typed lambda calculus extended with
 &
 \hhole{\hap{{{\textrm{$id$}}}}{\zwsel{\hnum{3}}}} : \tnum{}
 &
-\aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
+\aMove{\dParent{}} &  \refrule{\ref{r:moveparent-ap2}}
 \\
 17 &
 %\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
 &
 \hhole{\zwsel{\hap{{{\textrm{$id$}}}}{{\hnum{3}}}}} : \tnum{}
 &
-\aMove{\dParent{}} &  \refrule{\ref{r:moveparent}}
+\aMove{\dParent{}} &  \refrule{\ref{r:moveparent-hole}}
 \\
 18 &
 %\hhole{\hap{{{\textrm{id}}}}{{\hnum{3}}}} : \tnum{}
@@ -2090,7 +2090,7 @@ complete H-types, and $e$ rather than $\hexp$ for complete H-expressions.
 % \end{equation}
 
 \paragraph{Lambda}
-\begin{equation}
+\begin{equation}\label{r:movefirstchild-lam}
 \inferrule{ }{
   \performMove{
     \zwsel{\hlam{x}{\hexp}}
@@ -2135,7 +2135,7 @@ complete H-types, and $e$ rather than $\hexp$ for complete H-expressions.
     }
   }
 \end{equation}
-\begin{equation}
+\begin{equation}\label{r:moveparent-ap2}
   \inferrule{ }{
     \performMove{
       \hap{{\hexp_1}}{\zwsel{\hexp_2}}
@@ -2238,7 +2238,7 @@ complete H-types, and $e$ rather than $\hexp$ for complete H-expressions.
   }
 }
 \end{equation}
-\begin{equation}
+\begin{equation}\label{r:moveparent-hole}
   \inferrule{ }{
     \performMove{
       \hhole{\zwsel{\hexp}}
