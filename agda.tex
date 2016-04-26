@@ -1,3 +1,4 @@
+% !TEX root = editor-tfp16.tex
 In the previous section, we gave an overview of the most important rules in
 the semantics of Hazelnut, and stated the important theorems. In a few
 cases, we sketched out why these theorems will hold.
@@ -5,42 +6,37 @@ cases, we sketched out why these theorems will hold.
 In order to formally verify that our design meets the stated objectives, we
 are preparing a formalization of the grammar, the judgements given above
 and the metatheory in the proof assistant Agda \cite{norell:thesis}. We
-refer readers unfamiliar with the particulars of Agda to the Wiki, hosted
+refer readers unfamiliar with Agda to the Agda Wiki, hosted
 at \url{http://wiki.portal.chalmers.se/agda/}.
 
-This formalization is a work in progress at the time of submission, but we
-plan on completing it by the time this work is presented. The goal is fully
-mechanized proofs Theorem \ref{thrm:actsafe} and Theorem \ref{thrm:actdet}
-that act as a platform to explore more sophisticated designs and
-metatheory. The development can be found at
-\url{http://github.com/hazelgrove/agda-tfp16}, which includes the actual Agda
-source and a more detailed discussion of the technical representation
-decisions made.
+Our formalization of Hazelnut is under development at
+\url{http://github.com/hazelgrove/agda-tfp16}. At the time of submission, we 
+have completed much of the initial groundwork, but the proofs of 
+Theorem \ref{thrm:actsafe} and Theorem \ref{thrm:actdet} (and a few  
+lemmas that we elided here) are under construction.  
 
-The core idea of our formalization is to encode each judgement as a
+The documentation 
+includes a more detailed discussion of the technical representation
+decisions made. The core idea of our formalization is to encode each judgement as a
 dependent type. The rules of the judgements become the constructors of the
 type, and derivations of theorems values of the type. This is a rich
 setting that allows proofs to take advantage of pattern matching on the
 shape of derivations, closely matching on-paper proofs of similar
 properties.
 
-The formalization differs from the precise calculus listed here in a few
-ways. Most interestingly, instead of giving separate rules for the movement
-of each form of H-expressions and corresponding Z-expressions, we abstract
-over different corresponding forms that happen to have the same arity. This
-formalizes the observation that the rules for movements on additions and
-movements on applications are morally the same. Formalizing this intuition
-reduces the number of cases we need to consider in the inductive
-considerably, but more importantly allows us to write a slightly more
-general calculus. The rules will work for any form of a particular arity,
-so it's much more straightforward to extend this calculus to work for more
-interesting language features.
+The formalization differs from the calculus defined here in a few small 
+ways. Most interestingly, instead of giving separate movement rules for each 
+form of Z-expression, we abstract
+over different corresponding forms that happen to have the same arity, e.g. 
+additions and applications. Formalizing this intuition
+reduces the number of cases we need to consider 
+somewhat, but more importantly allows us to write a slightly more
+general calculus -- it will be easier to extend Hazelnut with more 
+interesting language features with this generic infrastructure in place.
 
 Because the metatheory in this paper is largely concerned with the statics
-of Hazelnut rather than the dynamics, we adopt Barendregt's convention for
-bound variables and avoid substitution entirely.\cite{urban} Future
+of Hazelnut rather than its dynamics, we adopt Barendregt's convention for
+bound variables and avoid substitution entirely \cite{urban}. Future
 iterations will need a more mature technique for reasoning about
-binding---likely de Bruijn indices or abstract bounding
-trees.\cite{lh09unibind} \cite{Pouillard11} By avoiding these issues when
-they are not yet relevant, we offer a clear first-pass formalization that
-hews closely to the mathematics presented in the paper.
+binding---likely de Bruijn indices or abstract binding
+trees \cite{lh09unibind,Pouillard11}. 
