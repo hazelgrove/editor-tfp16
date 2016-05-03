@@ -1,0 +1,16 @@
+----------------------- REVIEW 1 ---------------------
+PAPER: 17
+TITLE: Hazelnut: A Minimal Bidirectionally Typed Structure Editor
+AUTHORS: Cyrus Omar, Michael Hilton, Ian Voysey, Jonathan Aldrich and Matthew Hammer
+
+OVERALL EVALUATION: 3 (strong accept)
+REVIEWER'S CONFIDENCE: 5 (expert)
+
+----------- Review -----------
+This paper develops a "structure editor calculus" for a simply-typed lambda calculus with numbers. The goal is to give clear semantics to updates to program text while preserving well-formedness/meaningfulness, as programs are iteratively being written. To do so, the paper introduces a language with holes, on top of which a focusing mechanism specifies which hole is being address by an edit, and a set of semantic actions that represent transformations over the focused hole, such as constructing a new node or moving the focus.
+
+I find the idea very appealing and the paper is well written and clear. So I have no doubt this will make for an interesting presentation at TFP, and I look forward to the complete development. I found the connection between the hole type and the unknown type of gradual typing inspiring. The type system is otherwise a standard bidirectional system. The focus model is a bit more unusual (to me at least), based on a zipper, but it is well explained. One of the interest of the approach is that it defines meaningful actions that can occur in a given hole, which could be used to assist programmers (as type-driven synthesis systems do). The action model reminds me of (a subset of) jquery, so there _might_ be some interesting connection to the work of Lerner et al on formalizing and checking jquery.
+Overall, I see quite some potential for this work to serve as a base on top of which to develop clear formal models of interactive development. (There might be some more relevant related work in the program synthesis community, btw).
+
+The implementation section is currently not very informative, but that's to be expected at this early stage, since the authors have admittedly focused on the metatheory first. It would be ideal to have a live demo at TFP, if the implementation is complete enough by then!
+
