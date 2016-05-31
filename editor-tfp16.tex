@@ -679,12 +679,25 @@ The action semantics includes a subsumption rule much like the one from the unde
   \inferrule{
     \hsyn{\hGamma}{\removeSel{\zexp}}{\htau'}\\
     \performSyn{\hGamma}{\zexp}{\htau'}{\alpha}{\zexp'}{\htau''}\\
-    \tcompat{\htau}{\htau''}
+    \tcompat{\htau}{\htau''}\\
+    \alpha \neq \aConstruct{\fasc}\\
+    \alpha \neq \aConstruct{\flam{x}}
   }{
     \performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}
   }
 \end{equation}
-In other words, if the expression synthesizes a type, then we defer to the synthetic action performance judgement, as long as it produces an expression that synthesizes a type compatible with the type provided for analysis. It is easy to see that this satisfies Theorem 1 by applying the IH and subsumption.
+In other words, if the expression synthesizes a type, then we defer to the
+synthetic action performance judgement, as long as it produces an
+expression that synthesizes a type compatible with the type provided for
+analysis. Is easy to see that this satisfies Theorem 1 by applying the IH
+and subsumption.
+
+We specifically bar synthesis for actions that would induce a type with
+less information than supplied by the surrounding context, namely
+constructing an ascription or function literals. In both cases doing so
+does not add any expressivity to the action semantics but does create
+ambiguity in applying the inductive hypothesis in the proof of determinism
+in Theorem \ref{thrm:actdet}.
 
 \subsubsection{Relative Movement} Movement actions change the focus but do not change the underlying H-type or H-expression (so action sensibility is easy to show for these rules as well.)
 
@@ -2618,7 +2631,9 @@ The synthetic and analytic expression action performance judgements are defined 
   \inferrule{
     \hsyn{\hGamma}{\removeSel{\zexp}}{\htau'}\\
     \performSyn{\hGamma}{\zexp}{\htau'}{\alpha}{\zexp'}{\htau''}\\
-    \tcompat{\htau}{\htau''}
+    \tcompat{\htau}{\htau''}\\
+    \alpha \neq \aConstruct{\fasc}\\
+    \alpha \neq \aConstruct{\flam{x}}
   }{
     \performAna{\hGamma}{\zexp}{\htau}{\alpha}{\zexp'}
   }
