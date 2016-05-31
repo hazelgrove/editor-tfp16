@@ -288,7 +288,7 @@ indicated by the syntax~$\zwsel{\hehole}$. Focus determines the locus of action.
 2, consisting of a lambda abstraction ascribed an arrow type with holes in all positions. The argument type hole is in focus. The
 user proceeds to fill these holes using construction and movement actions, resulting in the final expression on Line 9. With no holes remaining, this expression is \emph{complete}.% (though it could, of course, undergo further actions nevertheless.)
 
-So far, editing has proceeded in an essentially type-directed, outside-in fashion -- the user first specified the type of the function, then produced a body of that type by the action on Line 8. Lines 10-12 similarly begin in a type-directed manner with the user giving an explicit type ascription, indicating that the expression that they are constructing will have type $\tnum$. 
+So far, editing has proceeded in an essentially type-directed, outside-in fashion -- the user first specified the type of the function, then produced a body of that type by the action on Line 8. Lines 10-12 similarly begin in a type-directed manner with the user giving an explicit type ascription, indicating that the expression that they are constructing will have type $\tnum$.
 
 However, on Line 13, the user performs the $\aConstruct{\fvar{id}}$ action. Notice that $id$ has type $\tarr{\tnum}{\tnum}$, which is not consistent with the type $\tnum$ given in the ascription. Na\"ively, this would produce a type error, leaving the program in a well-formed but semantically undefined state. One way to avoid this state is to simply not make this action available in the program configuration on Line 12. This is inflexible, forcing an outside-in approach to program construction (i.e. the user would need to construct the function application form before constructing the variable $id$.) Instead, Hazelnut permits this action, but places the variable $id$ inside a hole. This defers the consistency check that would normally occur: a hole can be checked against any type, as long as its contents have some type. The cursor is placed inside the hole. The user then proceeds to apply $id$ to the number expression $\hnum{3}$. At this point, the expression inside the hole has a type consistent with the ascription, so the user can \emph{finish} the hole. In our simple formalism, this requires moving the cursor to the hole (in practice, the system might find the nearest parent of hole form.) The result is the complete, well-typed program shown on Line 19 (notice that \emph{complete} is distinct from \emph{closed} -- the variable $id$ is free on Line 19, so this is not a closed program.)
 
@@ -356,7 +356,7 @@ $\arraycolsep=4pt\begin{array}{lllllll}
 \label{fig:hexp-syntax}
 \end{figure}
 
-The syntax of H-types and H-expressions is given in Figure \ref{fig:hexp-syntax}. Most of the forms correspond directly to those of the simply-typed lambda calculus extended with type $\tnum$. The number expression corresponding to the number $n$ is drawn $\hnum{n}$, and for simplicity, we define only a single arithmetic operation, $\hadd{\hexp}{\hexp}$. 
+The syntax of H-types and H-expressions is given in Figure \ref{fig:hexp-syntax}. Most of the forms correspond directly to those of the simply-typed lambda calculus extended with type $\tnum$. The number expression corresponding to the number $n$ is drawn $\hnum{n}$, and for simplicity, we define only a single arithmetic operation, $\hadd{\hexp}{\hexp}$.
 In addition to these standard forms, \emph{empty holes} are drawn $\hehole$ and \emph{non-empty H-expression holes} are drawn $\hhole{\hexp}$. In our simple calculus, all well-formed type expressions are valid types, so we do not need non-empty H-type holes.%Holes mark subterms that are, notionally, ``under construction.'' We will see what this formally corresponds to in a moment.
 
 We refer to terms that do not contain subterms of hole form as \emph{complete}. Informally, we will use metavariables $\tau$ and $e$ rather than $\htau$ and $\hexp$ for complete H-types and H-expressions, respectively. Formally, we can derive $\hcomplete{\tau}$ when $\tau$ is a complete H-type, and $\hcomplete{e}$ when $e$ is a complete H-expression. We omit the straightforward definitions of these judgements for concision. The dynamics of Hazelnut, which we need not detail here, is defined only  over complete H-expressions (i.e. we can only ``run'' a complete program, though see Sec. \ref{sec:future}.)
@@ -368,7 +368,7 @@ The statics of Hazelnut is organized as a \emph{bidirectional type system} \cite
 \hsyn{\hGamma}{\hexp}{\htau} & \text{$\hexp$ synthesizes $\htau$}
 \end{array}\]
 where typing contexts, $\hGamma$, map each variable $x \in \domof{\hGamma}$ to a hypothesis $x : \htau$.
-Derivations of the type analysis judgement establish that $\hexp$ can appear where an expression of type $\htau$ is expected. Derivations of the type synthesis judgement determine a type that can be assigned to $\hexp$ even in positions where an expected type is not known (e.g. at the top level.) Algorithmically, the type is an ``input'' of the type analysis judgement, but an ``output'' of the type synthesis judgement. %The rules describe a \emph{local type inference} scheme, i.e. type ascriptions are unnecessary when an expression is being analyzed against a known type. 
+Derivations of the type analysis judgement establish that $\hexp$ can appear where an expression of type $\htau$ is expected. Derivations of the type synthesis judgement determine a type that can be assigned to $\hexp$ even in positions where an expected type is not known (e.g. at the top level.) Algorithmically, the type is an ``input'' of the type analysis judgement, but an ``output'' of the type synthesis judgement. %The rules describe a \emph{local type inference} scheme, i.e. type ascriptions are unnecessary when an expression is being analyzed against a known type.
 Making a judgemental distinction between these two notions will be essential for giving a sensible action semantics to our system (Sec. \ref{sec:actions}.)
 
  %We use the metavariable $\Gamma$ for \emph{complete typing contexts}, i.e. typing contexts where each hypothesis mentions only complete types.
@@ -386,7 +386,7 @@ Type synthesis is stronger than type analysis in that if an expression is able t
 \end{equation}
 The \emph{H-type compatibility judgement}, $\tcompat{\htau}{\htau'}$, reduces to syntactic equality for complete H-types. For incomplete H-types, the rules are given after we discuss the semantics of holes below.
 
-First, let us briefly review the standard constructs. 
+First, let us briefly review the standard constructs.
 Type ascription allows the user to state  a type for the ascribed expression to be analyzed against:
 \begin{equation}\label{rule:syn-asc}
 \inferrule{
@@ -1225,7 +1225,7 @@ Otherwise, we must place the focused expression inside a hole:
 Notice that we do not have an action that explicitly wraps an expression in a non-empty hole. These arise implicitly when an action that would not na\"ively satisfy Theorem \ref{thrm:actsafe} is performed (see Figure \ref{fig:first-example}.)
 
 \subsubsection{Finishing}
-The final action we will consider in Hazelnut is $\aFinish$, which finishes the focused non-empty hole. 
+The final action we will consider in Hazelnut is $\aFinish$, which finishes the focused non-empty hole.
 
 If the focused non-empty hole appears in synthetic position, then it can always be finished:
 \begin{subequations}
@@ -1503,7 +1503,7 @@ Finally, if the focus is inside a non-empty hole, we special case the situation 
 The key question that must be answered for any implementation strategy is: how do we model a stream of actions from a user? Let us assume that these actions are chosen (using some input device, preferably, a keyboard) from some ``palette'' that never presents the user with actions that are not semantically well-defined, according to the action semantics defined earlier.
 %In a traditional editor, the input from the user is a stream of characters, and there are no guarantees that at any point that the program is syntactically well-formed, so the designer leaves editing as an .
 %In contrast, in a structure editor, the input from the user is a stream of operations.
-As such, each new action will ``atomically'' generate a new Z-expression. 
+As such, each new action will ``atomically'' generate a new Z-expression.
 This insight leads us to conclude that a natural way to implement this editor would be using event-based Functional Reactive Programming~\cite{Wan:2000:FRP:349299.349331} (FRP).
 Figure~\ref{fig:FRP} illustrates the concept of an FRP-based implementation of a  structure editor organized like Hazelnut.
 The input from the user is a stream of actions.  Each action results in a change to the underlying abstract model (i.e., a new Z-expression is created after each action.)
@@ -1515,9 +1515,9 @@ In order to reach a wide audience, we decided to implement HZ in the web browser
 In order to take advantage of all the benefits of FRP, we chose to implement HZ using OCaml\footnote{https://ocaml.org/}, the \texttt{js\_of\_ocaml} compiler\footnote{http://ocsigen.org/js\_of\_ocaml/} and the OCaml React library\footnote{http://erratique.ch/software/react}.
 
 At the time of the writing of this paper, our implementation of HZ includes encodings of Z-expression as presented in this paper.
-We consider this ZExp to be our model. 
+We consider this ZExp to be our model.
 HZ renders the model as a string embedded in HTML.
-Currently we support only the delete action.  Other actions are currently under development. We anticipate having a substantially more functional implementation by the time this work is presented (our focus thusfar has been on the metatheory.) 
+Currently we support only the delete action.  Other actions are currently under development. We anticipate having a substantially more functional implementation by the time this work is presented (our focus thusfar has been on the metatheory.)
 The work-in-progress code as well as directions for how to compile and run it can be found here: \url{https://github.com/hazelgrove/impl-tfp16}.
 
 A substantially simpler system that we developed while exploring the ideas that led to Hazelnut can be found at the following URL:
@@ -1541,12 +1541,12 @@ Not all structure editors are for educational purposes. For example,
 mbeddr \cite{voelter_mbeddr:_2012} is an extensible C-based Programming Language and IDE (nominally, for programming embedded systems.)
 mbeddr is build on top of the commercial JetBrains MPS framework for constructing structure editors.
 Another popular approach is to bring elements of structured editing into a traditional editor.
-Codelets \cite{oney_codelets:_2012} uses structured editing to add interactive documentation and examples in an editor. 
-Our previous work on Graphite~\cite{Omar:2012:ACC:2337223.2337324} allows developers to associate structured editing interfaces called  \emph{palettes} with types. Graphite is integrated into a text-based program editor (Eclipse.) 
+Codelets \cite{oney_codelets:_2012} uses structured editing to add interactive documentation and examples in an editor.
+Our previous work on Graphite~\cite{Omar:2012:ACC:2337223.2337324} allows developers to associate structured editing interfaces called  \emph{palettes} with types. Graphite is integrated into a text-based program editor (Eclipse.)
 
 Agda and Idris are two dependently typed languages that attempt to simulate a structured editor from within a rich text editor (e.g. Emacs.) These systems also have notions of holes and use types to guide the user toward filling these holes. These  systems are also, to our knowledge, not formally well-defined but rather exist only as part of system implementations.
 
-Perhaps the systems most similar in spirit to Hazelnut are Lamdu~\cite{lamdu} and Unison~\cite{unison}. Like Hazelnut, these are both statically typed functional language editors. In both cases, the language is similar to Haskell. In Lamdu, the editor uses structure editing to enable Live Programming, where the code is always being executed as it is being written. 
+Perhaps the systems most similar in spirit to Hazelnut are Lamdu~\cite{lamdu} and Unison~\cite{unison}. Like Hazelnut, these are both statically typed functional language editors. In both cases, the language is similar to Haskell. In Lamdu, the editor uses structure editing to enable Live Programming, where the code is always being executed as it is being written.
 
 Our work differs from all of these in that we begin with a formal editor calculus and build from there, rather than starting with an implementation and leaving many of the formal details formally unspecified. For example, while Lamdu has many interesting features, there is no theoretical basis presented for their work -- it is a rather large body of Haskell code with an unclear (and indeed, often somewhat perplexing, in our experience) action model. Unison is also a rather large body of Haskell code, though its action model appears superficially more similar to ours. We maintain what we believe to be a stronger action sensibility invariant than Unison (i.e. in Unison, one must construct expressions from the outside-in.) These systems are rich sources of interesting ideas, however -- there is room enough for many different approaches in this (re-)emerging space.
 
@@ -1589,7 +1589,7 @@ On the theoretical side, the notion of having one of many possible holes in a te
 
 We already discussed a connection to gradual typing \cite{Siek06a}. We hope to explore this connection more thoroughly. In particular, it may be possible to better support exploratory and live programming by allowing even programs with holes in them to execute as long as those holes are only in the type portions, by deferring to the semantics given in work on gradual typing.
 
-It may also be possible to give a dynamics to incomplete expressions. Prior work on staged evaluation suggests that there may be a connection to modal logic, viewing holes as quantifying over all possible terms that may fill them \cite{DBLP:journals/jacm/DaviesP01}. In developing a dynamic semantics, we will also need to handle terms like $\hhole{\hehole}$ and 
+It may also be possible to give a dynamics to incomplete expressions. Prior work on staged evaluation suggests that there may be a connection to modal logic, viewing holes as quantifying over all possible terms that may fill them \cite{DBLP:journals/jacm/DaviesP01}. In developing a dynamic semantics, we will also need to handle terms like $\hhole{\hehole}$ and
 $\hhole{\hhole{\hexp}}$. In our semantics given here, we eliminated them as they came up in a somewhat \emph{ad hoc} manner. We have not yet
 explored an equational theory for terms with holes, but intend to once our
 formalization effort is more mature.
@@ -1642,7 +1642,7 @@ The full collection of rules defining the semantics of Hazelnut are reproduced h
 \end{equation}
 \begin{equation}%\label{rule:tcompat-num}
 \inferrule{ }{
-  \tcompat{\tnum}{\tnum}
+  \tcompat{\htau}{\htau}
 }
 \end{equation}
 \begin{equation}%\label{rule:tcompat-arr}
