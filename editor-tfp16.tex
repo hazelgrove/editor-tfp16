@@ -63,6 +63,8 @@ University of Colorado Boulder
 {}$^\dagger$~{Student Author}
 }
 
+
+
 \maketitle              % typeset the title of the contribution
 \begin{abstract}
 Programs are rich inductive structures, but human programmers typically construct and manipulate them only indirectly, through flat textual representations. This indirection  comes at a cost -- programmers must comprehend the various subtleties of parsing, and it can require many text editor actions to make a single syntactically and semantically well-defined change. %Manipulating ill-defined programs is difficult for programmers and complicates the design of programming tools.
@@ -679,7 +681,7 @@ The action semantics includes a subsumption rule much like the one from the unde
   \inferrule{
     \hsyn{\hGamma}{\removeSel{\zexp}}{\htau'}\\
     \performSyn{\hGamma}{\zexp}{\htau'}{\alpha}{\zexp'}{\htau''}\\
-    \tcompat{\htau}{\htau''}\\
+    \tcompat{\htau}{\htau''}\\\\
     \alpha \neq \aConstruct{\fasc}\\
     \alpha \neq \aConstruct{\flam{x}}
   }{
@@ -2631,7 +2633,7 @@ The synthetic and analytic expression action performance judgements are defined 
   \inferrule{
     \hsyn{\hGamma}{\removeSel{\zexp}}{\htau'}\\
     \performSyn{\hGamma}{\zexp}{\htau'}{\alpha}{\zexp'}{\htau''}\\
-    \tcompat{\htau}{\htau''}\\
+    \tcompat{\htau}{\htau''}\\\\
     \alpha \neq \aConstruct{\fasc}\\
     \alpha \neq \aConstruct{\flam{x}}
   }{
